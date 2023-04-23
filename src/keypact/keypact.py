@@ -13,7 +13,7 @@ class KeyPact:
     def __init__(self, name):
         self.name = name
         self.hashed_name = sha256(name.encode()).hexdigest()
-        self.location = os.path.join(os.getcwd(), self.hashed_name)
+        self.location = os.path.join(os.getcwd(), "kp-" + self.hashed_name)
 
         self.initialize()
 
