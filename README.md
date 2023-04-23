@@ -1,5 +1,5 @@
-# Keypact | Efficient Key-Value Data Storage with Multithreaded Simultaneous Writing
-ANS is an efficient key-value data storage system that able to storing your datas. It is able to making simultaneous writing with multithreaded. 
+# KeyPact | Multithreaded Simultaneous Writing Key-Value DB
+KeyPact is an efficient key-value data storage system that aims to making simultaneous writing with multithreaded. 
 
 ## Features
 - Multithread Support
