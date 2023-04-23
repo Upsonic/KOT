@@ -1,0 +1,35 @@
+name: Deploys
+
+on:
+  release:
+    types: [published]
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy-pypi:
+
+    runs-on: ubuntu-latest
+    environment: Deploys
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+
+    - name: Build and Publish Python Packages
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine      
+        python setup.py sdist
+        twine upload dist/*
