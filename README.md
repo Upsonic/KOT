@@ -35,10 +35,10 @@ print(my_keypact.get("Onur"))
 ### Console
 
 ```console	
-keypact client_addresses set Onur Sivas
+keypact --name=client_addresses set Onur Sivas
 ```
 ```console
-keypact client_addresses get Onur
+keypact --name=client_addresses get Onur
 ```
 
 
