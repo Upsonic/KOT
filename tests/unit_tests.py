@@ -16,6 +16,7 @@ class TestKeyPact(unittest.TestCase):
     def test_set_get_delete(self):
         self.kp.set("key1", "value1")
         self.assertEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.dict(), {"key1":"value1"})
         self.kp.delete("key1")
         with self.assertRaises(FileNotFoundError):
             self.kp.get("key1")

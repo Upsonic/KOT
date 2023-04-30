@@ -32,17 +32,36 @@ class KeyPact:
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
 
         with open(os.path.join(self.location, key_location), "wb") as f:
-            pickle.dump(value, f)
+            pickle.dump({"key":key,"value":value}, f)
 
-    def get(self, key: str):
-        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
+    def get(self, key: str, custom_key_location: str = None):
+        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
 
         if not os.path.isfile(os.path.join(self.location, key_location)):
             raise FileNotFoundError("Key not found")
 
         with open(os.path.join(self.location, key_location), "rb") as f:
-            return pickle.load(f)
-        
+            result = pickle.load(f)
+            try:
+                total_result = result["value"]
+            except TypeError:
+                total_result = result
+            return total_result
+
+    def get_key(self, key_location: str):
+       
+
+        if not os.path.isfile(os.path.join(self.location, key_location)):
+            raise FileNotFoundError("Key not found")
+
+        with open(os.path.join(self.location, key_location), "rb") as f:
+            result = pickle.load(f)
+            try:
+                total_result = result["key"]
+            except TypeError:
+                total_result = False
+            return total_result
+
     def delete(self, key: str):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
 
@@ -51,6 +70,14 @@ class KeyPact:
         except OSError:
             pass
 
+
+    def dict(self):
+        result ={}
+        for key in os.listdir(self.location):
+            the_key = self.get_key(key)
+            if the_key != False:
+                result[the_key] = self.get(the_key)
+        return result
 
 def main():
     fire.Fire(KeyPact)    
