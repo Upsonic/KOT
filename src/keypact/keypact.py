@@ -40,13 +40,18 @@ class KeyPact:
         if not os.path.isfile(os.path.join(self.location, key_location)):
             raise FileNotFoundError("Key not found")
 
-        with open(os.path.join(self.location, key_location), "rb") as f:
-            result = pickle.load(f)
+        total_result = None
+        while total_result == None:
             try:
-                total_result = result["value"]
-            except TypeError:
-                total_result = result
-            return total_result
+                with open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    try:
+                        total_result = result["value"]
+                    except TypeError:
+                        total_result = result
+            except EOFError:
+                pass
+        return total_result
 
     def get_key(self, key_location: str):
        
