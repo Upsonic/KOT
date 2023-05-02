@@ -58,14 +58,18 @@ class KeyPact:
 
         if not os.path.isfile(os.path.join(self.location, key_location)):
             raise FileNotFoundError("Key not found")
-
-        with open(os.path.join(self.location, key_location), "rb") as f:
-            result = pickle.load(f)
+        total_result = None
+        while total_result == None:
             try:
-                total_result = result["key"]
-            except TypeError:
-                total_result = False
-            return total_result
+                with open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    try:
+                        total_result = result["key"]
+                    except TypeError:
+                        total_result = False
+            except EOFError:
+                pass                        
+        return total_result
 
     def delete(self, key: str):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
