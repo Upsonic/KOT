@@ -57,7 +57,7 @@ class KeyPact:
        
 
         if not os.path.isfile(os.path.join(self.location, key_location)):
-            raise FileNotFoundError("Key not found")
+            return None
         total_result = None
         while total_result == None:
             try:
@@ -68,7 +68,7 @@ class KeyPact:
                     except TypeError:
                         total_result = False
             except EOFError:
-                pass                        
+                pass                     
         return total_result
 
     def delete(self, key: str):
@@ -84,8 +84,9 @@ class KeyPact:
         result ={}
         for key in os.listdir(self.location):
             the_key = self.get_key(key)
-            if the_key != False:
-                result[the_key] = self.get(the_key)
+            if not the_key is None:
+                if the_key != False:
+                    result[the_key] = self.get(the_key)
         return result
 
 def main():
