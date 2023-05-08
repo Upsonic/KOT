@@ -7,6 +7,7 @@ import pickle
 
 import fire
 
+import time
 
 class KeyPact:
 
@@ -51,6 +52,7 @@ class KeyPact:
                         total_result = result
             except EOFError:
                 pass
+            time.sleep(0.1)
         return total_result
 
     def get_key(self, key_location: str):
@@ -68,7 +70,8 @@ class KeyPact:
                     except TypeError:
                         total_result = False
             except EOFError:
-                pass                     
+                pass
+            time.sleep(0.1)               
         return total_result
 
     def delete(self, key: str):
