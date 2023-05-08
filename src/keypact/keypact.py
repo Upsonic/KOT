@@ -38,7 +38,7 @@ class KeyPact:
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
 
         if not os.path.isfile(os.path.join(self.location, key_location)):
-            raise FileNotFoundError("Key not found")
+            return None
 
         total_result = None
         while total_result == None:
@@ -86,7 +86,9 @@ class KeyPact:
             the_key = self.get_key(key)
             if not the_key is None:
                 if the_key != False:
-                    result[the_key] = self.get(the_key)
+                    result_of_key = self.get(the_key)
+                    if not result_of_key is None:
+                        result[the_key] = result_of_key
         return result
 
 def main():
