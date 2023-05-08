@@ -42,17 +42,17 @@ class KeyPact:
             return None
 
         total_result = None
-        while total_result == None:
-            try:
-                with open(os.path.join(self.location, key_location), "rb") as f:
-                    result = pickle.load(f)
-                    try:
-                        total_result = result["value"]
-                    except TypeError:
-                        total_result = result
-            except EOFError:
-                pass
-            time.sleep(0.1)
+
+        try:
+            with open(os.path.join(self.location, key_location), "rb") as f:
+                result = pickle.load(f)
+                try:
+                    total_result = result["value"]
+                except TypeError:
+                    total_result = result
+        except EOFError:
+            pass
+
         return total_result
 
     def get_key(self, key_location: str):
@@ -61,17 +61,16 @@ class KeyPact:
         if not os.path.isfile(os.path.join(self.location, key_location)):
             return None
         total_result = None
-        while total_result == None:
-            try:
-                with open(os.path.join(self.location, key_location), "rb") as f:
-                    result = pickle.load(f)
-                    try:
-                        total_result = result["key"]
-                    except TypeError:
-                        total_result = False
-            except EOFError:
-                pass
-            time.sleep(0.1)               
+
+        try:
+            with open(os.path.join(self.location, key_location), "rb") as f:
+                result = pickle.load(f)
+                try:
+                    total_result = result["key"]
+                except TypeError:
+                    total_result = False
+        except EOFError:
+            pass            
         return total_result
 
     def delete(self, key: str):
