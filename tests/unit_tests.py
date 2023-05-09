@@ -18,8 +18,7 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(self.kp.get("key1"), "value1")
         self.assertEqual(self.kp.dict(), {"key1":"value1"})
         self.kp.delete("key1")
-        with self.assertRaises(FileNotFoundError):
-            self.kp.get("key1")
+        self.assertEqual(self.kp.get("key1"), None)
 
     def test_set_get_multiple(self):
         for key, value in self.test_data.items():
