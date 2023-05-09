@@ -50,7 +50,7 @@ class KeyPact:
                     total_result = result["value"]
                 except TypeError:
                     total_result = result
-        except EOFError:
+        except EOFError or FileNotFoundError:
             pass
 
         return total_result
@@ -69,7 +69,7 @@ class KeyPact:
                     total_result = result["key"]
                 except TypeError:
                     total_result = False
-        except EOFError:
+        except EOFError or FileNotFoundError:
             pass            
         return total_result
 
