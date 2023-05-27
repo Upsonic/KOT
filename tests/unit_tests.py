@@ -31,5 +31,26 @@ class TestKeyPact(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.kp.set(123, "invalid_key")
 
+
+    def test_set_get_file(self):
+        # Create a file to test with
+        with open("test_file.txt", "w") as f:
+            f.write("test")
+
+        self.kp.set_file("test_file", "test_file.txt")
+
+        self.assertEqual(os.path.exists("test_file.txt"), False)
+        the_key = self.kp.get_file("test_file")
+        self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), True)
+
+
+        #Open the file and check the contents
+        with open(os.path.join(self.kp.location, self.kp.get_file("test_file")), "r") as f:
+            self.assertEqual(f.read(), "test")
+        
+        # Delete the file
+        self.kp.delete_file("test_file")
+        self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), False)
+
 if __name__ == '__main__':
     unittest.main()

@@ -8,6 +8,7 @@ import pickle
 import fire
 
 import time
+from shutil import move, copy
 
 class KeyPact:
 
@@ -25,7 +26,7 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
-    def set(self, key: str, value):
+    def set(self, key: str, value, type_of_value="str"):
 
         if not isinstance(key, str):
             raise TypeError("Key must be a string")
@@ -33,7 +34,24 @@ class KeyPact:
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
 
         with open(os.path.join(self.location, key_location), "wb") as f:
-            pickle.dump({"key":key,"value":value}, f)
+            pickle.dump({"key":key,"value":value, "type":type}, f)
+
+
+    def set_file(self, key: str, file, dont_remove: bool = False):
+
+        self.set(key, file, type_of_value="file")
+        key_name = self.get_file(key)
+        if not dont_remove:
+            move(file, os.path.join(self.location, key_name))
+        else:
+            copy(file, os.path.join(self.location, key_name))
+
+    def get_file(self, key: str, custom_key_location: str = None):
+        the_key = self.get(key,custom_key_location)
+        return the_key+the_key.split("/")[-1]
+
+
+
 
     def get(self, key: str, custom_key_location: str = None):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
@@ -65,6 +83,8 @@ class KeyPact:
         try:
             with open(os.path.join(self.location, key_location), "rb") as f:
                 result = pickle.load(f)
+                if not "type" in result:
+                    result["type"] = "str"
                 try:
                     total_result = result["key"]
                 except TypeError:
@@ -81,6 +101,16 @@ class KeyPact:
         except OSError:
             pass
 
+    def delete_file(self, key: str):
+        
+
+        try:
+            os.remove(os.path.join(self.location, self.get_file(key)))
+        except OSError:
+            pass
+
+        self.delete(key)
+        
 
     def dict(self):
         result ={}
