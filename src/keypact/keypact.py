@@ -31,6 +31,8 @@ class KeyPact:
 
     def set(self, key: str, value, type_of_value="str") -> str:
         self.counter += 1
+        
+        
 
 
         if not isinstance(key, str):
@@ -39,6 +41,13 @@ class KeyPact:
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
         key_location_loading = os.path.join(self.location, key_location+".l")
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
+
+        key_location_reading_indicator = os.path.join(self.location, key_location+".re")
+
+        while os.path.exists(key_location_reading_indicator):
+            time.sleep(0.25)
+
+
         with open(key_location_loading, "wb") as f:
             pickle.dump({"key":key,"value":value, "type":type}, f)
 
@@ -87,6 +96,7 @@ class KeyPact:
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
 
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
+        key_location_reading_indicator = os.path.join(self.location, key_location+".re")
 
         while os.path.exists(key_location_loading_indicator):
             time.sleep(0.1)
@@ -99,6 +109,9 @@ class KeyPact:
         total_result = None
 
         try:
+            
+            with open(key_location_reading_indicator, "wb") as f:
+                f.write(b"1")
             with open(os.path.join(self.location, key_location), "rb") as f:
                 result = pickle.load(f)
                 try:
@@ -107,6 +120,9 @@ class KeyPact:
                     total_result = result
         except EOFError or FileNotFoundError:
             pass
+
+        if os.path.isfile(key_location_reading_indicator):
+            os.remove(key_location_reading_indicator)
 
         return total_result
 
