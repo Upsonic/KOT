@@ -17,6 +17,9 @@ class KeyPact:
         self.hashed_name = sha256(name.encode()).hexdigest()
         self.location = os.path.join(os.getcwd(), "kp-" + self.hashed_name)
 
+
+        self.counter = 0
+
         self.initialize()
 
     def initialize(self):
@@ -26,7 +29,9 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
-    def set(self, key: str, value, type_of_value="str"):
+    def set(self, key: str, value, type_of_value="str") -> str:
+        self.counter += 1
+
 
         if not isinstance(key, str):
             raise TypeError("Key must be a string")
@@ -38,15 +43,30 @@ class KeyPact:
 
         move(key_location_loading, key_location)
 
+        return key
 
-    def set_file(self, key: str, file, dont_remove: bool = False):
 
-        self.set(key, file, type_of_value="file")
+    def set_withrkey(self, value, type_of_value="str") -> str:
+        key = str(self.counter) + str(time.time())
+        return self.set(key, value, type_of_value)
+
+
+    def set_file(self, key: str, file, dont_remove: bool = False) -> str:
+
+        the_key = self.set(key, file, type_of_value="file")
         key_name = self.get_file(key)
         if not dont_remove:
             move(file, os.path.join(self.location, key_name))
         else:
             copy(file, os.path.join(self.location, key_name))
+
+        return the_key
+
+
+    def set_file_withrkey(self, file, dont_remove: bool = False) -> str:
+        key = str(self.counter) + str(time.time())
+        return self.set_file(key, file, dont_remove)
+
 
     def get_file(self, key: str, custom_key_location: str = None):
         the_key = self.get(key,custom_key_location)

@@ -32,7 +32,7 @@ class TestKeyPact(unittest.TestCase):
             self.kp.set(123, "invalid_key")
 
 
-    def test_set_get_file(self):
+    def test_set_get_delete_file(self):
         # Create a file to test with
         with open("test_file.txt", "w") as f:
             f.write("test")
@@ -51,6 +51,37 @@ class TestKeyPact(unittest.TestCase):
         # Delete the file
         self.kp.delete_file("test_file")
         self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), False)
+
+
+
+    def test_set_withrkey_get_delete_without_key(self):
+        key_name = self.kp.set_withrkey("value1")
+        self.assertEqual(self.kp.get(key_name), "value1")
+        self.assertEqual(self.kp.dict(), {key_name:"value1"})
+        self.kp.delete(key_name)
+        self.assertEqual(self.kp.get(key_name), None)
+
+
+    def test_set_withrkey_get_delete_file(self):
+        # Create a file to test with
+        with open("test_file.txt", "w") as f:
+            f.write("test")
+
+        the_file_key = self.kp.set_file_withrkey("test_file.txt")
+
+        self.assertEqual(os.path.exists("test_file.txt"), False)
+        the_key = self.kp.get_file(the_file_key)
+        self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), True)
+
+
+        #Open the file and check the contents
+        with open(os.path.join(self.kp.location, self.kp.get_file(the_file_key)), "r") as f:
+            self.assertEqual(f.read(), "test")
+        
+        # Delete the file
+        self.kp.delete_file(the_file_key)
+        self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), False)
+
 
 if __name__ == '__main__':
     unittest.main()
