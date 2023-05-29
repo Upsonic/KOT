@@ -44,8 +44,7 @@ class KeyPact:
 
         key_location_reading_indicator = os.path.join(self.location, key_location+".re")
 
-        while os.path.exists(key_location_reading_indicator):
-            time.sleep(0.25)
+        
 
 
         with open(key_location_loading, "wb") as f:
@@ -55,6 +54,10 @@ class KeyPact:
         #Create a file that inform is loading
         with open(key_location_loading_indicator, "wb") as f:
             f.write(b"1")
+
+        while os.path.exists(key_location_reading_indicator):
+                    time.sleep(0.25)
+
         move(key_location_loading, key_location)
 
         #Remove the loading indicator
