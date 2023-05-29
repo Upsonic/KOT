@@ -38,10 +38,18 @@ class KeyPact:
 
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
         key_location_loading = os.path.join(self.location, key_location+".l")
+        key_location_loading_indicator = os.path.join(self.location, key_location+".li")
         with open(key_location_loading, "wb") as f:
             pickle.dump({"key":key,"value":value, "type":type}, f)
 
+
+        #Create a file that inform is loading
+        with open(key_location_loading_indicator, "wb") as f:
+            f.write(b"1")
         move(key_location_loading, key_location)
+
+        #Remove the loading indicator
+        os.remove(key_location_loading_indicator)
 
         return key
 
@@ -77,6 +85,13 @@ class KeyPact:
 
     def get(self, key: str, custom_key_location: str = None):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
+
+        key_location_loading_indicator = os.path.join(self.location, key_location+".li")
+
+        while os.path.exists(key_location_loading_indicator):
+            time.sleep(0.1)
+
+
 
         if not os.path.isfile(os.path.join(self.location, key_location)):
             return None
