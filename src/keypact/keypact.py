@@ -32,9 +32,11 @@ class KeyPact:
             raise TypeError("Key must be a string")
 
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
-
-        with open(os.path.join(self.location, key_location), "wb") as f:
+        key_location_loading = os.path.join(self.location, key_location+".l")
+        with open(key_location_loading, "wb") as f:
             pickle.dump({"key":key,"value":value, "type":type}, f)
+
+        move(key_location_loading, key_location)
 
 
     def set_file(self, key: str, file, dont_remove: bool = False):
