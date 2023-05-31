@@ -32,7 +32,7 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=True) -> str:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False) -> str:
         self.counter += 1
         
         
