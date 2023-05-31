@@ -8,6 +8,7 @@ KeyPact is an efficient key-value data storage system that aims to making simult
 - Easy to integrate
 - Easy to deploy
 - Able to saving files
+- Able to compressing datas
 
 
 ## Installation

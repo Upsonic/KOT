@@ -10,6 +10,9 @@ import fire
 import time
 from shutil import move, copy
 
+import mgzip
+
+
 class KeyPact:
 
     def __init__(self, name):
@@ -29,7 +32,7 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
-    def set(self, key: str, value, type_of_value="str") -> str:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=True) -> str:
         self.counter += 1
         
         
@@ -43,12 +46,23 @@ class KeyPact:
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
 
         key_location_reading_indicator = os.path.join(self.location, key_location+".re")
+        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
         
 
+        if compress:
+            # create key_location_compress_indicator
+            with open(key_location_compress_indicator, "wb") as f:
+                f.write(b"1")
 
-        with open(key_location_loading, "wb") as f:
-            pickle.dump({"key":key,"value":value, "type":type}, f)
+            with mgzip.open(key_location_loading, "wb") as f:
+                pickle.dump({"key":key,"value":value, "type":type}, f)
+        
+        else:
+            with open(key_location_loading, "wb") as f:
+                pickle.dump({"key":key,"value":value, "type":type}, f)
+
+
 
 
         #Create a file that inform is loading
@@ -100,6 +114,7 @@ class KeyPact:
 
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
         key_location_reading_indicator = os.path.join(self.location, key_location+".re")
+        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
         while os.path.exists(key_location_loading_indicator):
             time.sleep(0.1)
@@ -115,12 +130,20 @@ class KeyPact:
             
             with open(key_location_reading_indicator, "wb") as f:
                 f.write(b"1")
-            with open(os.path.join(self.location, key_location), "rb") as f:
-                result = pickle.load(f)
-                try:
-                    total_result = result["value"]
-                except TypeError:
-                    total_result = result
+            if os.path.exists(key_location_compress_indicator):
+                with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    try:
+                        total_result = result["value"]
+                    except TypeError:
+                        total_result = result
+            else:
+                with open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    try:
+                        total_result = result["value"]
+                    except TypeError:
+                        total_result = result
         except EOFError or FileNotFoundError:
             pass
 
@@ -131,20 +154,30 @@ class KeyPact:
 
     def get_key(self, key_location: str):
        
-
+        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
         if not os.path.isfile(os.path.join(self.location, key_location)):
             return None
         total_result = None
 
         try:
-            with open(os.path.join(self.location, key_location), "rb") as f:
-                result = pickle.load(f)
-                if not "type" in result:
-                    result["type"] = "str"
-                try:
-                    total_result = result["key"]
-                except TypeError:
-                    total_result = False
+            if os.path.exists(key_location_compress_indicator):
+                with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    if not "type" in result:
+                        result["type"] = "str"
+                    try:
+                        total_result = result["key"]
+                    except TypeError:
+                        total_result = False            
+            else:
+                with open(os.path.join(self.location, key_location), "rb") as f:
+                    result = pickle.load(f)
+                    if not "type" in result:
+                        result["type"] = "str"
+                    try:
+                        total_result = result["key"]
+                    except TypeError:
+                        total_result = False
         except EOFError or FileNotFoundError:
             pass            
         return total_result
@@ -152,7 +185,11 @@ class KeyPact:
     def delete(self, key: str):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
 
+        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
+
         try:
+            if os.path.exists(key_location_compress_indicator):
+                os.remove(os.path.join(self.location, key_location_compress_indicator))
             os.remove(os.path.join(self.location, key_location))
         except OSError:
             pass
@@ -175,13 +212,33 @@ class KeyPact:
     def dict(self):
         result ={}
         for key in os.listdir(self.location):
-            the_key = self.get_key(key)
-            if not the_key is None:
-                if the_key != False:
-                    result_of_key = self.get(the_key)
-                    if not result_of_key is None:
-                        result[the_key] = result_of_key
+            if not "." in key:
+                the_key = self.get_key(key)
+                if not the_key is None:
+                    if the_key != False:
+                        result_of_key = self.get(the_key)
+                        if not result_of_key is None:
+                            result[the_key] = result_of_key
         return result
+
+    def size_all(self):
+        #Calculate self.location size
+        total_size = 0
+
+        for dirpath, dirnames, filenames in os.walk(self.location):
+            for f in filenames:
+                fp = os.path.join(dirpath, f)
+                total_size += os.path.getsize(fp)
+
+        return total_size
+    
+    def size(self, key: str):
+        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
+
+        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
+
+        return os.path.getsize(os.path.join(self.location, key_location))
+
 
 def main():
     fire.Fire(KeyPact)    

@@ -92,6 +92,52 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(self.kp.get("key1"), None)
         self.assertEqual(self.kp.dict(), {})
 
+    def test_set_get_no_compress(self):
+        self.kp.set("key1", "value1", compress=False)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.dict(), {"key1":"value1"})
+        self.kp.delete("key1")
+        self.assertEqual(self.kp.get("key1"), None)        
+
+    def test_set_get_yes_compress(self):
+        self.kp.set("key1", "value1", compress=True)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.dict(), {"key1":"value1"})
+        self.kp.delete("key1")
+        self.assertEqual(self.kp.get("key1"), None)    
+
+
+
+    def test_set_get_size(self):
+        self.kp.set("key1", "value1", compress=True)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.dict(), {"key1":"value1"})
+        the_size_of_value = self.kp.size("key1")
+        self.kp.delete("key1")
+        self.assertEqual(self.kp.get("key1"), None) 
+
+        self.assertGreater(the_size_of_value, 0)
+
+    def test_set_get_compress_test(self):
+
+        #create a big string
+        big_string = "a" * 1000000
+
+
+        self.kp.set("key1", big_string, compress=False)
+        self.assertEqual(self.kp.get("key1"), big_string)
+        self.assertEqual(self.kp.dict(), {"key1":big_string})
+        the_size_of_not_compress = self.kp.size_all()
+        self.kp.delete_all()
+        
+        self.kp.set("key1", big_string, compress=True)
+        self.assertEqual(self.kp.get("key1"), big_string)
+        self.assertEqual(self.kp.dict(), {"key1":big_string})
+        the_size_of_compress = self.kp.size_all()
+        self.kp.delete_all()
+
+        self.assertGreater(the_size_of_not_compress, the_size_of_compress)
+
 
 
 if __name__ == '__main__':
