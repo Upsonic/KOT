@@ -83,5 +83,16 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(os.path.exists(os.path.join(self.kp.location, the_key)), False)
 
 
+
+    def test_set_get_delete_all(self):
+        self.kp.set("key1", "value1")
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.dict(), {"key1":"value1"})
+        self.kp.delete_all()
+        self.assertEqual(self.kp.get("key1"), None)
+        self.assertEqual(self.kp.dict(), {})
+
+
+
 if __name__ == '__main__':
     unittest.main()

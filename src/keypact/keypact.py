@@ -168,6 +168,10 @@ class KeyPact:
         self.delete(key)
         
 
+    def delete_all(self):
+        for key in self.dict():
+            self.delete(key)
+
     def dict(self):
         result ={}
         for key in os.listdir(self.location):
