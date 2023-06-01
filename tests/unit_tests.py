@@ -1,3 +1,4 @@
+import contextlib
 import time
 import unittest
 import os
@@ -194,6 +195,43 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(another_kp.get("key1"), "value1")
 
 
+    def test_database_list_delete_delete_all(self):
+        backup_chdir = os.getcwd()
+        the_time = str(int(time.time()))
+        os.makedirs(os.path.join(self.kp.location, the_time))
+        os.chdir(os.path.join(self.kp.location, the_time))
+        database_list = KeyPact.database_list()
+
+        self.assertEqual(database_list, {})
+        a_new_kp = KeyPact("test_database_list")
+        database_list = KeyPact.database_list()
+
+        self.assertEqual(database_list, {"test_database_list":a_new_kp.location})
+        a_new_other_kp = KeyPact("test_database_list2")
+        database_list = KeyPact.database_list()
+
+        self.assertEqual(database_list, {"test_database_list":a_new_kp.location, "test_database_list2":a_new_other_kp.location})
+
+        KeyPact.database_delete("test_database_list2")
+
+        database_list = KeyPact.database_list()
+
+        self.assertEqual(database_list, {"test_database_list":a_new_kp.location})
+
+        a_new_other_kp = KeyPact("test_database_list2")
+
+
+        KeyPact.database_delete_all()
+
+        database_list = KeyPact.database_list()
+
+        self.assertEqual(database_list, {})
+
+        with contextlib.suppress(PermissionError):
+            shutil.rmtree(os.path.join(self.kp.location, the_time))
+
+
+        os.chdir(backup_chdir)
 
 
 if __name__ == '__main__':

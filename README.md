@@ -13,6 +13,7 @@ KeyPact is an efficient key-value data storage system that aims to making simult
 - Able to encryption
 - Able to caching
 - Able to backup and restore
+- Able to listing, deleting and deleting all databases
 
 
 ## Installation

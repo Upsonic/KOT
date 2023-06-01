@@ -9,7 +9,7 @@ import pickle
 import fire
 
 import time
-from shutil import move, copy, make_archive, unpack_archive
+from shutil import move, copy, make_archive, unpack_archive, rmtree
 
 import mgzip
 
@@ -24,10 +24,37 @@ import traceback
 
 class KeyPact:
 
-    def __init__(self, name):
+    @staticmethod
+    def database_list() -> dict:
+        database_index = KeyPact("kp-database-index", self_datas=True)
+        return database_index.dict()
+    
+    @staticmethod
+    def database_delete(name) -> bool:
+        database_index = KeyPact("kp-database-index", self_datas=True)
+        try:
+            rmtree(database_index.get(name))
+        except:
+            return False
+        
+        database_index.delete(name)
+        return True
+
+    @staticmethod
+    def database_delete_all():
+        database_index = KeyPact("kp-database-index", self_datas=True)
+        for each_database in database_index.dict():
+            KeyPact.database_delete(each_database)
+
+    def __init__(self, name, self_datas: bool = False):
         self.name = name
         self.hashed_name = sha256(name.encode()).hexdigest()
         self.location = os.path.join(os.getcwd(), "kp-" + self.hashed_name)
+
+        if not self_datas:
+            database_index = KeyPact("kp-database-index", self_datas=True)
+            database_index.set(self.name, self.location)
+
 
 
         self.counter = 0
