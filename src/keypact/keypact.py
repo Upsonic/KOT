@@ -21,24 +21,6 @@ from Crypto.Cipher import AES
 
 
 
-
-def encrypt(key, message):
-    def pad(s):
-        return s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-    padded_message = pad(message)
-    iv = Random.new().read(AES.block_size)
-    cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
-    return base64.b64encode(iv + cipher.encrypt(padded_message.encode())).decode()
-
-def decrypt(key, message):
-    def unpad(s):
-        return s[:-ord(s[len(s)-1:])]
-    message = base64.b64decode(message.encode())
-    iv = message[:AES.block_size]
-    cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
-    return unpad(cipher.decrypt(message[AES.block_size:])).decode()
-
-
 class KeyPact:
 
     def __init__(self, name):
