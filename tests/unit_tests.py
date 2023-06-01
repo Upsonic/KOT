@@ -180,6 +180,7 @@ class TestKeyPact(unittest.TestCase):
         backup_location = self.kp.backup("test_backup")
 
         another_kp = KeyPact("backup_test")
+        another_kp.delete_all()
 
         self.assertEqual(another_kp.get("key1"), None)
         result_of_restore = another_kp.restore(backup_location)
