@@ -49,6 +49,8 @@ class KeyPact:
 
         self.counter = 0
 
+        self.cache = {}
+
         self.initialize()
 
     def initialize(self):
@@ -76,7 +78,7 @@ class KeyPact:
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return unpad(cipher.decrypt(message[AES.block_size:])).decode()
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None") -> str:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None", cache_policy: int = 0, dont_delete_cache: bool=False) -> str:
         self.counter += 1
         
         
@@ -95,17 +97,27 @@ class KeyPact:
         if encryption_key != "None":
             value = encrypt(encryption_key, value)
 
+        the_dict = {"key":key,"value":value, "type":type}
+
+        if cache_policy != 0:
+            the_dict["cache_time"] = time.time()
+            the_dict["cache_policy"] = cache_policy
+        else:
+            if key in self.cache and not dont_delete_cache:
+                del self.cache[key]
+
+
         if compress:
             # create key_location_compress_indicator
             with open(key_location_compress_indicator, "wb") as f:
                 f.write(b"1")
 
             with mgzip.open(key_location_loading, "wb") as f:
-                pickle.dump({"key":key,"value":value, "type":type}, f)
+                pickle.dump(the_dict, f)
         
         else:
             with open(key_location_loading, "wb") as f:
-                pickle.dump({"key":key,"value":value, "type":type}, f)
+                pickle.dump(the_dict, f)
 
 
 
@@ -155,6 +167,19 @@ class KeyPact:
 
 
     def get(self, key: str, custom_key_location: str = None, encryption_key:str="None"):
+
+        if key in self.cache:
+            cache_control = False
+            currently = time.time()
+            last_time = self.cache[key]["cache_time"]
+            cache_policy = self.cache[key]["cache_policy"]
+
+            if currently - last_time > cache_policy:
+                cache_control = True
+            
+            if cache_control:
+                return self.cache[key]["value"]
+
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
 
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
@@ -171,6 +196,8 @@ class KeyPact:
 
         total_result = None
 
+        total_result_standart = None
+
         try:
             
             with open(key_location_reading_indicator, "wb") as f:
@@ -178,6 +205,7 @@ class KeyPact:
             if os.path.exists(key_location_compress_indicator):
                 with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
+                    total_result_standart = result
                     try:
                         total_result = result["value"]
                     except TypeError:
@@ -185,18 +213,23 @@ class KeyPact:
             else:
                 with open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
+                    total_result_standart = result
                     try:
                         total_result = result["value"]
                     except TypeError:
                         total_result = result
+
+            if encryption_key != "None":
+                total_result = decrypt(encryption_key, total_result)
+
+            if "cache_time" in total_result_standart:
+                self.cache[key] = total_result_standart
+
         except EOFError or FileNotFoundError:
             pass
 
         if os.path.isfile(key_location_reading_indicator):
             os.remove(key_location_reading_indicator)
-
-        if encryption_key != "None":
-            total_result = decrypt(encryption_key, total_result)
 
         return total_result
 
@@ -213,6 +246,10 @@ class KeyPact:
                     result = pickle.load(f)
                     if not "type" in result:
                         result["type"] = "str"
+                    if not "cache_time" in result:
+                        result["cache_time"] = 0
+                    if not "cache_policy" in result:
+                        result["cache_policy"] = 0
                     try:
                         total_result = result["key"]
                     except TypeError:
@@ -222,6 +259,10 @@ class KeyPact:
                     result = pickle.load(f)
                     if not "type" in result:
                         result["type"] = "str"
+                    if not "cache_time" in result:
+                        result["cache_time"] = 0
+                    if not "cache_policy" in result:
+                        result["cache_policy"] = 0
                     try:
                         total_result = result["key"]
                     except TypeError:

@@ -149,5 +149,14 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(self.kp.get("key1"), None)
 
 
+    def test_set_get_delete_cache(self):
+        self.kp.set("key1", "value1", cache_policy=30)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.assertNotEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.assertEqual(self.kp.get("key1"), "value1aaaa")
+
+
 if __name__ == '__main__':
     unittest.main()
