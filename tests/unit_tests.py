@@ -173,5 +173,21 @@ class TestKeyPact(unittest.TestCase):
         self.assertEqual(self.kp.get("key1", no_cache=True), "value1aaaa")
 
 
+
+    def test_backup_restore(self):
+        self.kp.set("key1", "value1")
+        self.assertEqual(self.kp.get("key1"), "value1")
+        backup_location = self.kp.backup("test_backup")
+
+        another_kp = KeyPact("backup_test")
+
+        self.assertEqual(another_kp.get("key1"), None)
+        result_of_restore = another_kp.restore(backup_location)
+        self.assertTrue(result_of_restore)
+        self.assertEqual(another_kp.get("key1"), "value1")
+
+
+
+
 if __name__ == '__main__':
     unittest.main()

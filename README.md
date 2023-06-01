@@ -12,6 +12,7 @@ KeyPact is an efficient key-value data storage system that aims to making simult
 - Able to storing pyton objects (Pickle)
 - Able to encryption
 - Able to caching
+- Able to backup and restore
 
 
 ## Installation

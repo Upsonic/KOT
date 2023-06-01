@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import os
 from hashlib import sha256
 import pickle
@@ -8,7 +9,7 @@ import pickle
 import fire
 
 import time
-from shutil import move, copy
+from shutil import move, copy, make_archive, unpack_archive
 
 import mgzip
 
@@ -19,7 +20,7 @@ import hashlib
 from Crypto import Random
 from Crypto.Cipher import AES
 
-
+import traceback
 
 class KeyPact:
 
@@ -77,7 +78,7 @@ class KeyPact:
         key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
         if encryption_key != "None":
-            value = encrypt(encryption_key, value)
+            value = self.encrypt(encryption_key, value)
 
         the_dict = {"key":key,"value":value, "type":type}
 
@@ -202,7 +203,7 @@ class KeyPact:
                         total_result = result
 
             if encryption_key != "None":
-                total_result = decrypt(encryption_key, total_result)
+                total_result = self.decrypt(encryption_key, total_result)
 
             if "cache_time" in total_result_standart:
                 self.cache[key] = total_result_standart
@@ -309,6 +310,25 @@ class KeyPact:
         key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
         return os.path.getsize(os.path.join(self.location, key_location))
+
+    def backup(self, backup_location: str) -> str:
+        # create a name for backup that a date
+        name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+        location = os.path.join(backup_location, name)
+        make_archive(location, 'zip', self.location)
+        move(location+".zip", location+".kp")
+        return location+".kp"
+
+    def restore(self, backup_location: str) -> bool:
+        try:
+            move(backup_location, backup_location.replace(".kp", ".zip"))
+            backup_location = backup_location.replace(".kp", ".zip")
+            unpack_archive(backup_location, self.location)
+            return True
+        except:
+            traceback.print_exc()
+            return False
+
 
 
 def main():
