@@ -142,14 +142,14 @@ class KeyPact:
         return self.set_file(key, file, dont_remove)
 
 
-    def get_file(self, key: str, custom_key_location: str = None):
+    def get_file(self, key: str, custom_key_location: str = ""):
         the_key = self.get(key,custom_key_location)
         return the_key+the_key.split("/")[-1]
 
 
 
 
-    def get(self, key: str, custom_key_location: str = None, encryption_key:str="None", no_cache: bool = False):
+    def get(self, key: str, custom_key_location: str = "", encryption_key:str="None", no_cache: bool = False):
 
         if key in self.cache and not no_cache:
             cache_control = False
@@ -163,7 +163,7 @@ class KeyPact:
             if cache_control:
                 return self.cache[key]["value"]
 
-        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
+        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == "" else custom_key_location
 
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
         key_location_reading_indicator = os.path.join(self.location, key_location+".re")
