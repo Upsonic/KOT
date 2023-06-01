@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Controlling Databases
+title: CONTROLLING DATABASES
 nav_order: 10
 has_children: false
 ---

@@ -17,6 +17,8 @@ my_location_db = KOT("locations_of_team_members")
 my_location_db.set("Onur", "Sivas")
 
 print(my_location_db.get("Onur"))
+
+my_location_db.delete("Onur")
 ```
 
 Output:

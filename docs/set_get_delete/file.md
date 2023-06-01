@@ -17,6 +17,8 @@ my_image_db = KOT("images_of_team_members")
 my_image_db.set_file("Onur", "Onur.jpg")
 
 print(my_image_db.get_file("Onur"))
+
+my_image_db.delete_file("Onur")
 ```
 
 Output:
@@ -24,3 +26,5 @@ Output:
 ```console
 new_location_of_onur.jpg
 ```
+
+
