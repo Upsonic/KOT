@@ -91,85 +91,102 @@ class KOT:
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return unpad(cipher.decrypt(message[AES.block_size:])).decode()
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None", cache_policy: int = 0, dont_delete_cache: bool=False) -> str:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None", cache_policy: int = 0, dont_delete_cache: bool=False) -> bool:
         self.counter += 1
         
-        
-
-
         if not isinstance(key, str):
             raise TypeError("Key must be a string")
 
-        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
-        key_location_loading = os.path.join(self.location, key_location+".l")
-        key_location_loading_indicator = os.path.join(self.location, key_location+".li")
-
-        key_location_reading_indicator = os.path.join(self.location, key_location+".re")
-        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
-
-        if encryption_key != "None":
-            value = self.encrypt(encryption_key, value)
-
-        the_dict = {"key":key,"value":value, "type":type}
-
-        if cache_policy != 0:
-            the_dict["cache_time"] = time.time()
-            the_dict["cache_policy"] = cache_policy
-        else:
-            if key in self.cache and not dont_delete_cache:
-                del self.cache[key]
+        try:
 
 
-        if compress:
-            # create key_location_compress_indicator
-            with open(key_location_compress_indicator, "wb") as f:
+            key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
+            key_location_loading = os.path.join(self.location, key_location+".l")
+            key_location_loading_indicator = os.path.join(self.location, key_location+".li")
+
+            key_location_reading_indicator = os.path.join(self.location, key_location+".re")
+            key_location_compress_indicator = os.path.join(self.location, key_location+".co")
+
+            if encryption_key != "None":
+                value = self.encrypt(encryption_key, value)
+
+            the_dict = {"key":key,"value":value, "type":type}
+
+            if cache_policy != 0:
+                the_dict["cache_time"] = time.time()
+                the_dict["cache_policy"] = cache_policy
+            else:
+                if key in self.cache and not dont_delete_cache:
+                    del self.cache[key]
+
+
+            if compress:
+                # create key_location_compress_indicator
+                with open(key_location_compress_indicator, "wb") as f:
+                    f.write(b"1")
+
+                with mgzip.open(key_location_loading, "wb") as f:
+                    pickle.dump(the_dict, f)
+            
+            else:
+                with open(key_location_loading, "wb") as f:
+                    pickle.dump(the_dict, f)
+
+
+
+
+            #Create a file that inform is loading
+            with open(key_location_loading_indicator, "wb") as f:
                 f.write(b"1")
 
-            with mgzip.open(key_location_loading, "wb") as f:
-                pickle.dump(the_dict, f)
-        
-        else:
-            with open(key_location_loading, "wb") as f:
-                pickle.dump(the_dict, f)
+            while os.path.exists(key_location_reading_indicator):
+                        time.sleep(0.25)
 
+            move(key_location_loading, key_location)
 
+            #Remove the loading indicator
+            os.remove(key_location_loading_indicator)
 
+        except:
+            traceback.print_exc()
+            return False
 
-        #Create a file that inform is loading
-        with open(key_location_loading_indicator, "wb") as f:
-            f.write(b"1")
-
-        while os.path.exists(key_location_reading_indicator):
-                    time.sleep(0.25)
-
-        move(key_location_loading, key_location)
-
-        #Remove the loading indicator
-        os.remove(key_location_loading_indicator)
-
-        return key
+        return True
 
 
     def set_withrkey(self, value, type_of_value="str") -> str:
         key = str(self.counter) + str(time.time())
-        return self.set(key, value, type_of_value)
+        try:
+            self.set(key, value, type_of_value)
+            return key
+        except:
+            traceback.print_exc()
+            return ""
 
 
-    def set_file(self, key: str, file, dont_remove: bool = False) -> str:
-
-        the_key = self.set(key, file, type_of_value="file")
-        key_name = self.get_file(key)
-        if not dont_remove:
-            move(file, os.path.join(self.location, key_name))
-        else:
-            copy(file, os.path.join(self.location, key_name))
-
-        return the_key
+    def set_file(self, key: str, file, dont_remove: bool = False) -> bool:
+        try:
+            the_key = self.set(key, file, type_of_value="file")
+            key_name = self.get_file(key)
+            if not dont_remove:
+                move(file, os.path.join(self.location, key_name))
+            else:
+                copy(file, os.path.join(self.location, key_name))
+        except:
+            traceback.print_exc()
+            return False
+        return True
 
 
     def set_file_withrkey(self, file, dont_remove: bool = False) -> str:
         key = str(self.counter) + str(time.time())
-        return self.set_file(key, file, dont_remove)
+        try:
+            self.set_file(key, file, dont_remove)
+            return key
+        except:
+            traceback.print_exc()
+            return ""
+
 
 
     def get_file(self, key: str, custom_key_location: str = ""):
@@ -285,32 +302,50 @@ class KOT:
             pass            
         return total_result
 
-    def delete(self, key: str):
-        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
-
-        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
-
+    def delete(self, key: str) -> bool:
         try:
+            key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
+            key_location_compress_indicator = os.path.join(self.location, key_location+".co")
+
             if os.path.exists(key_location_compress_indicator):
                 os.remove(os.path.join(self.location, key_location_compress_indicator))
-            os.remove(os.path.join(self.location, key_location))
-        except OSError:
-            pass
-
-    def delete_file(self, key: str):
+            if os.path.exists(os.path.join(self.location, key_location)):
+                os.remove(os.path.join(self.location, key_location))
+        except:
+            traceback.print_exc()
+            return False
         
+        return True
 
+
+    def delete_file(self, key: str) -> bool:
+        
+        
         try:
-            os.remove(os.path.join(self.location, self.get_file(key)))
-        except OSError:
-            pass
+            if os.path.exists(os.path.join(self.location, self.get_file(key))):
+                os.remove(os.path.join(self.location, self.get_file(key)))
+            
+        except:
+            traceback.print_exc()
+            return False
 
-        self.delete(key)
+
+        if self.delete(key):
+            return True
+        else:
+            return False
+
+        
         
 
-    def delete_all(self):
-        for key in self.dict():
-            self.delete(key)
+    def delete_all(self) -> bool:
+        try:
+            for key in self.dict():
+                self.delete(key)
+        except:
+            traceback.print_exc()
+            return False
+        return True
 
     def dict(self, encryption_key:str="None"):
         result ={}
@@ -363,4 +398,4 @@ class KOT:
 
 
 def main():
-    fire.Fire(KOT)    
+    fire.Fire(KOT)
