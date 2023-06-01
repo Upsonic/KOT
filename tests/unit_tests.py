@@ -172,6 +172,12 @@ class TestKeyPact(unittest.TestCase):
         self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
         self.assertEqual(self.kp.get("key1", no_cache=True), "value1aaaa")
 
+    def test_set_get_delete_cache_clear_cache(self):
+        self.kp.set("key1", "value1", cache_policy=15)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.kp.clear_cache()
+        self.assertEqual(self.kp.get("key1"), "value1aaaa")
 
 
     def test_backup_restore(self):

@@ -43,6 +43,9 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
+    def clear_cache(self):
+        self.cache = {}
+
 
 
     def encrypt(self, key, message):
