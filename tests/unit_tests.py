@@ -1,3 +1,4 @@
+import time
 import unittest
 import os
 import shutil
@@ -153,9 +154,23 @@ class TestKeyPact(unittest.TestCase):
         self.kp.set("key1", "value1", cache_policy=30)
         self.assertEqual(self.kp.get("key1"), "value1")
         self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
-        self.assertNotEqual(self.kp.get("key1"), "value1")
-        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=False)
         self.assertEqual(self.kp.get("key1"), "value1aaaa")
+
+
+    def test_set_get_delete_cache_expired(self):
+        self.kp.set("key1", "value1", cache_policy=3)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        time.sleep(4)
+        self.assertEqual(self.kp.get("key1"), "value1aaaa")
+
+    def test_set_get_delete_cache_no_cache(self):
+        self.kp.set("key1", "value1", cache_policy=30)
+        self.assertEqual(self.kp.get("key1"), "value1")
+        self.kp.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.assertEqual(self.kp.get("key1", no_cache=True), "value1aaaa")
 
 
 if __name__ == '__main__':

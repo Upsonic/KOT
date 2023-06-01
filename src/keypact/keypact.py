@@ -166,15 +166,15 @@ class KeyPact:
 
 
 
-    def get(self, key: str, custom_key_location: str = None, encryption_key:str="None"):
+    def get(self, key: str, custom_key_location: str = None, encryption_key:str="None", no_cache: bool = False):
 
-        if key in self.cache:
+        if key in self.cache and not no_cache:
             cache_control = False
             currently = time.time()
             last_time = self.cache[key]["cache_time"]
             cache_policy = self.cache[key]["cache_policy"]
 
-            if currently - last_time > cache_policy:
+            if currently - last_time < cache_policy:
                 cache_control = True
             
             if cache_control:
