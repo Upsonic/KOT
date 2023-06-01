@@ -24,7 +24,7 @@ my_image_db.delete_file("Onur")
 Output:
 
 ```console
-new_location_of_onur.jpg
+/root/KOT-92e2df9705120b6a67451c18e6e8a861c893e21d2d0488528b979e81ef2401d2/ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb_Onur.jpg
 ```
 
 

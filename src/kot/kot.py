@@ -174,7 +174,8 @@ class KOT:
 
     def get_file(self, key: str, custom_key_location: str = ""):
         the_key = self.get(key,custom_key_location)
-        return the_key+the_key.split("/")[-1]
+        key_sha_256 = os.path.join(self.location, sha256(key.encode()).hexdigest())
+        return key_sha_256+"_"+the_key.split("/")[-1]
 
 
 
