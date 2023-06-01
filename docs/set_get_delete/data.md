@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Set and Get
+title: Data
 nav_order: 3
 has_children: false
 parent: SET GET DELETE
