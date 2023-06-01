@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Deleting
-nav_order: 7
+nav_order: 5
 has_children: false
+parent: SET GET DELETE
 ---
 
 # Deleting
