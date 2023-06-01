@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Creating a Database
+title: CREATING A DATABASE
 nav_order: 2
 has_children: false
 ---
