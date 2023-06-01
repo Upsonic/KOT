@@ -1,16 +1,16 @@
 from setuptools import setup
 
 
-setup(name='keypact',
+setup(name='kot',
 version='0.11.0',
 description="""Efficient Key-Value Data Storage with Multithreaded Simultaneous Writing""",
 long_description="".join(open("README.md", encoding="utf-8").readlines()),
 long_description_content_type='text/markdown',
-url='https://github.com/onuratakan/KeyPact',
+url='https://github.com/onuratakan/KOT',
 author='Onur Atakan ULUSOY',
 author_email='atadogan06@gmail.com',
 license='MIT',
-packages=["keypact"],
+packages=["kot"],
 package_dir={'':'src'},
 install_requires=[
     "fire==0.5.0",
@@ -18,7 +18,7 @@ install_requires=[
     "pycryptodome==3.18.0"
 ],
 entry_points = {
-    'console_scripts': ['keypact=keypact.keypact:main'],
+    'console_scripts': ['kot=kot.kot:main'],
 },
 python_requires=">= 3",
 zip_safe=False)

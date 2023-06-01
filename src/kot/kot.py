@@ -22,16 +22,16 @@ from Crypto.Cipher import AES
 
 import traceback
 
-class KeyPact:
+class KOT:
 
     @staticmethod
     def database_list() -> dict:
-        database_index = KeyPact("kp-database-index", self_datas=True)
+        database_index = KOT("KOT-database-index", self_datas=True)
         return database_index.dict()
     
     @staticmethod
     def database_delete(name) -> bool:
-        database_index = KeyPact("kp-database-index", self_datas=True)
+        database_index = KOT("KOT-database-index", self_datas=True)
         try:
             rmtree(database_index.get(name))
         except:
@@ -42,17 +42,17 @@ class KeyPact:
 
     @staticmethod
     def database_delete_all():
-        database_index = KeyPact("kp-database-index", self_datas=True)
+        database_index = KOT("KOT-database-index", self_datas=True)
         for each_database in database_index.dict():
-            KeyPact.database_delete(each_database)
+            KOT.database_delete(each_database)
 
     def __init__(self, name, self_datas: bool = False):
         self.name = name
         self.hashed_name = sha256(name.encode()).hexdigest()
-        self.location = os.path.join(os.getcwd(), "kp-" + self.hashed_name)
+        self.location = os.path.join(os.getcwd(), "KOT-" + self.hashed_name)
 
         if not self_datas:
-            database_index = KeyPact("kp-database-index", self_datas=True)
+            database_index = KOT("KOT-database-index", self_datas=True)
             database_index.set(self.name, self.location)
 
 
@@ -346,13 +346,13 @@ class KeyPact:
         name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         location = os.path.join(backup_location, name)
         make_archive(location, 'zip', self.location)
-        move(location+".zip", location+".kp")
-        return location+".kp"
+        move(location+".zip", location+".KOT")
+        return location+".KOT"
 
     def restore(self, backup_location: str) -> bool:
         try:
-            move(backup_location, backup_location.replace(".kp", ".zip"))
-            backup_location = backup_location.replace(".kp", ".zip")
+            move(backup_location, backup_location.replace(".KOT", ".zip"))
+            backup_location = backup_location.replace(".KOT", ".zip")
             unpack_archive(backup_location, self.location)
             return True
         except:
@@ -362,4 +362,4 @@ class KeyPact:
 
 
 def main():
-    fire.Fire(KeyPact)    
+    fire.Fire(KOT)    

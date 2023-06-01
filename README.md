@@ -1,5 +1,5 @@
-# KeyPact | Multithreaded Simultaneous Writing Key-Value DB
-KeyPact is an efficient key-value data storage system that aims to making simultaneous writing with multithreaded. 
+# KOT | Multithreaded Simultaneous Writing Key-Value DB
+KOT is an efficient key-value data storage system that aims to making simultaneous writing with multithreaded. 
 
 ## Features
 - Multithread Support
@@ -17,40 +17,40 @@ KeyPact is an efficient key-value data storage system that aims to making simult
 
 
 ## Installation
-You can install KeyPact by pip3:
+You can install KOT by pip3:
 
 ```console
-pip3 install keypact
+pip3 install kot
 ```
 
 ## Usage
-KeyPact is aimed to be used in Python and command line as well. You can use it in your Python code or in command line.
+KOT is aimed to be used in Python and command line as well. You can use it in your Python code or in command line.
 
 
 ### In Python
 
 ```python
-import keypact
+from kot import KOT
 
-my_keypact = keypact.KeyPact("client_addresses")
+my_kot = KOT("client_addresses")
 
-my_keypact.set("Onur", "Sivas")
+my_kot.set("Onur", "Sivas")
 
-print(my_keypact.get("Onur"))
+print(my_kot.get("Onur"))
 ```
 
 ### Console
 
 ```console	
-keypact --name=client_addresses set Onur Sivas
+kot --name=client_addresses set Onur Sivas
 ```
 ```console
-keypact --name=client_addresses get Onur
+kot --name=client_addresses get Onur
 ```
 
 
 ## Contributing
-Contributions to KeyPact are welcome! If you have any suggestions or find a bug, please open an issue on the GitHub repository. If you want to contribute code, please fork the repository and create a pull request.
+Contributions to KOT are welcome! If you have any suggestions or find a bug, please open an issue on the GitHub repository. If you want to contribute code, please fork the repository and create a pull request.
 
 ## License
-KeyPact is released under the MIT License.
+KOT is released under the MIT License.
