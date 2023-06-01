@@ -13,6 +13,32 @@ from shutil import move, copy
 import mgzip
 
 
+
+import base64
+import hashlib
+from Crypto import Random
+from Crypto.Cipher import AES
+
+
+
+
+def encrypt(key, message):
+    def pad(s):
+        return s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
+    padded_message = pad(message)
+    iv = Random.new().read(AES.block_size)
+    cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
+    return base64.b64encode(iv + cipher.encrypt(padded_message.encode())).decode()
+
+def decrypt(key, message):
+    def unpad(s):
+        return s[:-ord(s[len(s)-1:])]
+    message = base64.b64decode(message.encode())
+    iv = message[:AES.block_size]
+    cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
+    return unpad(cipher.decrypt(message[AES.block_size:])).decode()
+
+
 class KeyPact:
 
     def __init__(self, name):
@@ -32,7 +58,25 @@ class KeyPact:
             if not os.path.isdir(self.location):
                 raise
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False) -> str:
+
+
+    def encrypt(self, key, message):
+        def pad(s):
+            return s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
+        padded_message = pad(message)
+        iv = Random.new().read(AES.block_size)
+        cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
+        return base64.b64encode(iv + cipher.encrypt(padded_message.encode())).decode()
+
+    def decrypt(self, key, message):
+        def unpad(s):
+            return s[:-ord(s[len(s)-1:])]
+        message = base64.b64decode(message.encode())
+        iv = message[:AES.block_size]
+        cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
+        return unpad(cipher.decrypt(message[AES.block_size:])).decode()
+
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None") -> str:
         self.counter += 1
         
         
@@ -48,7 +92,8 @@ class KeyPact:
         key_location_reading_indicator = os.path.join(self.location, key_location+".re")
         key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
-        
+        if encryption_key != "None":
+            value = encrypt(encryption_key, value)
 
         if compress:
             # create key_location_compress_indicator
@@ -109,7 +154,7 @@ class KeyPact:
 
 
 
-    def get(self, key: str, custom_key_location: str = None):
+    def get(self, key: str, custom_key_location: str = None, encryption_key:str="None"):
         key_location = os.path.join(self.location, sha256(key.encode()).hexdigest()) if custom_key_location == None else custom_key_location
 
         key_location_loading_indicator = os.path.join(self.location, key_location+".li")
@@ -149,6 +194,9 @@ class KeyPact:
 
         if os.path.isfile(key_location_reading_indicator):
             os.remove(key_location_reading_indicator)
+
+        if encryption_key != "None":
+            total_result = decrypt(encryption_key, total_result)
 
         return total_result
 
@@ -209,14 +257,14 @@ class KeyPact:
         for key in self.dict():
             self.delete(key)
 
-    def dict(self):
+    def dict(self, encryption_key:str="None"):
         result ={}
         for key in os.listdir(self.location):
             if not "." in key:
                 the_key = self.get_key(key)
                 if not the_key is None:
                     if the_key != False:
-                        result_of_key = self.get(the_key)
+                        result_of_key = self.get(the_key, encryption_key=encryption_key)
                         if not result_of_key is None:
                             result[the_key] = result_of_key
         return result

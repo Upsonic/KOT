@@ -139,6 +139,15 @@ class TestKeyPact(unittest.TestCase):
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
 
+    def test_set_get_delete_encryption_decryption(self):
+        self.kp.set("key1", "value1", encryption_key="OnurAtakanULUSOY")
+        self.assertNotEqual(self.kp.get("key1"), "value1")
+        self.assertEqual(self.kp.get("key1", encryption_key="OnurAtakanULUSOY"), "value1")
+        self.assertNotEqual(self.kp.dict(), {"key1":"value1"})
+        self.assertEqual(self.kp.dict(encryption_key="OnurAtakanULUSOY"), {"key1":"value1"})
+        self.kp.delete("key1")
+        self.assertEqual(self.kp.get("key1"), None)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,7 +14,8 @@ packages=["keypact"],
 package_dir={'':'src'},
 install_requires=[
     "fire==0.5.0",
-    "mgzip==0.2.1"
+    "mgzip==0.2.1",
+    "pycryptodome==3.18.0"
 ],
 entry_points = {
     'console_scripts': ['keypact=keypact.keypact:main'],
