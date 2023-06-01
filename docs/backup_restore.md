@@ -1,6 +1,6 @@
 ---
 layout: default
-title: BACKUP RESTROE
+title: BACKUP RESTORE
 nav_order: 9
 has_children: false
 ---
