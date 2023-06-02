@@ -148,6 +148,18 @@ class TestKOT(unittest.TestCase):
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
 
+    def test_set_get_compress_encyrption_test(self):
+
+        #create a big string
+        big_string = "a" * 1000000
+
+        
+        self.KOT.set("key1", big_string, compress=True, encryption_key="OnurAtakanULUSOY")
+        self.assertEqual(self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), big_string)
+        self.KOT.delete_all()
+
+
+
     def test_set_get_delete_encryption_decryption(self):
         self.KOT.set("key1", "value1", encryption_key="OnurAtakanULUSOY")
         self.assertNotEqual(self.KOT.get("key1"), "value1")
