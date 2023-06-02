@@ -24,6 +24,53 @@ import traceback
 
 class KOT:
 
+
+    @staticmethod
+    def benchmark_set(number: int = 10000, compress: bool=False, encryption_key:str="") -> float:
+        my_db = KOT("KOT-benchmark", self_datas=True)
+        start = time.time()
+        for i in range(number):
+            my_db.set("key"+str(i), "value"+str(i), compress=compress, encryption_key=encryption_key)
+        end = time.time()
+        my_db.delete_all()
+        return end-start
+
+    @staticmethod
+    def benchmark_get(number: int = 10000, compress: bool=False, encryption_key:str="", dont_generate:bool=False) -> float:
+        my_db = KOT("KOT-benchmark", self_datas=True)
+        if not dont_generate:
+            for i in range(number):
+                my_db.set("key"+str(i), "value"+str(i), compress=compress, encryption_key=encryption_key)
+        start = time.time()
+        for i in range(number):
+            my_db.get("key"+str(i), encryption_key=encryption_key)
+        end = time.time()
+        my_db.delete_all()
+        return end-start    
+
+    @staticmethod
+    def benchmark_delete(number: int = 10000, compress: bool=False, encryption_key:str="", dont_generate:bool=False) -> float:
+        my_db = KOT("KOT-benchmark", self_datas=True)
+        if not dont_generate:
+            for i in range(number):
+                my_db.set("key"+str(i), "value"+str(i), compress=compress, encryption_key=encryption_key)
+        start = time.time()
+        for i in range(number):
+            my_db.delete("key"+str(i))
+        end = time.time()
+        my_db.delete_all()
+        return end-start   
+
+
+    @staticmethod
+    def benchmark(number: int = 10000, compress: bool=False, encryption_key:str="") -> float:
+        total_time = 0
+        total_time += KOT.benchmark_set(number, compress, encryption_key)
+        total_time += KOT.benchmark_get(number, compress, encryption_key, dont_generate=True)
+        total_time += KOT.benchmark_delete(number, compress, encryption_key, dont_generate=True)
+        return total_time
+
+
     @staticmethod
     def database_list() -> dict:
         database_index = KOT("KOT-database-index", self_datas=True)
@@ -108,7 +155,7 @@ class KOT:
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return unpad(cipher.decrypt(message[AES.block_size:])).decode()
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="None", cache_policy: int = 0, dont_delete_cache: bool=False) -> bool:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="", cache_policy: int = 0, dont_delete_cache: bool=False) -> bool:
         self.counter += 1
         
         if not isinstance(key, str):
@@ -124,7 +171,7 @@ class KOT:
             key_location_reading_indicator = os.path.join(self.location, key_location+".re")
             key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
-            if encryption_key != "None":
+            if encryption_key != "":
                 value = self.encrypt(encryption_key, value)
 
             the_dict = {"key":key,"value":value, "type":type_of_value}
@@ -214,7 +261,7 @@ class KOT:
 
 
 
-    def get(self, key: str, custom_key_location: str = "", encryption_key:str="None", no_cache: bool = False, raw_dict:bool=False):
+    def get(self, key: str, custom_key_location: str = "", encryption_key:str="", no_cache: bool = False, raw_dict:bool=False):
 
         if key in self.cache and not no_cache:
             cache_control = False
@@ -267,7 +314,7 @@ class KOT:
                     except TypeError:
                         total_result = result
 
-            if encryption_key != "None":
+            if encryption_key != "":
                 total_result = self.decrypt(encryption_key, total_result)
 
             if "cache_time" in total_result_standart:
@@ -332,7 +379,10 @@ class KOT:
         return total_result
 
     def delete(self, key: str) -> bool:
+
         try:
+            if key in self.cache:
+                del self.cache[key]            
             key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
             key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
@@ -376,7 +426,7 @@ class KOT:
             return False
         return True
 
-    def dict(self, encryption_key:str="None"):
+    def dict(self, encryption_key:str=""):
         result ={}
         for key in os.listdir(self.location):
             if not "." in key:
@@ -447,6 +497,7 @@ class KOT:
         except:
             traceback.print_exc()
             return False
+
 
 
 
