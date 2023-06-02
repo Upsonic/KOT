@@ -18,7 +18,7 @@ install_requires=[
     "pycryptodome==3.18.0"
 ],
 entry_points = {
-    'console_scripts': ['kot=kot.kot:main'],
+    'console_scripts': ['KOT=kot.kot:main'],
 },
 python_requires=">= 3",
 zip_safe=False)
