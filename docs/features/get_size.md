@@ -17,9 +17,14 @@ from kot import KOT
 my_location_db = KOT("locations_of_team_members")
 my_location_db.set("Onur", "Sivas")
 
+my_image_db = KOT("images_of_team_members")
+my_image_db.set_file("Onur", "Onur.jpg")
 
 print(my_location_db.size("Onur"))
+print(my_image_db.size_file("Onur"))
+
 print(my_location_db.size_all())
+print(my_image_db.size_all())
 
 ```
 
@@ -27,5 +32,7 @@ Output:
 
 ```console
 5
+5555
 5
+5555
 ```

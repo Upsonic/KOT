@@ -110,7 +110,7 @@ class KOT:
             if encryption_key != "None":
                 value = self.encrypt(encryption_key, value)
 
-            the_dict = {"key":key,"value":value, "type":type}
+            the_dict = {"key":key,"value":value, "type":type_of_value}
 
             if cache_policy != 0:
                 the_dict["cache_time"] = time.time()
@@ -197,7 +197,7 @@ class KOT:
 
 
 
-    def get(self, key: str, custom_key_location: str = "", encryption_key:str="None", no_cache: bool = False):
+    def get(self, key: str, custom_key_location: str = "", encryption_key:str="None", no_cache: bool = False, raw_dict:bool=False):
 
         if key in self.cache and not no_cache:
             cache_control = False
@@ -262,7 +262,19 @@ class KOT:
         if os.path.isfile(key_location_reading_indicator):
             os.remove(key_location_reading_indicator)
 
+        if raw_dict:
+            return total_result_standart
+
         return total_result
+
+
+    def get_key_type(self, key: str, custom_key_location: str = "") -> str:
+        result = self.get(key, custom_key_location, raw_dict=True)
+        if result is None:
+            return ""
+        if not "type" in result:
+            return ""
+        return result["type"]
 
     def get_key(self, key_location: str):
        
@@ -359,7 +371,7 @@ class KOT:
                             result[the_key] = result_of_key
         return result
 
-    def size_all(self):
+    def size_all(self) -> int:
         #Calculate self.location size
         total_size = 0
 
@@ -370,12 +382,35 @@ class KOT:
 
         return total_size
     
-    def size(self, key: str):
-        key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
+    def size(self, key: str) -> int:
+        total_size = 0
+        try:
+            key_location = os.path.join(self.location, sha256(key.encode()).hexdigest())
 
-        key_location_compress_indicator = os.path.join(self.location, key_location+".co")
+            key_location_compress_indicator = os.path.join(self.location, key_location+".co")
 
-        return os.path.getsize(os.path.join(self.location, key_location))
+            if os.path.exists(key_location_compress_indicator):
+                total_size += os.path.getsize(os.path.join(self.location, key_location+".co"))
+
+
+            total_size += os.path.getsize(os.path.join(self.location, key_location))
+        except:
+            traceback.print_exc()
+
+        return total_size
+
+
+    def size_file(self, key: str) -> int:
+        total_size = self.size(key)
+        try:
+            total_size += os.path.getsize(os.path.join(self.location, self.get_file(key)))
+        except:
+            traceback.print_exc()
+
+        return total_size
+    
+
+
 
     def backup(self, backup_location: str) -> str:
         # create a name for backup that a date
