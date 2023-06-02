@@ -30,7 +30,7 @@ class KOT:
         return database_index.dict()
     
     @staticmethod
-    def database_delete(name) -> bool:
+    def database_delete(name: str) -> bool:
         database_index = KOT("KOT-database-index", self_datas=True)
         try:
             rmtree(database_index.get(name))
@@ -45,6 +45,23 @@ class KOT:
         database_index = KOT("KOT-database-index", self_datas=True)
         for each_database in database_index.dict():
             KOT.database_delete(each_database)
+
+
+    @staticmethod
+    def database_rename(name: str, new_name: str, force: bool=False) -> bool:
+        if new_name in KOT.database_list() and not force:
+            return False
+        try:
+            first_db = KOT(name)
+            location = first_db.backup(".")
+            KOT.database_delete(name)
+            second_db = KOT(new_name)
+            second_db.restore(location)
+            os.remove(location)
+        except:
+            traceback.print_exc()
+            return False
+        return True
 
     def __init__(self, name, self_datas: bool = False):
         self.name = name
@@ -425,6 +442,7 @@ class KOT:
             move(backup_location, backup_location.replace(".KOT", ".zip"))
             backup_location = backup_location.replace(".KOT", ".zip")
             unpack_archive(backup_location, self.location)
+            move(backup_location, backup_location.replace(".zip", ".KOT"))
             return True
         except:
             traceback.print_exc()

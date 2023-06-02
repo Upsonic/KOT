@@ -241,5 +241,38 @@ class TestKOT(unittest.TestCase):
         os.chdir(backup_chdir)
 
 
+    def test_database_rename_already(self):
+        first_db = KOT("firstdb")
+        first_db.set("key1", "value1")
+        self.assertEqual(first_db.get("key1"), "value1")
+        new_db = KOT("test_database_rename_already")
+        new_db.delete_all()
+        self.assertNotEqual(new_db.get("key1"), "value1")
+        result = KOT.database_rename("firstdb", "test_database_rename_already")
+        self.assertFalse(result)
+
+
+    def test_database_rename_force(self):
+        first_db = KOT("firstdb")
+        first_db.set("key1", "value1")
+        self.assertEqual(first_db.get("key1"), "value1")
+        new_db = KOT("test_database_rename_already")
+        new_db.delete_all()
+        self.assertNotEqual(new_db.get("key1"), "value1")
+        result = KOT.database_rename("firstdb", "test_database_rename_already", True)
+        self.assertTrue(result)
+        self.assertEqual(first_db.get("key1"), None)
+        self.assertEqual(new_db.get("key1"), "value1")
+        
+    def test_database_rename(self):
+        first_db = KOT("firstdb")
+        first_db.set("key1", "value1")
+        self.assertEqual(first_db.get("key1"), "value1")
+        KOT.database_delete("test_database_rename_already")
+        result = KOT.database_rename("firstdb", "test_database_rename_already",)
+        self.assertTrue(result)
+        self.assertEqual(first_db.get("key1"), None)
+        self.assertEqual(KOT("test_database_rename_already").get("key1"), "value1")
+
 if __name__ == '__main__':
     unittest.main()
