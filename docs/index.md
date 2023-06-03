@@ -57,7 +57,7 @@ kot --name=client_addresses get Onur
 ```
 
 ## Documentation
-You can find the documentation [here](https://onuratakan.github.io/kot/).
+You can find the documentation [here](https://onuratakan.github.io/KOT/).
 
 
 ## Contributing
