@@ -5,22 +5,17 @@ nav_order: 1
 has_children: false
 ---
 
-# KOT | Multithreaded Simultaneous Writing Key-Value DB
-KOT is an efficient key-value data storage system that aims to making simultaneous writing with multithreaded. 
+# KOT database
+
+The KOT database is a flexible, secure, and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
 
 ## Features
-- Multithread Support
-- Simultaneous Writing
-- Easy to use
-- Easy to integrate
-- Easy to deploy
-- Able to saving files
-- Able to compressing datas
-- Able to storing pyton objects (Pickle)
-- Able to encryption
-- Able to caching
-- Able to backup and restore
-- Able to listing, deleting, deleting all and rename databases
+
+- **Flexibility**: Save data in any format, including objects, definitions, numbers, strings, floats, and files, providing great flexibility and adaptability to different use cases and data structures.
+- **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
+- **Encryption**: Keep sensitive information secure and private with the included encryption feature.
+- **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
+- **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
 
 
 ## Installation
@@ -42,8 +37,14 @@ from kot import KOT
 my_kot = KOT("client_addresses")
 
 my_kot.set("Onur", "Sivas")
+#my_kot.set("Onur", "Sivas", compress=True)
+#my_kot.set("Onur", "Sivas", encryption_key="my_encryption_key"))
+#my_kot.set_file("Onur_Image", "Onur.jpg")
 
 print(my_kot.get("Onur"))
+
+my_kot.delete("Onur")
+#my_kot.delete_file("Onur_Image")
 ```
 
 ### Console
@@ -54,6 +55,9 @@ kot --name=client_addresses set Onur Sivas
 ```console
 kot --name=client_addresses get Onur
 ```
+
+## Documentation
+You can find the documentation [here](https://onuratakan.github.io/kot/).
 
 
 ## Contributing
