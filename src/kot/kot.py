@@ -155,7 +155,11 @@ class KOT:
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return unpad(cipher.decrypt(message[AES.block_size:])).decode()
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="", cache_policy: int = 0, dont_delete_cache: bool=False) -> bool:
+    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="", cache_policy: int = 0, dont_delete_cache: bool=False, save_directly:bool=False, dont_remove: bool = False) -> bool:
+
+        if type_of_value == "file" and not save_directly:
+            return self.set_file(key, value, dont_remove)
+
         self.counter += 1
         
         if not isinstance(key, str):
@@ -230,7 +234,7 @@ class KOT:
 
     def set_file(self, key: str, file, dont_remove: bool = False) -> bool:
         try:
-            the_key = self.set(key, file, type_of_value="file")
+            the_key = self.set(key, file, type_of_value="file", save_directly=True)
             key_name = self.get_file(key)
             if not dont_remove:
                 move(file, os.path.join(self.location, key_name))
