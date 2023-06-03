@@ -382,6 +382,9 @@ class KOT:
             pass            
         return total_result
 
+    def get_all(self):
+        return self.dict()
+
     def delete(self, key: str) -> bool:
 
         try:
