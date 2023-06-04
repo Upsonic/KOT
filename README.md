@@ -8,6 +8,8 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 - **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
 - **Encryption**: Keep sensitive information secure and private with the included encryption feature.
 - **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
+- **Fault Tolerance**: By the design of the KOT database, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
+- **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
 - **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
 
 
