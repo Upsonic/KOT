@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Data
+title: Data Operations
 nav_order: 3
 has_children: false
 parent: SET GET DELETE
 ---
 
-# Set and Get
+# Set, Get and Delete Data
 Previously section we created a database. Now we will learn how to set and get data from database. Let's set a data to database.
 
 ```python

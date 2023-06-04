@@ -1,12 +1,12 @@
 ---
 layout: default
-title: File
+title: File Operations
 nav_order: 4
 has_children: false
 parent: SET GET DELETE
 ---
 
-# Set and Get File
+# Set, Get and Delete File
 Previously section we set and get data from database. Now we will learn how to set and get file from database. This feature is move or copy the file by your `dont_remove` argument in the `set_file` to database inside. Let's set a file to database.
 
 ```python
