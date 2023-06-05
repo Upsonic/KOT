@@ -26,14 +26,26 @@ class TestKOT(unittest.TestCase):
         shutil.rmtree(self.KOT.location)
 
     def test_set_get_delete(self):
-
-
         self.KOT.set("key1", self.test_vales)
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
         self.assertEqual(self.KOT.dict(), {"key1":self.test_vales})
         self.KOT.delete("key1")
         self.assertEqual(self.KOT.get("key1"), None)
 
+    def test_set_get_delete_location(self):
+        self.KOT.set("key1", self.test_vales)
+        self.assertEqual(self.KOT.get("key1"), self.test_vales)
+        # create a folder in the location if not exists
+        currently_dir = os.getcwd()
+        if not os.path.exists(currently_dir + "/test"):
+            os.makedirs(currently_dir + "/test")
+        
+        false_kot = KOT(self.test_name, folder=currently_dir + "/test")
+        self.assertNotEqual(false_kot.get("key1"), self.test_vales)
+
+        
+        true_kot = KOT(self.test_name, folder=currently_dir)
+        self.assertEqual(true_kot.get("key1"), self.test_vales)        
 
     def test_set_get_delete_file(self):
 

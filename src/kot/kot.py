@@ -111,10 +111,11 @@ class KOT:
             return False
         return True
 
-    def __init__(self, name, self_datas: bool = False):
+    def __init__(self, name, self_datas: bool = False, folder: str=""):
         self.name = name
         self.hashed_name = sha256(name.encode()).hexdigest()
-        self.location = os.path.join(os.getcwd(), "KOT-" + self.hashed_name)
+        the_main_folder = os.getcwd() if not folder != "" else folder
+        self.location = os.path.join(the_main_folder, "KOT-" + self.hashed_name)
         
         
         if not self_datas:
