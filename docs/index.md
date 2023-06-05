@@ -11,7 +11,7 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 
 ## Features
 
-- **Flexibility**: Save data in any format, including objects, definitions, numbers, strings, and floats, providing great flexibility and adaptability to different use cases and data structures.
+- **Flexibility**: Save data in any format, including objects and files, providing great flexibility and adaptability to different use cases and data structures.
 - **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
 - **Encryption**: Keep sensitive information secure and private with the included encryption feature.
 - **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
