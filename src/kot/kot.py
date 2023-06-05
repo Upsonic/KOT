@@ -140,8 +140,8 @@ class KOT:
     def clear_cache(self):
         self.cache = {}
         for each_file in self.open_files_db.dict():
-            print(each_file)
-            os.remove(each_file)
+            if os.path.exists(each_file):
+                os.remove(each_file)
         self.open_files_db.delete_all()
 
 
