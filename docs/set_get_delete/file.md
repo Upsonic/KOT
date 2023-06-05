@@ -12,12 +12,16 @@ Previously section we set and get data from database. Now we will learn how to s
 ```python
 from kot import KOT
 
+# Create a database
 my_image_db = KOT("images_of_team_members")
 
+# Set file
 my_image_db.set_file("Onur", "Onur.jpg")
 
+# Get file
 print(my_image_db.get_file("Onur"))
 
+# Delete file
 my_image_db.delete_file("Onur")
 ```
 

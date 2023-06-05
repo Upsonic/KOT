@@ -11,6 +11,7 @@ In here we will learn how to get all databases in currently dir. Let's get all d
 ```python
 from kot import KOT
 
+# List all databases
 print(KOT.database_list())
 ```
 
@@ -28,6 +29,7 @@ In here we will learn how to delete a database. Let's delete a database.
 ```python
 from kot import KOT
 
+# Delete a database
 KOT.database_delete("mydb")
 ```
 
@@ -37,5 +39,6 @@ In here we will learn how to delete all databases in currently dir. Let's delete
 ```python   
 from kot import KOT
 
+# Delete all databases
 KOT.database_delete_all()
 ```

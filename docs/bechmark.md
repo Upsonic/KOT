@@ -11,6 +11,7 @@ In here we will learn how to make benchmark for KOT database set, get and delete
 ```python
 from kot import KOT
 
+# Benchmark for set, get and delete functions together
 print(KOT.benchmark(number=10000))
 ```
 
@@ -28,6 +29,7 @@ In here we will learn how to make benchmark for KOT database set function. Also 
 ```python
 from kot import KOT
 
+# Benchmark for set function
 print(KOT.benchmark_set(number=10000))
 ```
 
@@ -43,6 +45,7 @@ In here we will learn how to make benchmark for KOT database get function. Also 
 ```python
 from kot import KOT
 
+# Benchmark for get function
 print(KOT.benchmark_get(number=10000))
 ```
 
@@ -58,6 +61,7 @@ In here we will learn how to make benchmark for KOT database delete function. Al
 ```python
 from kot import KOT
 
+# Benchmark for delete function
 print(KOT.benchmark_delete(number=10000))
 ```
 

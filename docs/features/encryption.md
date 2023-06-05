@@ -13,8 +13,10 @@ Now we learned how to apply compressing in `set` function. Now we will learn how
 ```python
 from kot import KOT
 
+# Create a database
 my_address_db = KOT("addresses_of_team_members")
 
+# Set data with encryption
 my_address_db.set("Onur", "Turkey, Sivas, ....", encryption_key="my_encryption_key")
 
 print(my_address_db.get("Onur", encryption_key="my_encryption_key"))

@@ -36,17 +36,23 @@ KOT is aimed to be used in Python and command line as well. You can use it in yo
 ```python
 from kot import KOT
 
-my_kot = KOT("client_addresses")
+# Creating databases
+client_address_db = KOT("client_addresses")
+client_image_db = KOT("client_addresses")
 
-my_kot.set("Onur", "Sivas")
-#my_kot.set("Onur", "Sivas", compress=True)
-#my_kot.set("Onur", "Sivas", encryption_key="my_encryption_key"))
-#my_kot.set_file("Onur_Image", "Onur.jpg")
 
+# Setting functions
+client_address_db.set("Onur", "Sivas")
+#client_address_db.set("Onur", "Sivas", compress=True)
+#client_address_db.set("Onur", "Sivas", encryption_key="my_encryption_key"))
+#client_image_db.set_file("Onur_Image", "Onur.jpg")
+
+# Getting functions
 print(my_kot.get("Onur"))
+#print(client_image_db.get_file("Onur_Image"))
 
 my_kot.delete("Onur")
-#my_kot.delete_file("Onur_Image")
+#client_image_db.delete_file("Onur_Image")
 ```
 
 ### Console

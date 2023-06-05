@@ -12,12 +12,16 @@ Previously section we created a database. Now we will learn how to set and get d
 ```python
 from kot import KOT
 
+# Create a database
 my_location_db = KOT("locations_of_team_members")
 
+# Set data
 my_location_db.set("Onur", "Sivas")
 
+# Get data
 print(my_location_db.get("Onur"))
 
+# Delete data
 my_location_db.delete("Onur")
 ```
 

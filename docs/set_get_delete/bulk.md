@@ -15,9 +15,11 @@ from kot import KOT
 
 my_location_db = KOT("locations_of_team_members")
 
+# Set data
 my_location_db.set("Onur", "Sivas")
 my_location_db.set("Atakan", "Ankara")
 
+# Get all data
 print(my_location_db.get_all())
 ```
 
@@ -34,10 +36,13 @@ from kot import KOT
 
 my_location_db = KOT("locations_of_team_members")
 
+# Set data
 my_location_db.set("Onur", "Sivas")
 
+# Delete all data
 my_location_db.delete_all()
 
+# Get all data
 print(my_location_db.get_all())
 ```
 

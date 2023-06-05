@@ -11,5 +11,6 @@ In this section, we will learn how to create a database with KOT in currently di
 ```python
 from kot import KOT
 
+# Creating a database
 my_db = KOT("my_database")
 ```
