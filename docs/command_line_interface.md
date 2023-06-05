@@ -23,5 +23,3 @@ KOT --name locations_of_team_members get Onur
 ```console
 Sivas
 ```
-
-```console
