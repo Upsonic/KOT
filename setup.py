@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(name='kot',
-version='0.12.0',
+version='0.13.0',
 description="""Efficient Key-Value Data Storage with Multithreaded Simultaneous Writing""",
 long_description="".join(open("README.md", encoding="utf-8").readlines()),
 long_description_content_type='text/markdown',
