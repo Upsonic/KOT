@@ -3,6 +3,7 @@ layout: default
 title: CACHE
 nav_order: 9
 has_children: false
+parent: FEATURES
 ---
 
 # Cache
