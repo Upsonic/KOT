@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CACHE
+title: Cache
 nav_order: 9
 has_children: false
 parent: FEATURES
