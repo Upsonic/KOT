@@ -155,10 +155,7 @@ class KOT:
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return unpad(cipher.decrypt(message[AES.block_size:])).decode()
 
-    def set(self, key: str, value, type_of_value: str ="str", compress: bool=False, encryption_key:str="", cache_policy: int = 0, dont_delete_cache: bool=False, save_directly:bool=False, dont_remove: bool = False) -> bool:
-
-        if type_of_value == "file" and not save_directly:
-            return self.set_file(key, value, dont_remove)
+    def set(self, key: str, value, compress: bool=False, encryption_key:str="", cache_policy: int = 0, dont_delete_cache: bool=False, save_directly:bool=False, dont_remove: bool = False) -> bool:
 
         self.counter += 1
         
@@ -178,7 +175,7 @@ class KOT:
             if encryption_key != "":
                 value = self.encrypt(encryption_key, value)
 
-            the_dict = {"key":key,"value":value, "type":type_of_value}
+            the_dict = {"key":key,"value":value}
 
             if cache_policy != 0:
                 the_dict["cache_time"] = time.time()
@@ -222,34 +219,10 @@ class KOT:
         return True
 
 
-    def set_withrkey(self, value, type_of_value="str") -> str:
+    def set_withrkey(self, value) -> str:
         key = str(self.counter) + str(time.time())
         try:
-            self.set(key, value, type_of_value)
-            return key
-        except:
-            traceback.print_exc()
-            return ""
-
-
-    def set_file(self, key: str, file, dont_remove: bool = False) -> bool:
-        try:
-            the_key = self.set(key, file, type_of_value="file", save_directly=True)
-            key_name = self.get_file(key)
-            if not dont_remove:
-                move(file, os.path.join(self.location, key_name))
-            else:
-                copy(file, os.path.join(self.location, key_name))
-        except:
-            traceback.print_exc()
-            return False
-        return True
-
-
-    def set_file_withrkey(self, file, dont_remove: bool = False) -> str:
-        key = str(self.counter) + str(time.time())
-        try:
-            self.set_file(key, file, dont_remove)
+            self.set(key, value)
             return key
         except:
             traceback.print_exc()
@@ -257,10 +230,6 @@ class KOT:
 
 
 
-    def get_file(self, key: str, custom_key_location: str = ""):
-        the_key = self.get(key,custom_key_location)
-        key_sha_256 = os.path.join(self.location, sha256(key.encode()).hexdigest())
-        return key_sha_256+"."+the_key.split(".")[-1]
 
 
 
@@ -336,13 +305,6 @@ class KOT:
         return total_result
 
 
-    def get_key_type(self, key: str, custom_key_location: str = "") -> str:
-        result = self.get(key, custom_key_location, raw_dict=True)
-        if result is None:
-            return ""
-        if not "type" in result:
-            return ""
-        return result["type"]
 
     def get_key(self, key_location: str):
        
@@ -355,8 +317,6 @@ class KOT:
             if os.path.exists(key_location_compress_indicator):
                 with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
-                    if not "type" in result:
-                        result["type"] = "str"
                     if not "cache_time" in result:
                         result["cache_time"] = 0
                     if not "cache_policy" in result:
@@ -368,8 +328,6 @@ class KOT:
             else:
                 with open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
-                    if not "type" in result:
-                        result["type"] = "str"
                     if not "cache_time" in result:
                         result["cache_time"] = 0
                     if not "cache_policy" in result:
@@ -404,24 +362,6 @@ class KOT:
         return True
 
 
-    def delete_file(self, key: str) -> bool:
-        
-        
-        try:
-            if os.path.exists(os.path.join(self.location, self.get_file(key))):
-                os.remove(os.path.join(self.location, self.get_file(key)))
-            
-        except:
-            traceback.print_exc()
-            return False
-
-
-        if self.delete(key):
-            return True
-        else:
-            return False
-
-        
         
 
     def delete_all(self) -> bool:
@@ -474,15 +414,6 @@ class KOT:
         return total_size
 
 
-    def size_file(self, key: str) -> int:
-        total_size = self.size(key)
-        try:
-            total_size += os.path.getsize(os.path.join(self.location, self.get_file(key)))
-        except:
-            traceback.print_exc()
-
-        return total_size
-    
 
 
 

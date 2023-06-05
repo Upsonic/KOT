@@ -19,7 +19,6 @@ class TestKOT(unittest.TestCase):
         self.KOT.set("key1", "value1")
         self.assertEqual(self.KOT.get("key1"), "value1")
         self.assertEqual(self.KOT.dict(), {"key1":"value1"})
-        self.assertEqual(self.KOT.get_key_type("key1"), "str")
         self.KOT.delete("key1")
         self.assertEqual(self.KOT.get("key1"), None)
 
@@ -35,59 +34,6 @@ class TestKOT(unittest.TestCase):
             self.KOT.set(123, "invalid_key")
 
 
-    def test_set_get_delete_file_size(self):
-        # Create a file to test with
-        with open("test_file.txt", "w") as f:
-            f.write("test")
-
-        self.KOT.set_file("test_file", "test_file.txt")
-
-        self.assertEqual(os.path.exists("test_file.txt"), False)
-        the_key = self.KOT.get_file("test_file")
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), True)
-
-
-        #Open the file and check the contents
-        with open(os.path.join(self.KOT.location, self.KOT.get_file("test_file")), "r") as f:
-            self.assertEqual(f.read(), "test")
-        
-        #type
-        self.assertEqual(self.KOT.get_key_type("test_file"), "file")
-
-        #check the size
-        self.assertGreater(self.KOT.size_file("test_file"), 0)
-
-        # Delete the file
-        self.KOT.delete_file("test_file")
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), False)
-
-
-    def test_set_get_delete_file_size_with_set_function(self):
-        # Create a file to test with
-        with open("test_file.txt", "w") as f:
-            f.write("test")
-
-        self.KOT.set("test_file", "test_file.txt", type_of_value="file")
-
-        self.assertEqual(os.path.exists("test_file.txt"), False)
-        the_key = self.KOT.get_file("test_file")
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), True)
-
-
-        #Open the file and check the contents
-        with open(os.path.join(self.KOT.location, self.KOT.get_file("test_file")), "r") as f:
-            self.assertEqual(f.read(), "test")
-        
-        #type
-        self.assertEqual(self.KOT.get_key_type("test_file"), "file")
-
-        #check the size
-        self.assertGreater(self.KOT.size_file("test_file"), 0)
-
-        # Delete the file
-        self.KOT.delete_file("test_file")
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), False)
-
 
     def test_set_withrkey_get_delete_without_key(self):
         key_name = self.KOT.set_withrkey("value1")
@@ -95,27 +41,6 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.dict(), {key_name:"value1"})
         self.KOT.delete(key_name)
         self.assertEqual(self.KOT.get(key_name), None)
-
-
-    def test_set_withrkey_get_delete_file(self):
-        # Create a file to test with
-        with open("test_file.txt", "w") as f:
-            f.write("test")
-
-        the_file_key = self.KOT.set_file_withrkey("test_file.txt")
-
-        self.assertEqual(os.path.exists("test_file.txt"), False)
-        the_key = self.KOT.get_file(the_file_key)
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), True)
-
-
-        #Open the file and check the contents
-        with open(os.path.join(self.KOT.location, self.KOT.get_file(the_file_key)), "r") as f:
-            self.assertEqual(f.read(), "test")
-        
-        # Delete the file
-        self.KOT.delete_file(the_file_key)
-        self.assertEqual(os.path.exists(os.path.join(self.KOT.location, the_key)), False)
 
 
 

@@ -11,7 +11,7 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 
 ## Features
 
-- **Flexibility**: Save data in any format, including objects, definitions, numbers, strings, floats, and files, providing great flexibility and adaptability to different use cases and data structures.
+- **Flexibility**: Save data in any format, including objects, definitions, numbers, strings, and floats, providing great flexibility and adaptability to different use cases and data structures.
 - **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
 - **Encryption**: Keep sensitive information secure and private with the included encryption feature.
 - **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
@@ -38,21 +38,18 @@ from kot import KOT
 
 # Creating databases
 client_address_db = KOT("client_addresses")
-client_image_db = KOT("client_addresses")
 
 
 # Setting functions
 client_address_db.set("Onur", "Sivas")
 #client_address_db.set("Onur", "Sivas", compress=True)
 #client_address_db.set("Onur", "Sivas", encryption_key="my_encryption_key"))
-#client_image_db.set_file("Onur_Image", "Onur.jpg")
+
 
 # Getting functions
 print(my_kot.get("Onur"))
-#print(client_image_db.get_file("Onur_Image"))
 
 my_kot.delete("Onur")
-#client_image_db.delete_file("Onur_Image")
 ```
 
 ### Console

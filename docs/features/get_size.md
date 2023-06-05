@@ -18,25 +18,21 @@ from kot import KOT
 my_location_db = KOT("locations_of_team_members")
 my_location_db.set("Onur", "Sivas")
 
-# Create a database and set file
-my_image_db = KOT("images_of_team_members")
-my_image_db.set_file("Onur", "Onur.jpg")
 
-# Get size of data and file
+
+# Get size of data
 print(my_location_db.size("Onur"))
-print(my_image_db.size_file("Onur"))
 
-# Get size of all data and file
+
+# Get size of all data
 print(my_location_db.size_all())
-print(my_image_db.size_all())
+
 
 ```
 
 Output:
 
 ```console
-5
-5555
 5
 5555
 ```
