@@ -3,6 +3,7 @@ test_backup
 *.KOT
 *.zip
 *.txt
+*.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
