@@ -326,5 +326,15 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(first_db.get("key1"), None)
         self.assertEqual(KOT("test_database_rename_already").get("key1"), self.test_vales)
 
+
+
+    def test_dict_no_data(self):
+        self.KOT.set("key1", self.test_vales)
+        self.assertEqual(self.KOT.get("key1"), self.test_vales)
+        self.assertEqual(self.KOT.dict(no_data=True), {"key1":True})
+        self.KOT.delete("key1")
+        self.assertEqual(self.KOT.get("key1"), None)        
+
+
 if __name__ == '__main__':
     unittest.main()
