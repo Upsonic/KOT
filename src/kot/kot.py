@@ -7,19 +7,19 @@ import os
 from hashlib import sha256
 import pickle
 
-import fire
+
 
 import time
 from shutil import move, copy, make_archive, unpack_archive, rmtree
 
-import mgzip
+
 
 
 
 import base64
 import hashlib
-from Crypto import Random
-from Crypto.Cipher import AES
+
+
 
 import traceback
 
@@ -148,6 +148,7 @@ class KOT:
 
 
     def encrypt(self, key, message):
+        from Crypto.Cipher import AES
         #Serializing the message
         message = pickle.dumps(message)
         #Turning to string
@@ -156,11 +157,13 @@ class KOT:
         def pad(s):
             return s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
         padded_message = pad(message)
+        from Crypto import Random
         iv = Random.new().read(AES.block_size)
         cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
         return base64.b64encode(iv + cipher.encrypt(padded_message.encode())).decode()
 
     def decrypt(self, key, message):
+        from Crypto.Cipher import AES
         def unpad(s):
             return s[:-ord(s[len(s)-1:])]
         message = base64.b64decode(message.encode())
@@ -235,7 +238,7 @@ class KOT:
                 # create key_location_compress_indicator
                 with open(key_location_compress_indicator, "wb") as f:
                     f.write(b"1")
-
+                import mgzip
                 with mgzip.open(key_location_loading, "wb") as f:
                     pickle.dump(the_dict, f)
             
@@ -326,6 +329,7 @@ class KOT:
             with open(key_location_reading_indicator, "wb") as f:
                 f.write(b"1")
             if os.path.exists(key_location_compress_indicator):
+                import mgzip
                 with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
                     total_result_standart = result
@@ -380,6 +384,7 @@ class KOT:
 
         try:
             if os.path.exists(key_location_compress_indicator):
+                import mgzip
                 with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
                     result = pickle.load(f)
                     if not "cache_time" in result:
@@ -517,4 +522,5 @@ class KOT:
 
 
 def main():
+    import fire
     fire.Fire(KOT)
