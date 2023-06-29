@@ -73,13 +73,13 @@ class KOT:
 
 
     @staticmethod
-    def database_list() -> dict:
-        database_index = KOT("KOT-database-index", self_datas=True)
+    def database_list(folder: str="") -> dict:
+        database_index = KOT("KOT-database-index", self_datas=True, folder=folder)
         return database_index.dict()
     
     @staticmethod
-    def database_delete(name: str) -> bool:
-        database_index = KOT("KOT-database-index", self_datas=True)
+    def database_delete(name: str, folder: str="") -> bool:
+        database_index = KOT("KOT-database-index", self_datas=True, folder=folder)
         try:
             rmtree(database_index.get(name))
         except:
@@ -89,21 +89,21 @@ class KOT:
         return True
 
     @staticmethod
-    def database_delete_all():
-        database_index = KOT("KOT-database-index", self_datas=True)
+    def database_delete_all(folder: str=""):
+        database_index = KOT("KOT-database-index", self_datas=True, folder=folder)
         for each_database in database_index.dict():
             KOT.database_delete(each_database)
 
 
     @staticmethod
-    def database_rename(name: str, new_name: str, force: bool=False) -> bool:
+    def database_rename(name: str, new_name: str, force: bool=False, folder: str="") -> bool:
         if new_name in KOT.database_list() and not force:
             return False
         try:
-            first_db = KOT(name)
+            first_db = KOT(name, folder=folder)
             location = first_db.backup(".")
             KOT.database_delete(name)
-            second_db = KOT(new_name)
+            second_db = KOT(new_name, folder=folder)
             second_db.restore(location)
             os.remove(location)
         except:
@@ -119,8 +119,8 @@ class KOT:
         
         
         if not self_datas:
-            self.open_files_db = KOT("KOT-open_files_db", self_datas=True)
-            database_index = KOT("KOT-database-index", self_datas=True)
+            self.open_files_db = KOT("KOT-open_files_db", self_datas=True, folder=folder)
+            database_index = KOT("KOT-database-index", self_datas=True, folder=folder)
             database_index.set(self.name, self.location)
 
 
