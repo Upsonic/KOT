@@ -355,7 +355,8 @@ class KOT:
             pass
 
         if os.path.isfile(key_location_reading_indicator):
-            os.remove(key_location_reading_indicator)
+            with contextlib.suppress(FileNotFoundError):
+                os.remove(key_location_reading_indicator)
 
 
         if total_result_standart["meta"]["type"] == "file":
