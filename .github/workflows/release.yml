@@ -10,8 +10,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment: Release
     steps:
     - uses: actions/checkout@v3
     - uses: ncipollo/release-action@v1
