@@ -17,3 +17,4 @@ jobs:
       with:
         name: KOT ${{ github.ref }}
         generateReleaseNotes: true
+        token: ${{ secrets.ONUR_TOKEN }}
