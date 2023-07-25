@@ -16,6 +16,11 @@ from shutil import rmtree
 from shutil import unpack_archive
 import random
 
+
+force_compress = False
+force_encrypt = False
+
+
 class HASHES:
     cache = {}
     @staticmethod
@@ -40,6 +45,9 @@ class KOT:
     def benchmark_set(number: int = 10000,
                       compress: bool = False,
                       encryption_key: str = "") -> float:
+        compress = True if force_compress else compress
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
+            
         my_db = KOT("KOT-benchmark", self_datas=True)
         start = time.time()
         for i in range(number):
@@ -60,6 +68,8 @@ class KOT:
         encryption_key: str = "",
         dont_generate: bool = False,
     ) -> float:
+        compress = True if force_compress else compress
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         my_db = KOT("KOT-benchmark", self_datas=True)
         if not dont_generate:
             for i in range(number):
@@ -83,6 +93,8 @@ class KOT:
         encryption_key: str = "",
         dont_generate: bool = False,
     ) -> float:
+        compress = True if force_compress else compress
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         my_db = KOT("KOT-benchmark", self_datas=True)
         if not dont_generate:
             for i in range(number):
@@ -103,6 +115,8 @@ class KOT:
     def benchmark(number: int = 10000,
                   compress: bool = False,
                   encryption_key: str = "") -> float:
+        compress = True if force_compress else compress
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         total_time = 0
         total_time += KOT.benchmark_set(number, compress, encryption_key)
         total_time += KOT.benchmark_get(number,
@@ -276,6 +290,8 @@ class KOT:
         custom_key_location: str = "",
         short_cut: bool = False,
     ) -> bool:
+        compress = True if force_compress else compress
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         self.counter += 1
 
         meta = {"type": "value", "file": None, "direct_file": True}
@@ -428,6 +444,7 @@ class KOT:
         raw_dict: bool = False,
         get_shotcut: bool = False,
     ):
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         if key in self.cache and not no_cache:
             cache_control = False
             currently = time.time()
@@ -633,6 +650,7 @@ class KOT:
         return True
 
     def dict(self, encryption_key: str = "", no_data: bool = False):
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key
         result = {}
         for key in os.listdir(self.location):
             if not "." in key:
