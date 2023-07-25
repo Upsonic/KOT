@@ -398,6 +398,7 @@ class KOT:
         encryption_key: str = "",
         no_cache: bool = False,
         raw_dict: bool = False,
+        get_shotcut: bool = False,
     ):
         if key in self.cache and not no_cache:
             cache_control = False
@@ -499,7 +500,7 @@ class KOT:
         # Return the result
         if raw_dict:
 
-            if total_result_standart["short_cut"]:
+            if total_result_standart["short_cut"] and not get_shotcut:
                 total_result_standart = self.get(key, custom_key_location=total_result_standart["value"],
                                     encryption_key=encryption_key,
                                     no_cache=no_cache,
@@ -510,7 +511,7 @@ class KOT:
 
 
 
-        if total_result_standart["short_cut"]:
+        if total_result_standart["short_cut"] and not get_shotcut:
             total_result = self.get(key, custom_key_location=total_result_standart["value"],
                                     encryption_key=encryption_key,
                                     no_cache=no_cache,
@@ -573,6 +574,14 @@ class KOT:
                 maybe_file = self.get(key)
                 if os.path.exists(maybe_file):
                     os.remove(maybe_file)
+
+            the_get = self.get(key, no_cache=True, raw_dict=True, get_shotcut=True)
+            if the_get["short_cut"]:
+                with contextlib.suppress(TypeError):
+                    maybe_file = self.get(key, custom_key_location=the_get["value"])
+                    if os.path.exists(maybe_file):
+                        os.remove(maybe_file)
+                os.remove(the_get["value"])             
 
             if os.path.exists(key_location_compress_indicator):
                 os.remove(
