@@ -9,6 +9,7 @@ host = None
 port = None
 password = None
 def database_list(page: ft.Page):
+    page.scroll = "AUTO"
     global folder
 
 
