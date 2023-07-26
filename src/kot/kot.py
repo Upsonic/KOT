@@ -418,6 +418,8 @@ class KOT:
     def transformer(self, element, encryption_key: str = ""):
         if "meta" not in element:
             element["meta"] = {"type": "value"}
+        if "short_cut" not in element:
+            element["short_cut"] = False
         if element["meta"]["type"] == "value":
             if encryption_key != "":
                 return self.decrypt(encryption_key, element["value"])
