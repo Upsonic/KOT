@@ -227,7 +227,14 @@ def login(page: ft.Page,):
 
 
 
-def GUI(folder_data, password_data, host_data, port_data):
+def GUI(folder_data, password_data):
+    global folder
+    global password
+    folder = folder_data
+    password = password_data
+    ft.app(name="KOT", target=login)
+
+def WEB(folder_data, password_data, host_data, port_data):
     global folder
     global host
     global port

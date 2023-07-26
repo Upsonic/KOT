@@ -136,10 +136,15 @@ class KOT:
                              folder=folder)
         return database_index.dict()
     @staticmethod
-    def gui(password, folder: str = "",host=None, port=0):
+    def gui(password, folder: str = ""):
         from .gui import GUI
-        GUI(folder, password, host, port)
+        GUI(folder, password)
 
+
+    @staticmethod
+    def web(password, folder: str = "",host=None, port=0):
+        from .gui import WEB
+        WEB(folder, password, host, port)
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
