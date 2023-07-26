@@ -22,6 +22,11 @@ def database_list(page: ft.Page):
     
     def create_new_key(database):
         def create_new_key_submit(e):
+            the_value = text_field_2.value
+            try:
+                the_value = float(the_value)
+            except:
+                pass
             KOT(database, folder=folder).set(text_field.value, text_field_2.value)
             page.show_snack_bar(
                     ft.SnackBar(ft.Text("Key created"), open=True)
