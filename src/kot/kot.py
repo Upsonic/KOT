@@ -135,6 +135,11 @@ class KOT:
                              self_datas=True,
                              folder=folder)
         return database_index.dict()
+    @staticmethod
+    def gui(password, folder: str = "",host=None, port=0):
+        from .gui import GUI
+        GUI(folder, password, host, port)
+
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
@@ -603,6 +608,7 @@ class KOT:
     def get_all(self):
         return self.dict()
 
+
     def get_count(self):
         return len(self.dict(no_data=True))
 
@@ -718,6 +724,9 @@ class KOT:
         except:
             traceback.print_exc()
             return False
+
+
+
 
 
 def main():
