@@ -65,3 +65,21 @@ customer_db = KOT("customer_database", folder="data")
 
 This will create a `customer_database` in the `data` folder.
 
+
+# Backup and Restore
+
+To create a backup of the customer database, you can use the `backup` method of the `KOT` class. Here's an example:
+
+```python
+backup_location = customer_db.backup(".")
+print("Backup created at:", backup_location)
+```
+
+To restore the customer database from a backup, you can use the `restore` method of the `KOT` class. Here's an example:
+
+```python
+customer_db.restore(backup_location)
+print("Database restored from backup")
+```
+
+Make sure to provide the correct backup location when restoring the database.
