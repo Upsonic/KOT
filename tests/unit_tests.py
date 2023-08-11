@@ -5,7 +5,7 @@ import os
 import sys
 import shutil
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src", "kot"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from kot import KOT
 import kot

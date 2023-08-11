@@ -165,10 +165,9 @@ class KOT:
         except:
             return False
         global open_databases
-        print("aaaaaaaa", name+str(False)+folder )
-        print(open_databases)
+
         if name+str(False)+folder in open_databases:
-            print("adasdasdasd",open_databases[name+str(False)+folder])
+
             open_databases.pop(name+str(False)+folder)
         database_index.delete(name)
         return True
@@ -755,7 +754,7 @@ class KOT:
 def KOT_serial(name, self_datas: bool = False, folder: str = ""):
     global start_location
     folder = start_location if not folder != "" else folder
-    print("KOT SERİAL REQUEST", name,folder)
+
     global open_databases
     name_hash = name + str(self_datas) + folder
 
