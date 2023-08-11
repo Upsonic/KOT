@@ -6,13 +6,13 @@ on:
       - '.github/workflows/codecov.yml'
       - 'src/**'
       - 'tests/**'
+      - '.coveragerc'
   pull_request:
     paths:
       - '.github/workflows/codecov.yml'
       - 'src/**'
       - 'tests/**'
-  release:
-    types: [published]   
+      - '.coveragerc'
   workflow_dispatch:
 
 concurrency: 
