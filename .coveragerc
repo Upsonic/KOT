@@ -10,11 +10,11 @@ exclude_lines =
     if __name__ == .__main__.:
     class .*\bProtocol\):
     @(abc\.)?abstractmethod
-    def main():
-    def gui(password, folder: str = ""):
-    def api(password, folder: str = "",host="localhost", port=5000):
-    def web(password, folder: str = "",host=None, port=0):
-    def web(password, folder: str = "",host=None, port=0):
-    def benchmark_get(
-    def benchmark_delete(
-    def benchmark(number: int = 10000,
+    def main
+    def gui
+    def api
+    def web
+    def web
+    def benchmark_get
+    def benchmark_delete
+    def benchmark
