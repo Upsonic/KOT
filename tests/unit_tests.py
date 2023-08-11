@@ -341,5 +341,7 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.get("key1"), None)        
 
 
-if __name__ == '__main__':
-    unittest.main()
+backup = sys.argv
+sys.argv = [sys.argv[0]]
+unittest.main(exit=False)
+sys.argv = backup
