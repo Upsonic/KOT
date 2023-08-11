@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import flet as ft
 
-from .kot import KOT
+from .kot import KOT_serial
 
 folder = None
 host = None
@@ -14,7 +14,7 @@ def database_list(page: ft.Page):
 
 
     def delete_key(database, key):
-        KOT(database,folder=folder).delete(key)
+        KOT_serial(database,folder=folder).delete(key)
         page.show_snack_bar(
                     ft.SnackBar(ft.Text("Key deleted"), open=True)
                 )
@@ -27,7 +27,7 @@ def database_list(page: ft.Page):
                 the_value = float(the_value)
             except:
                 pass
-            KOT(database, folder=folder).set(text_field.value, the_value)
+            KOT_serial(database, folder=folder).set(text_field.value, the_value)
             page.show_snack_bar(
                     ft.SnackBar(ft.Text("Key created"), open=True)
                 )
@@ -43,7 +43,7 @@ def database_list(page: ft.Page):
         page.add(text_field_2)
 
     def get_all(database):
-        database_list_data = KOT(database,folder=folder).get_all()
+        database_list_data = KOT_serial(database,folder=folder).get_all()
         my_table_2.rows=[
                     ft.DataRow(
                         cells=[
@@ -85,7 +85,7 @@ def database_list(page: ft.Page):
 
     def create_new_db():
         def create_new_db_submit(e):
-            KOT(text_field.value, folder=folder)
+            KOT_serial(text_field.value, folder=folder)
             page.show_snack_bar(
                     ft.SnackBar(ft.Text("Database created"), open=True)
                 )

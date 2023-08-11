@@ -19,6 +19,8 @@ import random
 
 force_compress = False
 force_encrypt = False
+open_databases = {}
+start_location = os.getcwd()
 
 
 class HASHES:
@@ -48,7 +50,7 @@ class KOT:
         compress = True if force_compress else compress
         encryption_key = force_encrypt if force_encrypt != False else encryption_key
             
-        my_db = KOT("KOT-benchmark", self_datas=True)
+        my_db = KOT_serial("KOT-benchmark", self_datas=True)
         start = time.time()
         for i in range(number):
             my_db.set(
@@ -70,7 +72,7 @@ class KOT:
     ) -> float:
         compress = True if force_compress else compress
         encryption_key = force_encrypt if force_encrypt != False else encryption_key
-        my_db = KOT("KOT-benchmark", self_datas=True)
+        my_db = KOT_serial("KOT-benchmark", self_datas=True)
         if not dont_generate:
             for i in range(number):
                 my_db.set(
@@ -95,7 +97,7 @@ class KOT:
     ) -> float:
         compress = True if force_compress else compress
         encryption_key = force_encrypt if force_encrypt != False else encryption_key
-        my_db = KOT("KOT-benchmark", self_datas=True)
+        my_db = KOT_serial("KOT-benchmark", self_datas=True)
         if not dont_generate:
             for i in range(number):
                 my_db.set(
@@ -131,7 +133,7 @@ class KOT:
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
-        database_index = KOT("KOT-database-index",
+        database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
         return database_index.dict()
@@ -151,7 +153,7 @@ class KOT:
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
-        database_index = KOT("KOT-database-index",
+        database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
         try:
@@ -159,16 +161,22 @@ class KOT:
             for each_key in the_db.get_all():
                 the_db.delete(each_key)
             rmtree(database_index.get(name))
+
         except:
             return False
-
+        global open_databases
+        print("aaaaaaaa", name+str(False)+folder )
+        print(open_databases)
+        if name+str(False)+folder in open_databases:
+            print("adasdasdasd",open_databases[name+str(False)+folder])
+            open_databases.pop(name+str(False)+folder)
         database_index.delete(name)
         return True
 
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
-        database_index = KOT("KOT-database-index",
+        database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
         try:
@@ -182,7 +190,7 @@ class KOT:
 
     @staticmethod
     def database_delete_all(folder: str = ""):
-        database_index = KOT("KOT-database-index",
+        database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
 
@@ -191,7 +199,7 @@ class KOT:
 
     @staticmethod
     def database_pop_all(folder: str = ""):
-        database_index = KOT("KOT-database-index",
+        database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
 
@@ -220,16 +228,17 @@ class KOT:
     def __init__(self, name, self_datas: bool = False, folder: str = ""):
         self.name = name
         self.hashed_name = HASHES.get_hash(name)
-        the_main_folder = os.getcwd() if not folder != "" else folder
+        global start_location
+        the_main_folder = start_location if not folder != "" else folder
         self.the_main_folder = the_main_folder
         self.location = os.path.join(the_main_folder,
                                      "KOT-" + self.hashed_name)
 
         if not self_datas:
-            self.open_files_db = KOT("KOT-open_files_db",
+            self.open_files_db = KOT_serial("KOT-open_files_db",
                                      self_datas=True,
                                      folder=folder)
-            database_index = KOT("KOT-database-index",
+            database_index = KOT_serial("KOT-database-index",
                                  self_datas=True,
                                  folder=folder)
             database_index.set(self.name, self.location)
@@ -741,7 +750,27 @@ class KOT:
 
 
 
+
+
+def KOT_serial(name, self_datas: bool = False, folder: str = ""):
+    global start_location
+    folder = start_location if not folder != "" else folder
+    print("KOT SERİAL REQUEST", name,folder)
+    global open_databases
+    name_hash = name + str(self_datas) + folder
+
+
+    if name_hash in open_databases:
+
+        return open_databases[name_hash]
+    else:
+
+        database = KOT(name, self_datas=self_datas, folder=folder)
+        open_databases[name_hash] = database
+        return database
+
 def main():
     import fire
 
     fire.Fire(KOT)
+

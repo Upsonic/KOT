@@ -1,6 +1,6 @@
 from waitress import serve
 from flask import Flask, request, Response, jsonify
-from kot import KOT
+from kot import KOT_serial
 
 app = Flask(__name__)
 
@@ -29,7 +29,7 @@ def set_data():
     key = request.form.get('key')
     value = request.form.get('value')
     
-    database = KOT(database_name, folder=folder)
+    database = KOT_serial(database_name, folder=folder)
     database.set(key, value)
     
     return 'Data set successfully'
@@ -39,7 +39,7 @@ def get_data():
     database_name = request.form.get('database_name')
     key = request.form.get('key')
     
-    database = KOT(database_name, folder=folder)
+    database = KOT_serial(database_name, folder=folder)
     data = database.get(key)
     
     return jsonify(data)
@@ -47,7 +47,7 @@ def get_data():
 @app.route('/controller/get_all', methods=['POST'])
 def get_all():
     database_name = request.form.get('database_name')
-    database = KOT(database_name, folder=folder)
+    database = KOT_serial(database_name, folder=folder)
     datas = database.get_all()
 
     return jsonify(datas)
@@ -57,7 +57,7 @@ def delete_data():
     database_name = request.form.get('database_name')
     key = request.form.get('key')
     
-    database = KOT(database_name, folder=folder)
+    database = KOT_serial(database_name, folder=folder)
     database.delete(key)
     
     return 'Data deleted successfully'
