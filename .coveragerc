@@ -10,11 +10,3 @@ exclude_lines =
     if __name__ == .__main__.:
     class .*\bProtocol\):
     @(abc\.)?abstractmethod
-    def main
-    def gui
-    def api
-    def web
-    def web
-    def benchmark_get
-    def benchmark_delete
-    def benchmark

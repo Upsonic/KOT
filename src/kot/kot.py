@@ -46,22 +46,22 @@ class KOT:
     @staticmethod
     def benchmark_set(number: int = 10000,
                       compress: bool = False,
-                      encryption_key: str = "") -> float:
-        compress = True if force_compress else compress
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
+                      encryption_key: str = "") -> float: # no cover
+        compress = True if force_compress else compress # no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
             
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)
-        start = time.time()
-        for i in range(number):
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
+        start = time.time() # no cover
+        for i in range(number): # no cover
             my_db.set(
                 "key" + str(i),
                 "value" + str(i),
                 compress=compress,
                 encryption_key=encryption_key,
-            )
-        end = time.time()
-        my_db.delete_all()
-        return end - start
+            ) # no cover
+        end = time.time() # no cover
+        my_db.delete_all() # no cover
+        return end - start # no cover
 
     @staticmethod
     def benchmark_get(
@@ -69,24 +69,24 @@ class KOT:
         compress: bool = False,
         encryption_key: str = "",
         dont_generate: bool = False,
-    ) -> float:
-        compress = True if force_compress else compress
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)
-        if not dont_generate:
-            for i in range(number):
+    ) -> float: # no cover
+        compress = True if force_compress else compress # no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
+        if not dont_generate: # no cover
+            for i in range(number): # no cover
                 my_db.set(
                     "key" + str(i),
                     "value" + str(i),
                     compress=compress,
                     encryption_key=encryption_key,
-                )
-        start = time.time()
-        for i in range(number):
-            my_db.get("key" + str(i), encryption_key=encryption_key)
-        end = time.time()
-        my_db.delete_all()
-        return end - start
+                ) # no cover
+        start = time.time() # no cover
+        for i in range(number): # no cover
+            my_db.get("key" + str(i), encryption_key=encryption_key) # no cover
+        end = time.time() # no cover
+        my_db.delete_all() # no cover
+        return end - start # no cover
 
     @staticmethod
     def benchmark_delete(
@@ -94,42 +94,42 @@ class KOT:
         compress: bool = False,
         encryption_key: str = "",
         dont_generate: bool = False,
-    ) -> float:
-        compress = True if force_compress else compress
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)
-        if not dont_generate:
-            for i in range(number):
+    ) -> float: # no cover
+        compress = True if force_compress else compress # no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
+        if not dont_generate: # no cover
+            for i in range(number): # no cover
                 my_db.set(
                     "key" + str(i),
                     "value" + str(i),
                     compress=compress,
                     encryption_key=encryption_key,
-                )
-        start = time.time()
-        for i in range(number):
-            my_db.delete("key" + str(i))
-        end = time.time()
-        my_db.delete_all()
-        return end - start
+                ) # no cover
+        start = time.time() # no cover
+        for i in range(number): # no cover
+            my_db.delete("key" + str(i)) # no cover
+        end = time.time() # no cover
+        my_db.delete_all() # no cover
+        return end - start # no cover
 
     @staticmethod
     def benchmark(number: int = 10000,
                   compress: bool = False,
-                  encryption_key: str = "") -> float:
-        compress = True if force_compress else compress
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
-        total_time = 0
-        total_time += KOT.benchmark_set(number, compress, encryption_key)
+                  encryption_key: str = "") -> float: # no cover
+        compress = True if force_compress else compress # no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
+        total_time = 0 # no cover
+        total_time += KOT.benchmark_set(number, compress, encryption_key) # no cover
         total_time += KOT.benchmark_get(number,
                                         compress,
                                         encryption_key,
-                                        dont_generate=True)
+                                        dont_generate=True) # no cover
         total_time += KOT.benchmark_delete(number,
                                            compress,
                                            encryption_key,
-                                           dont_generate=True)
-        return total_time
+                                           dont_generate=True) # no cover
+        return total_time # no cover
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
@@ -138,18 +138,18 @@ class KOT:
                              folder=folder)
         return database_index.dict()
     @staticmethod
-    def gui(password, folder: str = ""):
-        from .gui import GUI
-        GUI(folder, password)
+    def gui(password, folder: str = ""): # no cover
+        from .gui import GUI # no cover
+        GUI(folder, password) # no cover
     @staticmethod
-    def api(password, folder: str = "",host="localhost", port=5000):
-        from .api import API
-        API(folder, password, host, port)
+    def api(password, folder: str = "",host="localhost", port=5000): # no cover
+        from .api import API # no cover
+        API(folder, password, host, port) # no cover
 
     @staticmethod
-    def web(password, folder: str = "",host=None, port=0):
-        from .gui import WEB
-        WEB(folder, password, host, port)
+    def web(password, folder: str = "",host=None, port=0): # no cover
+        from .gui import WEB # no cover
+        WEB(folder, password, host, port) # no cover
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
@@ -768,8 +768,8 @@ def KOT_serial(name, self_datas: bool = False, folder: str = ""):
         open_databases[name_hash] = database
         return database
 
-def main():
-    import fire
+def main(): # no cover
+    import fire # no cover
 
-    fire.Fire(KOT)
+    fire.Fire(KOT) # no cover
 
