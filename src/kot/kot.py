@@ -31,12 +31,8 @@ class HASHES:
             return HASHES.cache[string]
         if hash_type == "sha256":
             result = sha256(string.encode()).hexdigest()
-        elif hash_type == "sha512":
-            result = sha512(string.encode()).hexdigest()
-        elif hash_type == "md5":
-            result = md5(string.encode()).hexdigest()
         else:
-            raise ValueError("Hash type must be sha256, sha512 or md5")
+            raise ValueError("Hash type must be sha256")
         HASHES.cache[string] = result
         return result
 
@@ -772,4 +768,3 @@ def main(): # pragma: no cover
     import fire # pragma: no cover
 
     fire.Fire(KOT) # pragma: no cover
-
