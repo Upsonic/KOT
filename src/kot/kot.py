@@ -46,22 +46,22 @@ class KOT:
     @staticmethod
     def benchmark_set(number: int = 10000,
                       compress: bool = False,
-                      encryption_key: str = "") -> float: # no cover
-        compress = True if force_compress else compress # no cover
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
+                      encryption_key: str = "") -> float: # pragma: no cover
+        compress = True if force_compress else compress # pragma: no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
             
-        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
-        start = time.time() # no cover
-        for i in range(number): # no cover
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # pragma: no cover
+        start = time.time() # pragma: no cover
+        for i in range(number): # pragma: no cover
             my_db.set(
                 "key" + str(i),
                 "value" + str(i),
                 compress=compress,
                 encryption_key=encryption_key,
-            ) # no cover
-        end = time.time() # no cover
-        my_db.delete_all() # no cover
-        return end - start # no cover
+            ) # pragma: no cover
+        end = time.time() # pragma: no cover
+        my_db.delete_all() # pragma: no cover
+        return end - start # pragma: no cover
 
     @staticmethod
     def benchmark_get(
@@ -69,24 +69,24 @@ class KOT:
         compress: bool = False,
         encryption_key: str = "",
         dont_generate: bool = False,
-    ) -> float: # no cover
-        compress = True if force_compress else compress # no cover
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
-        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
-        if not dont_generate: # no cover
-            for i in range(number): # no cover
+    ) -> float: # pragma: no cover
+        compress = True if force_compress else compress # pragma: no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # pragma: no cover
+        if not dont_generate: # pragma: no cover
+            for i in range(number): # pragma: no cover
                 my_db.set(
                     "key" + str(i),
                     "value" + str(i),
                     compress=compress,
                     encryption_key=encryption_key,
-                ) # no cover
-        start = time.time() # no cover
-        for i in range(number): # no cover
-            my_db.get("key" + str(i), encryption_key=encryption_key) # no cover
-        end = time.time() # no cover
-        my_db.delete_all() # no cover
-        return end - start # no cover
+                ) # pragma: no cover
+        start = time.time() # pragma: no cover
+        for i in range(number): # pragma: no cover
+            my_db.get("key" + str(i), encryption_key=encryption_key) # pragma: no cover
+        end = time.time() # pragma: no cover
+        my_db.delete_all() # pragma: no cover
+        return end - start # pragma: no cover
 
     @staticmethod
     def benchmark_delete(
@@ -94,42 +94,42 @@ class KOT:
         compress: bool = False,
         encryption_key: str = "",
         dont_generate: bool = False,
-    ) -> float: # no cover
-        compress = True if force_compress else compress # no cover
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
-        my_db = KOT_serial("KOT-benchmark", self_datas=True) # no cover
-        if not dont_generate: # no cover
-            for i in range(number): # no cover
+    ) -> float: # pragma: no cover
+        compress = True if force_compress else compress # pragma: no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
+        my_db = KOT_serial("KOT-benchmark", self_datas=True) # pragma: no cover
+        if not dont_generate: # pragma: no cover
+            for i in range(number): # pragma: no cover
                 my_db.set(
                     "key" + str(i),
                     "value" + str(i),
                     compress=compress,
                     encryption_key=encryption_key,
-                ) # no cover
-        start = time.time() # no cover
-        for i in range(number): # no cover
-            my_db.delete("key" + str(i)) # no cover
-        end = time.time() # no cover
-        my_db.delete_all() # no cover
-        return end - start # no cover
+                ) # pragma: no cover
+        start = time.time() # pragma: no cover
+        for i in range(number): # pragma: no cover
+            my_db.delete("key" + str(i)) # pragma: no cover
+        end = time.time() # pragma: no cover
+        my_db.delete_all() # pragma: no cover
+        return end - start # pragma: no cover
 
     @staticmethod
     def benchmark(number: int = 10000,
                   compress: bool = False,
-                  encryption_key: str = "") -> float: # no cover
-        compress = True if force_compress else compress # no cover
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key # no cover
-        total_time = 0 # no cover
-        total_time += KOT.benchmark_set(number, compress, encryption_key) # no cover
+                  encryption_key: str = "") -> float: # pragma: no cover
+        compress = True if force_compress else compress # pragma: no cover
+        encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
+        total_time = 0 # pragma: no cover
+        total_time += KOT.benchmark_set(number, compress, encryption_key) # pragma: no cover
         total_time += KOT.benchmark_get(number,
                                         compress,
                                         encryption_key,
-                                        dont_generate=True) # no cover
+                                        dont_generate=True) # pragma: no cover
         total_time += KOT.benchmark_delete(number,
                                            compress,
                                            encryption_key,
-                                           dont_generate=True) # no cover
-        return total_time # no cover
+                                           dont_generate=True) # pragma: no cover
+        return total_time # pragma: no cover
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
@@ -138,18 +138,18 @@ class KOT:
                              folder=folder)
         return database_index.dict()
     @staticmethod
-    def gui(password, folder: str = ""): # no cover
-        from .gui import GUI # no cover
-        GUI(folder, password) # no cover
+    def gui(password, folder: str = ""): # pragma: no cover
+        from .gui import GUI # pragma: no cover
+        GUI(folder, password) # pragma: no cover
     @staticmethod
-    def api(password, folder: str = "",host="localhost", port=5000): # no cover
-        from .api import API # no cover
-        API(folder, password, host, port) # no cover
+    def api(password, folder: str = "",host="localhost", port=5000): # pragma: no cover
+        from .api import API # pragma: no cover
+        API(folder, password, host, port) # pragma: no cover
 
     @staticmethod
-    def web(password, folder: str = "",host=None, port=0): # no cover
-        from .gui import WEB # no cover
-        WEB(folder, password, host, port) # no cover
+    def web(password, folder: str = "",host=None, port=0): # pragma: no cover
+        from .gui import WEB # pragma: no cover
+        WEB(folder, password, host, port) # pragma: no cover
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
@@ -768,8 +768,8 @@ def KOT_serial(name, self_datas: bool = False, folder: str = ""):
         open_databases[name_hash] = database
         return database
 
-def main(): # no cover
-    import fire # no cover
+def main(): # pragma: no cover
+    import fire # pragma: no cover
 
-    fire.Fire(KOT) # no cover
+    fire.Fire(KOT) # pragma: no cover
 
