@@ -263,7 +263,7 @@ class TestKOT(unittest.TestCase):
         backup_chdir = os.getcwd()
         the_time = str(int(time.time()))
         os.makedirs(os.path.join(self.KOT.location, the_time))
-        kot.kot.start_location = (os.path.join(self.KOT.location, the_time))
+        kot.start_location = (os.path.join(self.KOT.location, the_time))
         database_list = KOT.database_list()
 
         self.assertEqual(database_list, {})
@@ -295,7 +295,7 @@ class TestKOT(unittest.TestCase):
             shutil.rmtree(os.path.join(self.KOT.location, the_time))
 
 
-        kot.kot.start_location = (backup_chdir)
+        kot.start_location = (backup_chdir)
 
 
     def test_database_rename_already(self):
