@@ -3,12 +3,12 @@ name: Codecov
 on: 
   push:
     paths:
-      - '.github/workflows/tests.yml'
+      - '.github/workflows/codecov.yml'
       - 'src/**'
       - 'tests/**'
   pull_request:
     paths:
-      - '.github/workflows/tests.yml'
+      - '.github/workflows/codecov.yml'
       - 'src/**'
       - 'tests/**'
   release:
