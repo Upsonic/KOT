@@ -12,7 +12,7 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 - **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
 - **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
 
-[![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT)
+[![Tests](https://github.com/onuratakan/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT)
 
 ## Installation
 You can install KOT by pip3:
