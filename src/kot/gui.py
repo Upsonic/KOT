@@ -249,4 +249,3 @@ def WEB(folder_data, password_data, host_data, port_data):
     port = port_data
     password = password_data
     ft.app(name="KOT", target=login, view=ft.AppView.WEB_BROWSER, host=host, port=port)
-

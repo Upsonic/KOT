@@ -139,7 +139,10 @@ class KOT:
     def gui(password, folder: str = ""):
         from .gui import GUI
         GUI(folder, password)
-
+    @staticmethod
+    def api(password, folder: str = "",host="localhost", port=5000):
+        from .api import API
+        API(folder, password, host, port)
 
     @staticmethod
     def web(password, folder: str = "",host=None, port=0):

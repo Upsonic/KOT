@@ -16,7 +16,9 @@ install_requires=[
     "fire==0.5.0",
     "mgzip==0.2.1",
     "pycryptodome==3.18.0",
-    "flet==0.8.4"
+    "flet==0.8.4",
+    "flask==2.0.0",
+    "waitress==2.1.2",
 ],
 entry_points = {
     'console_scripts': ['KOT=kot.kot:main'],
