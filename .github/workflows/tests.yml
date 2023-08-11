@@ -74,7 +74,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest
-        pip install .
     - name: Test with pytest
       run: |
         pytest tests/unit_tests.py -v
@@ -104,7 +103,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest
-        pip install .
     - name: Test with pytest
       run: |
         pytest tests/unit_tests.py -v
@@ -133,7 +131,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest
-        pip install .
     - name: Test with pytest
       run: |
         pytest tests/unit_tests.py -v
