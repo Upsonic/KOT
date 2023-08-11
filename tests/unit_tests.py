@@ -2,7 +2,11 @@ import contextlib
 import time
 import unittest
 import os
+import sys
 import shutil
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src", "kot"))
+
 from kot import KOT
 import kot
 
