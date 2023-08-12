@@ -6,37 +6,39 @@ has_children: false
 parent: EXAMPLE APPLICATIONS
 ---
 
-# 1. Importing KOT
+# Price Tracker
+
+## 1. Importing KOT
 ```python 
 from kot import KOT
 ```
 
-# 2. Create a new instance of the `KOT` class to represent the price tracker:
+## 2. Create a new instance of the `KOT` class to represent the price tracker:
 
 ```python
 price_db = KOT("price_tracker")
 ```
 
-# 3. Add a price record to the database using the `set` method:
+## 3. Add a price record to the database using the `set` method:
 
 ```python
 price_db.set("Price 1", {"product": "Product 1", "price": 10.99})
 ```
 
-# 4. Retrieve a price record from the database using the `get` method:
+## 4. Retrieve a price record from the database using the `get` method:
 
 ```python
 price = price_db.get("Price 1")
 print(price)
 ```
 
-# 5. Delete a price record from the database using the `delete` method:
+## 5. Delete a price record from the database using the `delete` method:
 
 ```python
 price_db.delete("Price 1")
 ```
 
-# Using Compressing
+## Using Compressing
 
 To use compressing in the price tracker, you can pass a `compress` argument to the `set` method when adding a price record. Here's an example:
 
@@ -55,7 +57,7 @@ This will output the retrieved price record.
 
 
 
-# Specifiying Database Location
+## Specifiying Database Location
 
 To specify the location of the database file for the price tracker, you can pass a `folder` argument to the `KOT` class. Here's an example:
 
@@ -66,7 +68,7 @@ price_db = KOT("price_tracker", folder="data")
 This will create a `customer_database` in the `data` folder.
 
 
-# Backup and Restore
+## Backup and Restore
 
 To create a backup of the customer database, you can use the `backup` method of the `KOT` class. Here's an example:
 
