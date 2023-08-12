@@ -619,8 +619,8 @@ class KOT:
             pass
         return total_result
 
-    def get_all(self):
-        return self.dict()
+    def get_all(self, encryption_key: str = ""):
+        return self.dict(encryption_key=encryption_key)
 
 
     def get_count(self):

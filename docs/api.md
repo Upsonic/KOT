@@ -37,6 +37,7 @@ Retrieves the value for the given key from the specified database.
 - Endpoint: `/controller/get_all`
 - Parameters:
   - `database_name`: The name of the database.
+  - `encryption_key`: (Optional) The encryption key of values
 
 Retrieves all the data from the specified database.
 
