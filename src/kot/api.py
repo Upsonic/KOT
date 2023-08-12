@@ -1,6 +1,6 @@
 from waitress import serve
 from flask import Flask, request, Response, jsonify
-from kot import KOT_serial
+from .kot import KOT_serial
 
 app = Flask(__name__)
 
