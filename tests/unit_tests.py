@@ -346,8 +346,13 @@ class TestKOT(unittest.TestCase):
         expected_count = 1
         self.assertEqual(count, expected_count)
 
+    def test_wait_system(self):
+        self.KOT.set("key1", self.test_vales)
+        self.KOT.wait_system("key1", "indicator")
+        self.assertEqual(self.KOT.get("key1"), self.test_vales)
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
+sys.argv = backup
 sys.argv = backup
