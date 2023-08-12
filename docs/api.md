@@ -18,6 +18,8 @@ The API provides the following endpoints for interacting with the KOT key-value 
   - `database_name`: The name of the database.
   - `key`: The key to set.
   - `value`: The value to set for the key.
+  - `encryption_key`: (Optional) The encryption key for the value.
+  - `compress`: (Optional) The compression option for the value.
 
 Sets the value for the given key in the specified database.
 
@@ -28,6 +30,7 @@ Sets the value for the given key in the specified database.
 - Parameters:
   - `database_name`: The name of the database.
   - `key`: The key to retrieve.
+  - `compress`: (Optional) The compression option for the value.
 
 Retrieves the value for the given key from the specified database.
 
