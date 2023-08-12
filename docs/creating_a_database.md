@@ -14,3 +14,4 @@ from kot import KOT
 # Creating a database
 my_db = KOT("my_database")
 #my_db = KOT("my_database", folder="/root/my_databases")
+```
