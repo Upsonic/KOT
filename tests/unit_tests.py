@@ -338,7 +338,13 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
         self.assertEqual(self.KOT.dict(no_data=True), {"key1":True})
         self.KOT.delete("key1")
-        self.assertEqual(self.KOT.get("key1"), None)        
+        self.assertEqual(self.KOT.get("key1"), None)
+    
+    def test_get_count(self):
+        self.KOT.set("key1", self.test_vales)
+        count = self.KOT.get_count()
+        expected_count = 1
+        self.assertEqual(count, expected_count)
 
 
 backup = sys.argv
