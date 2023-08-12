@@ -12,7 +12,7 @@ COPY KOT KOT
 
 RUN cd KOT
 
-RUN pip .
+RUN pip install .
 
 EXPOSE 5000
 
