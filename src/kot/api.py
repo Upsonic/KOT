@@ -28,9 +28,11 @@ def set_data():
     database_name = request.form.get('database_name')
     key = request.form.get('key')
     value = request.form.get('value')
+    compress = request.form.get('compress')
+    encryption_key = request.form.get('encryption_key')
     
     database = KOT_serial(database_name, folder=folder)
-    database.set(key, value)
+    database.set(key, value, compress=compress, encryption_key=encryption_key)
     
     return 'Data set successfully'
 
@@ -38,9 +40,10 @@ def set_data():
 def get_data():
     database_name = request.form.get('database_name')
     key = request.form.get('key')
+    encryption_key = request.form.get('encryption_key')
     
     database = KOT_serial(database_name, folder=folder)
-    data = database.get(key)
+    data = database.get(key, encryption_key=encryption_key)
     
     return jsonify(data)
 
