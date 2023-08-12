@@ -346,13 +346,30 @@ class TestKOT(unittest.TestCase):
         expected_count = 1
         self.assertEqual(count, expected_count)
 
+
+    def test_database_pop(self):
+        # Create a database
+        customer_db = KOT("customer_database")
+
+        # Add some data to the database
+        customer_db.set("John", "Doe")
+        customer_db.set("Jane", "Smith")
+
+        # Pop a value from the database
+        value = KOT.database_pop("customer_database")
+
+
+        self.assertEqual(customer_db.get("John"), None)
+        self.assertEqual(customer_db.get("Jane"), None)
+
     def test_wait_system(self):
         self.KOT.set("key1", self.test_vales)
         self.KOT.wait_system("key1", "indicator")
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
 
+
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
 sys.argv = backup
-sys.argv = backup
+
