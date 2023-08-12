@@ -3,6 +3,7 @@
 import flet as ft
 
 from .kot import KOT_serial
+from .kot import KOT
 
 folder = None
 host = None
