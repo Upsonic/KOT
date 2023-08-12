@@ -7,6 +7,27 @@ has_children: false
 
 # API Referance
 
+## Start
+You can start the API with `api`` command but you must give an password.
+
+```console
+KOT api <password>
+```
+
+Also you can specify the 'host' and 'port'.
+
+```console
+KOT api <password> --host localhost --port 5000
+```
+
+## Authorization
+You must use the API with `Basic Auth`.
+
+- Authorization Type: Basic Auth
+  - Username: ""
+  - Password: The password that you used for starting API.
+
+
 ## Overview
 
 The API provides the following endpoints for interacting with the KOT key-value database.
