@@ -33,3 +33,32 @@ jobs:
         pip install setuptools wheel twine      
         python setup.py sdist
         twine upload dist/*
+
+
+
+  deploy-docker:
+
+    runs-on: ubuntu-latest
+    environment: Deploys
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+
+    - name: Build and Publish Docker Images
+      env:
+        VERSION: ${{ github.event.release.tag_name }}    
+      run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        cd .. 
+        docker build -t ghcr.io/onuratakan/api:latest -f KOT/docker/local/api/Dockerfile .
+        docker build -t ghcr.io/onuratakan/api:$VERSION -f KOT/docker/local/api/Dockerfile .  
+        docker push ghcr.io/onuratakan/api:latest
+        docker push ghcr.io/onuratakan/api:$VERSION
