@@ -73,7 +73,7 @@ def delete_data():
 def list_databases():
     databases = KOT.database_list(folder=folder)
     
-    return ', '.join(databases)
+    return jsonify(databases)
 
 @app.route('/database/pop', methods=['POST'])
 def pop_database():
