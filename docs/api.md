@@ -8,7 +8,7 @@ has_children: false
 # API
 
 ## Start
-You can start the API with `api`` command but you must give an password.
+You can start the API with `api` command but you must give an password.
 
 ```console
 KOT api <password>
