@@ -11,6 +11,8 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 - **Fault Tolerance**: By the design of the KOT database, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
 - **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
 - **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
+- **Docker Avaibility**: You can use KOT database API as an container on Docker platform. It's good for more stable, safe and durable uses.
+
 
 [![Tests](https://github.com/onuratakan/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT)
 
