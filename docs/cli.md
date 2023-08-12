@@ -1,13 +1,13 @@
 ---
 layout: default
-title: CLI REFERANCE
+title: CLI
 nav_order: 10
 has_children: false
 ---
 
-# CLI Referance
+# CLI
 
-## Overview
+## Referance
 
 You can use KOT in command line. KOT has a support all functions in command line.
 

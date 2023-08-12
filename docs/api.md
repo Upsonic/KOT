@@ -1,11 +1,11 @@
 ---
 layout: default
-title: API REFERANCE
+title: API
 nav_order: 9
 has_children: false
 ---
 
-# API Referance
+# API
 
 ## Start
 You can start the API with `api`` command but you must give an password.
@@ -28,7 +28,7 @@ You must use the API with `Basic Auth`.
   - Password: The password that you used for starting API.
 
 
-## Overview
+## Referance
 
 The API provides the following endpoints for interacting with the KOT key-value database.
 
