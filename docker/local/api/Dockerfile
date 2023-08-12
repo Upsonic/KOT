@@ -10,7 +10,8 @@ WORKDIR /app/
 
 COPY KOT KOT
 
-RUN cd KOT
+WORKDIR /app/KOT
+
 
 RUN pip install .
 
