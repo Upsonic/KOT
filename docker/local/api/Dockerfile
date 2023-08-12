@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-LABEL org.opencontainers.image.source https://github.com/onuyatakan/KOT
+LABEL org.opencontainers.image.source https://github.com/onuratakan/KOT
 
 RUN mkdir /app
 
