@@ -3,6 +3,7 @@ layout: default
 title: CLI
 nav_order: 10
 has_children: false
+parent: INTERFACES
 ---
 
 # CLI

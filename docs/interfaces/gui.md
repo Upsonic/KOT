@@ -3,6 +3,7 @@ layout: default
 title: GUI
 nav_order: 12
 has_children: false
+parent: INTERFACES
 ---
 
 # GUI
