@@ -175,8 +175,8 @@ class KOT:
         for each_database in database_index.dict():
             try:
                 KOT.database_delete(each_database, folder=folder)
-            except:
-                return False
+            except: # pragma: no cover
+                return False # pragma: no cover
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
@@ -218,8 +218,8 @@ class KOT:
             second_db = KOT(new_name, folder=folder)
             second_db.restore(location)
             os.remove(location)
-        except:
-            traceback.print_exc()
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
             return False
         return True
 
@@ -250,9 +250,9 @@ class KOT:
     def initialize(self):
         try:
             os.makedirs(self.location)
-        except OSError:
-            if not os.path.isdir(self.location):
-                raise
+        except OSError: # pragma: no cover
+            if not os.path.isdir(self.location): # pragma: no cover
+                raise # pragma: no cover
 
     def clear_cache(self):
         self.cache = {}
@@ -354,9 +354,9 @@ class KOT:
                         meta["direct_file"] = False
                         with open(file, "rb") as f:
                             value = f.read()
-                except:
-                    traceback.print_exc()
-                    return False
+                except: # pragma: no cover
+                    traceback.print_exc() # pragma: no cover
+                    return False # pragma: no cover
 
             if encryption_key != "":
                 value = self.encrypt(encryption_key, value)
@@ -410,9 +410,9 @@ class KOT:
             with contextlib.suppress(FileNotFoundError):
                 os.remove(key_location_loading_indicator)
 
-        except:
-            traceback.print_exc()
-            return False
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
+            return False # pragma: no cover
 
         return True
 
@@ -421,9 +421,9 @@ class KOT:
         try:
             self.set(key, value)
             return key
-        except:
-            traceback.print_exc()
-            return ""
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
+            return "" # pragma: no cover
 
     def transformer(self, element, encryption_key: str = ""):
         if "meta" not in element:
@@ -539,16 +539,16 @@ class KOT:
             total_result_standart = result
             try:
                 total_result = self.transformer(result, encryption_key=encryption_key)
-            except TypeError:
-                traceback.print_exc()
-                total_result = result            
+            except TypeError: # pragma: no cover
+                traceback.print_exc() # pragma: no cover
+                total_result = result   # pragma: no cover          
 
             # Add to cache
             if "cache_time" in total_result_standart:
                 self.cache[key] = total_result_standart
 
-        except EOFError or FileNotFoundError:
-            traceback.print_exc()
+        except EOFError or FileNotFoundError: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
 
         # Delete the file that inform is reading
         if os.path.isfile(key_location_reading_indicator):
@@ -614,12 +614,12 @@ class KOT:
                 result["meta"] = {"type": "value"}
             try:
                 total_result = result["key"]
-            except TypeError:
-                total_result = False
+            except TypeError: # pragma: no cover
+                total_result = False # pragma: no cover
 
 
-        except EOFError or FileNotFoundError:
-            pass
+        except EOFError or FileNotFoundError: # pragma: no cover
+            pass # pragma: no cover
         return total_result
 
     def get_all(self, encryption_key: str = ""):
@@ -658,8 +658,8 @@ class KOT:
                                  key_location_compress_indicator))
             if os.path.exists(os.path.join(self.location, key_location)):
                 os.remove(os.path.join(self.location, key_location))
-        except:
-            traceback.print_exc()
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
             return False
 
         return True
@@ -668,8 +668,8 @@ class KOT:
         try:
             for key in self.dict():
                 self.delete(key)
-        except:
-            traceback.print_exc()
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
             return False
         return True
 
@@ -720,8 +720,8 @@ class KOT:
 
             total_size += os.path.getsize(
                 os.path.join(self.location, key_location))
-        except:
-            traceback.print_exc()
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
 
         return total_size
 
@@ -740,9 +740,9 @@ class KOT:
             unpack_archive(backup_location, self.location)
             move(backup_location, backup_location.replace(".zip", ".KOT"))
             return True
-        except:
-            traceback.print_exc()
-            return False
+        except: # pragma: no cover
+            traceback.print_exc() # pragma: no cover
+            return False # pragma: no cover
 
 
 
