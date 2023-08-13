@@ -1,8 +1,5 @@
 ---
 title: EXAMPLE APPLICATIONS
-nav_order: 17
+nav_order: 18
 has_children: true
----
-
-# Using Custom Location
 ---

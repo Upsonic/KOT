@@ -16,6 +16,8 @@ from shutil import rmtree
 from shutil import unpack_archive
 import random
 
+import copy as cpv
+
 
 force_compress = False
 force_encrypt = False
@@ -38,6 +40,63 @@ class HASHES:
 
 
 class KOT:
+    @staticmethod
+    def execute(query, value:bool=None):
+        # Check if the input is a string
+        if not isinstance(query, str):
+            raise TypeError("Query must be a string")
+        custom_value = None
+        if value is not None:
+            custom_value = cpv.copy(value)
+        value = None
+
+        # Parse the SQL query
+        command, database_name, key, value, encryption_key, compress = KOT.parse_query(query)
+
+        if custom_value is not None:
+            value = custom_value
+
+        if command == 'SET':
+            result = KOT_serial(database_name).set(key, value, encryption_key=encryption_key, compress=compress)
+        elif command == 'GET':
+            result = KOT_serial(database_name).get(key, encryption_key=encryption_key)
+        elif command == 'DELETE':
+            result = KOT_serial(database_name).delete(key)
+        elif command == 'DATABASE_DELETE':
+            result = KOT.database_delete(database_name)
+        elif command == 'DATABASE_DELETE_ALL':
+            result = KOT.database_delete_all()            
+        elif command == 'DATABASE_POP':
+            result = KOT.database_pop(database_name)
+        elif command == 'DATABASE_POP_ALL':
+            result = KOT.database_pop_all()            
+        elif command == 'DATABASE_LIST':
+            result = KOT.database_list()            
+        else:
+            raise ValueError(f"Unsupported command: {command}")
+
+        # Return the result of the operation
+        return result
+
+    @staticmethod
+    def parse_query(query):
+        # Check if the input is a string
+        if not isinstance(query, str):
+            raise TypeError("Query must be a string")
+    
+        # Parse the SQL query and return the database name, command, key, and value
+        parts = query.split()
+        command = parts[0]
+        database_name = (parts[1]) if len(parts) > 1 else None
+        key =  (parts[2]) if len(parts) > 2 else None
+        value = (parts[3]) if len(parts) > 3 else None
+        encryption_key = (parts[4]) if len(parts) > 4 else ""
+        compress = bool(parts[5]) if len(parts) > 5 else False
+
+
+    
+    
+        return command, database_name, key, value, encryption_key, compress
 
     @staticmethod
     def benchmark_set(number: int = 10000,

@@ -385,6 +385,71 @@ class TestKOT(unittest.TestCase):
         self.KOT.wait_system("indicator")
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
 
+    def test_execute_set_get(self):
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1")
+        value = KOT("settings").get("key1")
+        value_2 = KOT.execute("GET settings key1")
+        self.assertEqual(value, "value1")
+        self.assertEqual(value_2, "value1")
+
+
+        a_dict = {"hi":"hello"}
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1", value=a_dict)
+        value = KOT("settings").get("key1")
+        self.assertEqual(value, a_dict)
+
+
+        # Use the execute function to delete the key-value pair
+        KOT.execute("DELETE settings key1")
+        value = KOT("settings").get("key1")
+
+        # Assert that the key does not exist in the database anymore
+        self.assertEqual(value, None)
+
+        # Use the execute function to set a key-value pair
+        KOT.execute('SET settings key1 "value1"')
+        value = KOT.database_list()
+        self.assertIn("settings",value)
+
+        # Use the execute function to set a key-value pair
+        KOT.execute('SET settings key1 "value1"')
+        KOT.execute("DATABASE_DELETE settings")
+        value = KOT.database_list()
+        value_2 = KOT.execute("DATABASE_LIST")
+        self.assertNotIn("settings",value)
+        self.assertEqual(value, value_2)
+
+        # Use the execute function to set a key-value pair
+        KOT.execute('SET settings key1 "value1"')
+        KOT.execute("DATABASE_DELETE_ALL")
+        value = KOT.database_list()
+        value_2 = KOT.execute("DATABASE_LIST")
+        self.assertNotIn("settings",value)
+        self.assertEqual(value, value_2)
+
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1")
+        KOT.execute("DATABASE_POP settings")
+        self.assertEqual(KOT("settings").get("key1"), None)
+
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1")
+        KOT.execute("DATABASE_POP_ALL")
+        self.assertEqual(KOT("settings").get("key1"), None)
+
+
+
+
+        big_string = "a" * 1000000
+        name_of_db = self.KOT.name
+        KOT.execute(f"SET {name_of_db} key1 {big_string} OnurAtakanULUSOY True")
+        self.assertEqual(self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), big_string)
+
+
+
+
     def test_database_delete_open_databases_pop_kot_serial(self):
         # Create a test database
         test_db = KOT_serial("test_db")
@@ -398,6 +463,13 @@ class TestKOT(unittest.TestCase):
 
         self.assertNotIn("test_db"+str(False)+kot.kot.start_location , kot.kot.open_databases)
 
+    def test_execute_non_string_query(self):
+        with self.assertRaises(TypeError):
+            KOT.execute(123)
+
+    def test_execute_unsupported_command(self):
+        with self.assertRaises(ValueError):
+            KOT.execute("UNSUPPORTED_COMMAND")
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
