@@ -382,7 +382,7 @@ class TestKOT(unittest.TestCase):
 
     def test_wait_system(self):
         self.KOT.set("key1", self.test_vales)
-        self.KOT.wait_system("key1", "indicator")
+        self.KOT.wait_system("indicator")
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
 
     def test_database_delete_open_databases_pop_kot_serial(self):

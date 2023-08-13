@@ -197,8 +197,8 @@ class KOT:
         for each_database in database_index.dict():
             try:
                 KOT.database_pop(each_database, folder=folder)
-            except:
-                return False
+            except: # pragma: no cover
+                return False # pragma: no cover
 
 
 
@@ -334,7 +334,7 @@ class KOT:
                 self.location, standart_key_location + str(random_number) + ".li")
 
             key_location_reading_indicator = os.path.join(
-                self.location, standart_key_location)
+                self.location, standart_key_location+".re")
             key_location_compress_indicator = os.path.join(
                 self.location, standart_key_location + ".co")
 
@@ -388,20 +388,8 @@ class KOT:
             with open(key_location_loading_indicator, "wb") as f:
                 f.write(b"1")
 
-            try_number = 0
-            busy = True
-            while not busy and try_number < 6:
-                any_file = False
-                for each_file in os.listdir(self.location):
-                    if each_file.startswith(
-                            key_location_reading_indicator) and each_file.endswith(
-                                ".re"):
-                        any_file = True
-                if not any_file:
-                    busy = False
-                    break
-                try_number += 1
-                time.sleep(0.25)
+            self.wait_system(key_location_reading_indicator)
+
 
             with contextlib.suppress(FileNotFoundError):
                 move(key_location_loading, key_location)
@@ -438,15 +426,14 @@ class KOT:
             return element["meta"]["file"]
 
 
-    def wait_system(self, key: str, indicator:str):
+    def wait_system(self, indicator:str):
         try_number = 0
         busy = True
         while not busy and try_number < 6:
                 any_file = False
                 for each_file in os.listdir(self.location):
                     if each_file.startswith(
-                            indicator) and each_file.endswith(
-                                indicator):
+                            indicator):
                         any_file = True
                 if not any_file:
                     busy = False
@@ -484,7 +471,7 @@ class KOT:
             
         
         key_location_loading_indicator = os.path.join(
-                self.location, standart_key_location)
+                self.location, standart_key_location+ ".li")
 
         random_number = random.randint(10000,99999)
         key_location_reading_indicator = os.path.join(
@@ -493,21 +480,7 @@ class KOT:
                 self.location, standart_key_location + ".co")
 
 
-
-        try_number = 0
-        busy = True
-        while not busy and try_number < 6:
-                any_file = False
-                for each_file in os.listdir(self.location):
-                    if each_file.startswith(
-                            key_location_loading_indicator) and each_file.endswith(
-                                ".li"):
-                        any_file = True
-                if not any_file:
-                    busy = False
-                    break
-                try_number += 1
-                time.sleep(0.25)
+        self.wait_system(key_location_loading_indicator)
 
 
         if not os.path.isfile(key_location):
