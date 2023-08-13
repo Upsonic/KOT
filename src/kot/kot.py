@@ -152,14 +152,13 @@ class KOT:
         database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
-        try:
-            the_db = KOT(name, folder=folder, self_datas=True)
-            for each_key in the_db.get_all():
-                the_db.delete(each_key)
-            rmtree(database_index.get(name))
+        
+        the_db = KOT(name, folder=folder, self_datas=True)
+        for each_key in the_db.get_all():
+            the_db.delete(each_key)
+        rmtree(database_index.get(name))
 
-        except:
-            return False
+
         global open_databases
 
         if name+str(False)+folder in open_databases:
@@ -167,7 +166,17 @@ class KOT:
             open_databases.pop(name+str(False)+folder)
         database_index.delete(name)
         return True
+    @staticmethod
+    def database_delete_all(folder: str = ""):
+        database_index = KOT_serial("KOT-database-index",
+                             self_datas=True,
+                             folder=folder)
 
+        for each_database in database_index.dict():
+            try:
+                KOT.database_delete(each_database, folder=folder)
+            except:
+                return False
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
@@ -193,14 +202,7 @@ class KOT:
                 return False
 
 
-    @staticmethod
-    def database_delete_all(folder: str = ""):
-        database_index = KOT_serial("KOT-database-index",
-                             self_datas=True,
-                             folder=folder)
 
-        for each_database in database_index.dict():
-            KOT.database_delete(each_database, folder=folder)
 
     @staticmethod
     def database_rename(name: str,
