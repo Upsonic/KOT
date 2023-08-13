@@ -7,7 +7,7 @@ import shutil
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from kot import KOT, HASHES
+from kot import KOT, HASHES, KOT_serial
 import kot
 
 
@@ -385,9 +385,18 @@ class TestKOT(unittest.TestCase):
         self.KOT.wait_system("key1", "indicator")
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
 
+    def test_database_delete_open_databases_pop_kot_serial(self):
+        # Create a test database
+        test_db = KOT_serial("test_db")
+
+        # Call the database_delete method
+        KOT.database_delete("test_db")
+
+        # Assert that the test database is not present in the open_databases dictionary
+        self.assertNotIn("test_dbFalse", kot.kot.open_databases)
+
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
 sys.argv = backup
-
