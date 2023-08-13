@@ -296,6 +296,39 @@ class KOT:
 
         return pickle.loads(unpadded)
 
+
+    def set_compress(self, key_location_loading, key_location_compress_indicator, the_dict):
+        self.indicator_creator(key_location_compress_indicator)
+        import mgzip
+
+        with mgzip.open(key_location_loading, "wb") as f:
+            pickle.dump(the_dict, f)        
+
+    def set_normal(self, key_location_loading, the_dict):
+        with open(key_location_loading, "wb") as f:
+            pickle.dump(the_dict, f)
+    
+    def get_encryption(self, key_location):
+        import mgzip
+        result = None
+        with mgzip.open(key_location,
+                                "rb") as f:
+            result = pickle.load(f)
+        return result
+    
+    def get_normal(self, key_location):
+        result = None
+        with open(key_location,
+                          "rb") as f:
+            result = pickle.load(f)
+        return result
+
+    def read_file(self, file):
+        value = None
+        with open(file, "rb") as f:
+            value = f.read()        
+        return value
+
     def set(
         self,
         key: str,
@@ -344,8 +377,7 @@ class KOT:
                             copy(file, meta["file"])
                     else:
                         meta["direct_file"] = False
-                        with open(file, "rb") as f:
-                            value = f.read()
+                        value = self.read_file(file)
                 except: # pragma: no cover
                     traceback.print_exc() # pragma: no cover
                     return False # pragma: no cover
@@ -365,17 +397,10 @@ class KOT:
                     del self.cache[key]
 
             if compress:
-                self.indicator_creator(key_location_compress_indicator)
-                import mgzip
-
-                with mgzip.open(key_location_loading, "wb") as f:
-                    pickle.dump(the_dict, f)
-
+                self.set_compress(key_location_loading, key_location_compress_indicator, the_dict)
             else:
-                with open(key_location_loading, "wb") as f:
-                    pickle.dump(the_dict, f)
-            print("ooo")
-            print(key_location_loading_indicator)
+                self.set_normal(key_location_loading, the_dict)
+
             self.indicator_creator(key_location_loading_indicator)
 
             self.wait_system(key_location_reading_indicator)
@@ -456,6 +481,14 @@ class KOT:
 
         return standart_key_location, key_location, key_location_loading, key_location_reading_indicator,key_location_compress_indicator, key_location_loading_indicator
 
+    def create_file_of_key(self,total_result_standart,encryption_key):
+        # Create the file if there is an compress or encryption situation
+
+                with open(total_result_standart["meta"]["file"], "wb") as f:
+                    the_bytes = total_result_standart["value"]
+                    if encryption_key != "":
+                        the_bytes = self.decrypt(encryption_key, the_bytes)
+                    f.write(the_bytes)        
 
     def get(
         self,
@@ -499,14 +532,9 @@ class KOT:
 
             # Read the file
             if os.path.exists(key_location_compress_indicator):
-                import mgzip
-                with mgzip.open(key_location,
-                                "rb") as f:
-                    result = pickle.load(f)
+                result = self.get_encryption(key_location)
             else:
-                with open(key_location,
-                          "rb") as f:
-                    result = pickle.load(f)
+                result = self.get_normal(key_location)
 
             # Transform the result
             total_result_standart = result
@@ -525,14 +553,9 @@ class KOT:
 
         self.indicator_remover(key_location_reading_indicator)
 
-        # Create the file if there is an compress or encryption situation
         if total_result_standart["meta"]["type"] == "file":
             if not total_result_standart["meta"]["direct_file"]:
-                with open(total_result_standart["meta"]["file"], "wb") as f:
-                    the_bytes = total_result_standart["value"]
-                    if encryption_key != "":
-                        the_bytes = self.decrypt(encryption_key, the_bytes)
-                    f.write(the_bytes)
+                self.create_file_of_key(total_result_standart, encryption_key)
 
         # Return the result
         if raw_dict:
