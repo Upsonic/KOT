@@ -7,7 +7,7 @@ import shutil
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from kot import KOT
+from kot import KOT, HASHES
 import kot
 
 
@@ -345,6 +345,10 @@ class TestKOT(unittest.TestCase):
         count = self.KOT.get_count()
         expected_count = 1
         self.assertEqual(count, expected_count)
+    
+    def test_hash_type_error(self):
+        with self.assertRaises(ValueError):
+            HASHES.get_hash("test", hash_type="md5")
 
     def test_database_pop(self):
         # Create a database
