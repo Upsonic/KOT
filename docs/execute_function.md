@@ -21,6 +21,10 @@ Here are some examples of how to use the `KOT.execute` function:
 # Set a key-value pair
 KOT.execute("SET my_database my_key my_value")
 
+# Set a key-value pair with custom value type
+custom_value = {"hi","Hello"}
+KOT.execute("SET my_database my_key", value=custom_value)
+
 # Get a value
 value = KOT.execute("GET my_database my_key")
 print(value)
