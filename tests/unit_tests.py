@@ -346,7 +346,6 @@ class TestKOT(unittest.TestCase):
         expected_count = 1
         self.assertEqual(count, expected_count)
 
-
     def test_database_pop(self):
         # Create a database
         customer_db = KOT("customer_database")
@@ -360,7 +359,23 @@ class TestKOT(unittest.TestCase):
 
 
         self.assertEqual(customer_db.get("John"), None)
-        self.assertEqual(customer_db.get("Jane"), None)
+        self.assertEqual(customer_db.get("Jane"), None)    
+
+    def test_database_pop_all(self):
+        # Create two databases
+        db1 = KOT("database1")
+        db2 = KOT("database2")
+
+        # Write key-value pairs to the databases
+        db1.set("key1", "value1")
+        db2.set("key2", "value2")
+
+        # Delete all data from the databases
+        KOT.database_pop_all()
+
+        # Check if the databases are empty
+        self.assertEqual(db1.get_all(), {})
+        self.assertEqual(db2.get_all(), {})
 
     def test_wait_system(self):
         self.KOT.set("key1", self.test_vales)
