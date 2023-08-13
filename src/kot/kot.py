@@ -321,22 +321,15 @@ class KOT:
             raise TypeError("File must be a string")
 
         try:
-            standart_key_location = os.path.join(self.location,HASHES.get_hash(key))
-            key_location =  standart_key_location if custom_key_location == "" else custom_key_location
-            
+
+
+            standart_key_location, key_location, key_location_loading, key_location_reading_indicator,key_location_compress_indicator, key_location_loading_indicator = self.indicator_generator(key, custom_key_location)
+            key_location_loading_indicator = key_location_loading_indicator+str(random.randint(10000,99999))
+
+
             if custom_key_location != "" and not short_cut:
                 self.set(key,value=key_location,file=file,compress=compress,encryption_key=encryption_key,cache_policy=cache_policy,dont_delete_cache=dont_delete_cache,dont_remove_file=dont_remove_file,short_cut = True)            
 
-            key_location_loading = os.path.join(self.location,
-                                                standart_key_location + ".l")
-            random_number = random.randint(10000,99999)
-            key_location_loading_indicator = os.path.join(
-                self.location, standart_key_location + str(random_number) + ".li")
-
-            key_location_reading_indicator = os.path.join(
-                self.location, standart_key_location+".re")
-            key_location_compress_indicator = os.path.join(
-                self.location, standart_key_location + ".co")
 
             if file != "":
                 meta["type"] = "file"
@@ -372,9 +365,7 @@ class KOT:
                     del self.cache[key]
 
             if compress:
-                # create key_location_compress_indicator
-                with open(key_location_compress_indicator, "wb") as f:
-                    f.write(b"1")
+                self.indicator_creator(key_location_compress_indicator)
                 import mgzip
 
                 with mgzip.open(key_location_loading, "wb") as f:
@@ -383,10 +374,9 @@ class KOT:
             else:
                 with open(key_location_loading, "wb") as f:
                     pickle.dump(the_dict, f)
-
-            # Create a file that inform is loading
-            with open(key_location_loading_indicator, "wb") as f:
-                f.write(b"1")
+            print("ooo")
+            print(key_location_loading_indicator)
+            self.indicator_creator(key_location_loading_indicator)
 
             self.wait_system(key_location_reading_indicator)
 
@@ -394,8 +384,7 @@ class KOT:
             with contextlib.suppress(FileNotFoundError):
                 move(key_location_loading, key_location)
 
-            with contextlib.suppress(FileNotFoundError):
-                os.remove(key_location_loading_indicator)
+            self.indicator_remover(key_location_loading_indicator)
 
         except: # pragma: no cover
             traceback.print_exc() # pragma: no cover
@@ -442,6 +431,31 @@ class KOT:
                 time.sleep(0.25)
 
 
+    def indicator_creator(self, indicator:str):
+        with contextlib.suppress(Exception):
+            with open(indicator, "wb") as f:
+                f.write(b"1")
+    
+    def indicator_remover(self, indicator:str):
+        if os.path.isfile(indicator):
+            with contextlib.suppress(Exception):
+                os.remove(indicator)        
+
+    def indicator_generator(self, key, custom_key_location):
+        standart_key_location = os.path.join(self.location,HASHES.get_hash(key))
+        key_location =  standart_key_location if custom_key_location == "" else custom_key_location
+
+        key_location_loading = os.path.join(self.location,
+                                                standart_key_location + ".l")
+        key_location_reading_indicator = os.path.join(
+                self.location, standart_key_location+".re")
+        key_location_compress_indicator = os.path.join(
+                self.location, standart_key_location + ".co")
+        key_location_loading_indicator = os.path.join(
+                self.location, standart_key_location+ ".li")
+
+        return standart_key_location, key_location, key_location_loading, key_location_reading_indicator,key_location_compress_indicator, key_location_loading_indicator
+
 
     def get(
         self,
@@ -465,19 +479,9 @@ class KOT:
             if cache_control:
                 return self.transformer(self.cache[key])
 
+        standart_key_location, key_location, key_location_loading, key_location_reading_indicator,key_location_compress_indicator, key_location_loading_indicator = self.indicator_generator(key, custom_key_location)
+        key_location_reading_indicator = key_location_reading_indicator+str(random.randint(10000,99999))
 
-        standart_key_location = os.path.join(self.location,HASHES.get_hash(key))
-        key_location =  standart_key_location if custom_key_location == "" else custom_key_location
-            
-        
-        key_location_loading_indicator = os.path.join(
-                self.location, standart_key_location+ ".li")
-
-        random_number = random.randint(10000,99999)
-        key_location_reading_indicator = os.path.join(
-                self.location, standart_key_location +str(random_number) + ".re")
-        key_location_compress_indicator = os.path.join(
-                self.location, standart_key_location + ".co")
 
 
         self.wait_system(key_location_loading_indicator)
@@ -490,11 +494,8 @@ class KOT:
         total_result_standart = None
 
         try:
+            self.indicator_creator(key_location_reading_indicator)
 
-            # Create a file that inform is reading
-            with contextlib.suppress(Exception):
-                with open(key_location_reading_indicator, "wb") as f:
-                    f.write(b"1")
 
             # Read the file
             if os.path.exists(key_location_compress_indicator):
@@ -522,10 +523,7 @@ class KOT:
         except EOFError or FileNotFoundError: # pragma: no cover
             traceback.print_exc() # pragma: no cover
 
-        # Delete the file that inform is reading
-        if os.path.isfile(key_location_reading_indicator):
-            with contextlib.suppress(Exception):
-                os.remove(key_location_reading_indicator)
+        self.indicator_remover(key_location_reading_indicator)
 
         # Create the file if there is an compress or encryption situation
         if total_result_standart["meta"]["type"] == "file":
