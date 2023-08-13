@@ -174,14 +174,24 @@ class KOT:
         database_index = KOT_serial("KOT-database-index",
                              self_datas=True,
                              folder=folder)
-        try:
-            the_db = KOT(name, folder=folder, self_datas=True)
-            for each_key in the_db.get_all():
-                the_db.delete(each_key)
-        except:
-            return False
+        the_db = KOT(name, folder=folder, self_datas=True)
+        for each_key in the_db.get_all():
+            the_db.delete(each_key)
 
         return True
+
+    @staticmethod
+    def database_pop_all(folder: str = ""):
+        database_index = KOT_serial("KOT-database-index",
+                             self_datas=True,
+                             folder=folder)
+
+        for each_database in database_index.dict():
+            try:
+                KOT.database_pop(each_database, folder=folder)
+            except:
+                return False
+
 
     @staticmethod
     def database_delete_all(folder: str = ""):
@@ -191,15 +201,6 @@ class KOT:
 
         for each_database in database_index.dict():
             KOT.database_delete(each_database, folder=folder)
-
-    @staticmethod
-    def database_pop_all(folder: str = ""):
-        database_index = KOT_serial("KOT-database-index",
-                             self_datas=True,
-                             folder=folder)
-
-        for each_database in database_index.dict():
-            KOT.database_pop(each_database, folder=folder)
 
     @staticmethod
     def database_rename(name: str,
