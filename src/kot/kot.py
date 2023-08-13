@@ -160,9 +160,8 @@ class KOT:
 
 
         global open_databases
-
+        folder = start_location if not folder != "" else folder
         if name+str(False)+folder in open_databases:
-
             open_databases.pop(name+str(False)+folder)
         database_index.delete(name)
         return True

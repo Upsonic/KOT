@@ -390,10 +390,13 @@ class TestKOT(unittest.TestCase):
         test_db = KOT_serial("test_db")
 
         # Call the database_delete method
+
+        self.assertIn("test_db"+str(False)+kot.kot.start_location , kot.kot.open_databases)
         KOT.database_delete("test_db")
 
-        # Assert that the test database is not present in the open_databases dictionary
-        self.assertNotIn("test_dbFalse", kot.kot.open_databases)
+
+
+        self.assertNotIn("test_db"+str(False)+kot.kot.start_location , kot.kot.open_databases)
 
 
 backup = sys.argv
