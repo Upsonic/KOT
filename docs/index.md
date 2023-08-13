@@ -57,10 +57,10 @@ my_kot.delete("Onur")
 ### Console
 
 ```console	
-kot --name=client_addresses set Onur Sivas
+KOT --name=client_addresses set Onur Sivas
 ```
 ```console
-kot --name=client_addresses get Onur
+KOT --name=client_addresses get Onur
 ```
 
 ## Documentation
