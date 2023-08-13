@@ -325,7 +325,6 @@ class TestKOT(unittest.TestCase):
         first_db = KOT("firstdb")
         first_db.set("key1", self.test_vales)
         self.assertEqual(first_db.get("key1"), self.test_vales)
-        KOT.database_delete("test_database_rename_already")
         result = KOT.database_rename("firstdb", "test_database_rename_already",)
         self.assertTrue(result)
         self.assertEqual(first_db.get("key1"), None)
