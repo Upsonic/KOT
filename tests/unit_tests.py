@@ -452,6 +452,13 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(value, "value1")
         self.assertEqual(value_2, "value1")
 
+
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1")
+        value = KOT("settings").get_all()
+        value_2 = KOT.execute("GET_ALL settings")
+        self.assertEqual(value, value_2)
+
         # Use the execute function to set a key-value pair
         KOT.execute("SET settings key1 value1 enc")
         value = KOT("settings").get("key1",encryption_key="enc")
@@ -577,6 +584,7 @@ class TestKOT(unittest.TestCase):
 
     def test_get_key_none(self):
         self.assertEqual(self.KOT.get_key("dsadasdasdasdadsada"),None)
+
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]

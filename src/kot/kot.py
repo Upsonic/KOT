@@ -73,7 +73,9 @@ class KOT:
         elif command == 'DATABASE_POP_ALL':
             result = KOT.database_pop_all(folder=folder)            
         elif command == 'DATABASE_LIST':
-            result = KOT.database_list(folder=folder)            
+            result = KOT.database_list(folder=folder)
+        elif command == 'GET_ALL':
+            result = KOT_serial(database_name, folder=folder).get_all()
         else:
             raise ValueError(f"Unsupported command: {command}")
 

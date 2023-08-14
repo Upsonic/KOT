@@ -44,6 +44,11 @@ KOT.execute("SET my_database my_key my_value None True")
 # Get an compressed value
 value = KOT.execute("GET my_database my_key")
 print(value)
+
+# Get all datas of database
+value = KOT.execute("GET_ALL my_database")
+print(value)
+
 ```
 
 Note: The `KOT.execute` function raises a `TypeError` if the `query` parameter is not a string, and a `ValueError` if the command is not supported.
