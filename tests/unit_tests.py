@@ -132,7 +132,7 @@ class TestKOT(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.KOT.set(123, "invalid_key")
 
-    def test_set_invalid_key(self):
+    def test_set_invalid_file_name(self):
         with self.assertRaises(TypeError):
             self.KOT.set("123", file=13213)
 
