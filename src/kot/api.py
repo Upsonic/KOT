@@ -118,6 +118,11 @@ def delete_all_database():
     
     return 'All database deleted successfully'
 
+@app.route('/execute', methods=['POST'])
+def execute():
+    query = request.form.get('query')
+    return jsonify(KOT.execute(query, folder=folder))
+
 
 def API(folder_data, password_data, host_data, port_data):
     global folder

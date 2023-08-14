@@ -70,3 +70,9 @@ KOT database_delete <database_name>
 ```console
 KOT database_delete_all
 ```
+
+### `execute`
+
+```console
+KOT execute <query>
+```

@@ -207,6 +207,16 @@ def database_list(page: ft.Page):
     )
     page.add(ft.Text("Press the + button to refresh the list."))
 
+    def execute(e):
+        result = KOT.execute(query.value)
+        page.show_snack_bar(
+                    ft.SnackBar(ft.Text(str(result)), open=True)
+                )
+        fab_pressed(None)
+    query = ft.TextField(label="Query for Execution", on_submit=lambda e: execute(e))
+
+    page.add(query)
+
     page.add(my_table,)
     page.add(my_table_2,)
 

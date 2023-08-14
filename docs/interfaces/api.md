@@ -125,3 +125,11 @@ Deletes the specified database.
 - Endpoint: `/database/delete_all`
 
 Deletes all the databases.
+
+
+### `execute`
+
+- Method: POST
+- Endpoint: `/execute`
+
+Executes the query.

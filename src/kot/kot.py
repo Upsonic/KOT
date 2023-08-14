@@ -41,7 +41,7 @@ class HASHES:
 
 class KOT:
     @staticmethod
-    def execute(query, value:bool=None):
+    def execute(query, value:bool=None, folder: str = ""):
         # Check if the input is a string
         if not isinstance(query, str):
             raise TypeError("Query must be a string")
@@ -57,21 +57,21 @@ class KOT:
             value = custom_value
 
         if command == 'SET':
-            result = KOT_serial(database_name).set(key, value, encryption_key=encryption_key, compress=compress)
+            result = KOT_serial(database_name, folder=folder).set(key, value, encryption_key=encryption_key, compress=compress)
         elif command == 'GET':
-            result = KOT_serial(database_name).get(key, encryption_key=encryption_key)
+            result = KOT_serial(database_name, folder=folder).get(key, encryption_key=encryption_key)
         elif command == 'DELETE':
-            result = KOT_serial(database_name).delete(key)
+            result = KOT_serial(database_name, folder=folder).delete(key)
         elif command == 'DATABASE_DELETE':
-            result = KOT.database_delete(database_name)
+            result = KOT.database_delete(database_name, folder=folder)
         elif command == 'DATABASE_DELETE_ALL':
-            result = KOT.database_delete_all()            
+            result = KOT.database_delete_all(folder=folder)            
         elif command == 'DATABASE_POP':
-            result = KOT.database_pop(database_name)
+            result = KOT.database_pop(database_name, folder=folder)
         elif command == 'DATABASE_POP_ALL':
-            result = KOT.database_pop_all()            
+            result = KOT.database_pop_all(folder=folder)            
         elif command == 'DATABASE_LIST':
-            result = KOT.database_list()            
+            result = KOT.database_list(folder=folder)            
         else:
             raise ValueError(f"Unsupported command: {command}")
 
@@ -202,7 +202,7 @@ class KOT:
         API(folder, password, host, port) # pragma: no cover
 
     @staticmethod
-    def web(password, folder: str = "",host=None, port=0): # pragma: no cover
+    def web(password, folder: str = "",host="localhost", port=5000): # pragma: no cover
         from .gui import WEB # pragma: no cover
         WEB(folder, password, host, port) # pragma: no cover
 
