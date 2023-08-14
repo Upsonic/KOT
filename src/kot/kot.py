@@ -54,6 +54,7 @@ class KOT:
         command, database_name, key, value, encryption_key, compress = KOT.parse_query(query)
 
 
+
         if custom_value is not None:
             value = custom_value
 
@@ -368,6 +369,7 @@ class KOT:
 
     def set_normal(self, key_location_loading, key_location_compress_indicator, the_dict):
         self.indicator_remover(key_location_compress_indicator)
+        
         with open(key_location_loading, "wb") as f:
             pickle.dump(the_dict, f)
     
@@ -469,7 +471,6 @@ class KOT:
 
             self.wait_system(key_location_reading_indicator)
 
-
             with contextlib.suppress(FileNotFoundError):
                 move(key_location_loading, key_location)
 
@@ -504,20 +505,28 @@ class KOT:
             return element["meta"]["file"]
 
 
-    def wait_system(self, indicator:str):
+    def wait_system(self, indicator:str, after_first_loop_trigger=None, max_try_number = 6, sleep_amount = 0.25):
         try_number = 0
         busy = True
-        while not busy and try_number < 6:
+        while busy and try_number < max_try_number:
                 any_file = False
-                for each_file in os.listdir(self.location):
-                    if each_file.startswith(
+                try:
+
+                    for each_file in os.listdir(self.location):
+
+                        if each_file.startswith(
                             indicator):
-                        any_file = True
+                            any_file = True
+                except:
+                    pass
                 if not any_file:
+
                     busy = False
                     break
                 try_number += 1
-                time.sleep(0.25)
+                time.sleep(sleep_amount)
+                if after_first_loop_trigger is not None:
+                    after_first_loop_trigger()
 
 
     def indicator_creator(self, indicator:str):

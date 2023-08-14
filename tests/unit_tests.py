@@ -381,9 +381,24 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(db2.get_all(), {})
 
     def test_wait_system(self):
+        the_indicator = os.path.join(self.KOT.location, "indicator")
         self.KOT.set("key1", self.test_vales)
-        self.KOT.wait_system("indicator")
-        self.assertEqual(self.KOT.get("key1"), self.test_vales)
+
+        start_time = int(time.time())
+        self.KOT.wait_system("indicator", sleep_amount=3)
+        end_time = int(time.time())
+        self.assertLess((end_time-start_time), 2)
+
+    def test_wait_system_wait(self):
+        the_indicator = os.path.join(self.KOT.location, "indicator")
+        self.KOT.set("key1", self.test_vales)
+        self.KOT.indicator_creator(the_indicator)
+        def deletor():
+            self.KOT.indicator_remover(the_indicator)
+        start_time = int(time.time())
+        self.KOT.wait_system("indicator", sleep_amount=3, after_first_loop_trigger=deletor)
+        end_time = int(time.time())
+        self.assertGreater((end_time-start_time), 2)
 
     def test_execute_set_get(self):
         # Use the execute function to set a key-value pair
