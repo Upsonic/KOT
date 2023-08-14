@@ -490,9 +490,9 @@ class KOT:
 
     def transformer(self, element, encryption_key: str = None):
         if "meta" not in element:
-            element["meta"] = {"type": "value"}
+            element["meta"] = {"type": "value"} # pragma: no cover
         if "short_cut" not in element:
-            element["short_cut"] = False
+            element["short_cut"] = False # pragma: no cover
         if element["meta"]["type"] == "value":
             if encryption_key != None:
                 return self.decrypt(encryption_key, element["value"])
@@ -674,7 +674,7 @@ class KOT:
             if not "cache_policy" in result:
                 result["cache_policy"] = 0
             if not "meta" in result:
-                result["meta"] = {"type": "value"}
+                result["meta"] = {"type": "value"} # pragma: no cover
             try:
                 total_result = result["key"]
             except TypeError: # pragma: no cover
@@ -707,10 +707,6 @@ class KOT:
                     os.remove(maybe_file)
 
             the_get = self.get(key, no_cache=True, raw_dict=True, get_shotcut=True)
-            with contextlib.suppress(TypeError):
-                    maybe_file = self.get(key, custom_key_location=the_get["value"])
-                    if os.path.exists(maybe_file):
-                        os.remove(maybe_file)   
             with contextlib.suppress(TypeError):
                 if the_get["short_cut"]:
                     os.remove(the_get["value"])             

@@ -574,6 +574,10 @@ class TestKOT(unittest.TestCase):
         self.KOT.delete("key1")
         self.assertEqual(os.path.exists(custom_location),False)
 
+
+    def test_get_key_none(self):
+        self.assertEqual(self.KOT.get_key("dsadasdasdasdadsada"),None)
+
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
