@@ -53,7 +53,6 @@ class KOT:
         # Parse the SQL query
         command, database_name, key, value, encryption_key, compress = KOT.parse_query(query)
 
-        print(command, database_name, key, value, encryption_key, compress)
 
         if custom_value is not None:
             value = custom_value
