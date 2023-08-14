@@ -486,6 +486,23 @@ class TestKOT(unittest.TestCase):
         with self.assertRaises(ValueError):
             KOT.execute("UNSUPPORTED_COMMAND")
 
+    def test_set_shortcut(self):
+        # Set a key-value pair with the short_cut parameter set to True
+        custom_location = "test_location.pickle"
+        self.KOT.set("key1", self.test_vales, custom_key_location=custom_location)
+
+        # Retrieve the value
+        value = self.KOT.get("key1")
+        value_2 = self.KOT.get("key1",get_shotcut=True)
+        value_3 = self.KOT.get("key1",get_shotcut=True, raw_dict=True)
+
+        # Check if the retrieved value is a reference to the original value
+        self.assertEqual(value, self.test_vales)
+
+        self.assertEqual(os.path.exists("test_location.pickle"), True)
+        self.assertEqual(value_2, custom_location)
+        self.assertEqual(value_3["value"], custom_location)
+
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
