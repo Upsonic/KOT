@@ -82,9 +82,6 @@ class KOT:
 
     @staticmethod
     def parse_query(query):
-        # Check if the input is a string
-        if not isinstance(query, str):
-            raise TypeError("Query must be a string")
     
         # Parse the SQL query and return the database name, command, key, and value
         parts = query.split()
