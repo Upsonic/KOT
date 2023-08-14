@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from waitress import serve
 from flask import Flask, request, Response, jsonify
 from .kot import KOT_serial
