@@ -53,13 +53,15 @@ class KOT:
         # Parse the SQL query
         command, database_name, key, value, encryption_key, compress = KOT.parse_query(query)
 
+        print(command, database_name, key, value, encryption_key, compress)
+
         if custom_value is not None:
             value = custom_value
 
         if command == 'SET':
             result = KOT_serial(database_name, folder=folder).set(key, value, encryption_key=encryption_key, compress=compress)
         elif command == 'GET':
-            result = KOT_serial(database_name, folder=folder).get(key, encryption_key=encryption_key)
+            result = KOT_serial(database_name, folder=folder).get(key, encryption_key=value)
         elif command == 'DELETE':
             result = KOT_serial(database_name, folder=folder).delete(key)
         elif command == 'DATABASE_DELETE':
@@ -90,9 +92,11 @@ class KOT:
         database_name = (parts[1]) if len(parts) > 1 else None
         key =  (parts[2]) if len(parts) > 2 else None
         value = (parts[3]) if len(parts) > 3 else None
-        encryption_key = (parts[4]) if len(parts) > 4 else ""
+        encryption_key = (parts[4]) if len(parts) > 4 else None
         compress = bool(parts[5]) if len(parts) > 5 else False
 
+        if encryption_key == "None":
+            encryption_key = None
 
     
     
@@ -101,7 +105,7 @@ class KOT:
     @staticmethod
     def benchmark_set(number: int = 10000,
                       compress: bool = False,
-                      encryption_key: str = "") -> float: # pragma: no cover
+                      encryption_key: str = None) -> float: # pragma: no cover
         compress = True if force_compress else compress # pragma: no cover
         encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
             
@@ -122,7 +126,7 @@ class KOT:
     def benchmark_get(
         number: int = 10000,
         compress: bool = False,
-        encryption_key: str = "",
+        encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float: # pragma: no cover
         compress = True if force_compress else compress # pragma: no cover
@@ -147,7 +151,7 @@ class KOT:
     def benchmark_delete(
         number: int = 10000,
         compress: bool = False,
-        encryption_key: str = "",
+        encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float: # pragma: no cover
         compress = True if force_compress else compress # pragma: no cover
@@ -171,7 +175,7 @@ class KOT:
     @staticmethod
     def benchmark(number: int = 10000,
                   compress: bool = False,
-                  encryption_key: str = "") -> float: # pragma: no cover
+                  encryption_key: str = None) -> float: # pragma: no cover
         compress = True if force_compress else compress # pragma: no cover
         encryption_key = force_encrypt if force_encrypt != False else encryption_key # pragma: no cover
         total_time = 0 # pragma: no cover
@@ -363,7 +367,8 @@ class KOT:
         with mgzip.open(key_location_loading, "wb") as f:
             pickle.dump(the_dict, f)        
 
-    def set_normal(self, key_location_loading, the_dict):
+    def set_normal(self, key_location_loading, key_location_compress_indicator, the_dict):
+        self.indicator_remover(key_location_compress_indicator)
         with open(key_location_loading, "wb") as f:
             pickle.dump(the_dict, f)
     
@@ -394,7 +399,7 @@ class KOT:
         value=None,
         file: str = "",
         compress: bool = False,
-        encryption_key: str = "",
+        encryption_key: str = None,
         cache_policy: int = 0,
         dont_delete_cache: bool = False,
         dont_remove_file: bool = False,
@@ -428,7 +433,7 @@ class KOT:
                 meta["file"] = os.path.join(
                     self.location, key_location + "." + file.split(".")[-1])
                 try:
-                    if not compress and encryption_key == "":
+                    if not compress and encryption_key == None:
                         value = ""
                         if not dont_remove_file:
                             move(file, meta["file"])
@@ -441,7 +446,8 @@ class KOT:
                     traceback.print_exc() # pragma: no cover
                     return False # pragma: no cover
 
-            if encryption_key != "":
+
+            if encryption_key != None:
                 value = self.encrypt(encryption_key, value)
 
             the_dict = {"key": key, "value": value, "meta": meta, "short_cut": False}
@@ -458,7 +464,7 @@ class KOT:
             if compress:
                 self.set_compress(key_location_loading, key_location_compress_indicator, the_dict)
             else:
-                self.set_normal(key_location_loading, the_dict)
+                self.set_normal(key_location_loading, key_location_compress_indicator, the_dict)
 
             self.indicator_creator(key_location_loading_indicator)
 
@@ -485,13 +491,13 @@ class KOT:
             traceback.print_exc() # pragma: no cover
             return "" # pragma: no cover
 
-    def transformer(self, element, encryption_key: str = ""):
+    def transformer(self, element, encryption_key: str = None):
         if "meta" not in element:
             element["meta"] = {"type": "value"}
         if "short_cut" not in element:
             element["short_cut"] = False
         if element["meta"]["type"] == "value":
-            if encryption_key != "":
+            if encryption_key != None:
                 return self.decrypt(encryption_key, element["value"])
             return element["value"]
         elif element["meta"]["type"] == "file":
@@ -545,7 +551,7 @@ class KOT:
 
                 with open(total_result_standart["meta"]["file"], "wb") as f:
                     the_bytes = total_result_standart["value"]
-                    if encryption_key != "":
+                    if encryption_key != None:
                         the_bytes = self.decrypt(encryption_key, the_bytes)
                     f.write(the_bytes)        
 
@@ -553,7 +559,7 @@ class KOT:
         self,
         key: str,
         custom_key_location: str = "",
-        encryption_key: str = "",
+        encryption_key: str = None,
         no_cache: bool = False,
         raw_dict: bool = False,
         get_shotcut: bool = False,
@@ -674,7 +680,7 @@ class KOT:
             pass # pragma: no cover
         return total_result
 
-    def get_all(self, encryption_key: str = ""):
+    def get_all(self, encryption_key: str = None):
         return self.dict(encryption_key=encryption_key)
 
 
@@ -725,7 +731,7 @@ class KOT:
             return False
         return True
 
-    def dict(self, encryption_key: str = "", no_data: bool = False):
+    def dict(self, encryption_key: str = None, no_data: bool = False):
         encryption_key = force_encrypt if force_encrypt != False else encryption_key
         result = {}
         for key in os.listdir(self.location):

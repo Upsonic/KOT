@@ -8,22 +8,18 @@ has_children: false
 
 # Execute Function
 
-The `KOT.execute` function allows users to execute SQL queries in the KOT database. It takes two parameters:
+The `KOT.execute` function allows users to execute queries in the KOT database. It takes two parameters:
 
-- `query`: A string representing the SQL query.
+- `query`: A string representing the query.
 - `value`: An optional value to be stored in the database.
 
-The function returns the result of the SQL query.
+The function returns the result of the query.
 
 Here are some examples of how to use the `KOT.execute` function:
 
 ```python
 # Set a key-value pair
 KOT.execute("SET my_database my_key my_value")
-
-# Set a key-value pair with custom value type
-custom_value = {"hi","Hello"}
-KOT.execute("SET my_database my_key", value=custom_value)
 
 # Get a value
 value = KOT.execute("GET my_database my_key")
@@ -35,12 +31,22 @@ KOT.execute("DELETE my_database my_key")
 # Set a key-value pair with encryption
 KOT.execute("SET my_database my_key my_value my_encryption_key")
 
+# Set a key-value pair with encryption and Compressing
+KOT.execute("SET my_database my_key my_value my_encryption_key True")
+
 # Get an encrypted value
 value = KOT.execute("GET my_database my_key my_encryption_key")
 print(value)
+
+# Set a key-value pair with Compressing
+KOT.execute("SET my_database my_key my_value None True")
+
+# Get an compressed value
+value = KOT.execute("GET my_database my_key")
+print(value)
 ```
 
-Note: The `KOT.execute` function raises a `TypeError` if the `query` parameter is not a string, and a `ValueError` if the SQL command is not supported.
+Note: The `KOT.execute` function raises a `TypeError` if the `query` parameter is not a string, and a `ValueError` if the command is not supported.
 
 ## Database Commands
 
@@ -63,5 +69,5 @@ KOT.execute("DATABASE_POP_ALL")
 databases = KOT.execute("DATABASE_LIST")
 print(databases)
 ```
-These commands allow you to delete, pop, and list databases using SQL queries.
+These commands allow you to delete, pop, and list databases using queries.
 
