@@ -92,6 +92,19 @@ class TestKOT(unittest.TestCase):
         with open(self.KOT.get("key1", encryption_key="Onur"), "r") as f:
             self.assertEqual(f.read(), "test")
 
+    def test_set_get_delete_file_delete_function(self):
+
+        with open("test_file.txt", "w") as f:
+            f.write("test")
+
+        self.KOT.set("key1", file="test_file.txt")
+        the_kot_file = self.KOT.get("key1")
+        self.assertEqual(os.path.exists(the_kot_file), True)
+        
+        self.KOT.delete("key1")
+        
+        self.assertEqual(os.path.exists(the_kot_file), False)
+
 
     def test_set_get_delete_multiple(self):
         self.KOT.set("key1", self.test_vales)
@@ -119,7 +132,9 @@ class TestKOT(unittest.TestCase):
         with self.assertRaises(TypeError):
             self.KOT.set(123, "invalid_key")
 
-
+    def test_set_invalid_key(self):
+        with self.assertRaises(TypeError):
+            self.KOT.set("123", file=13213)
 
     def test_set_withrkey_get_delete_without_key(self):
         key_name = self.KOT.set_withrkey(self.test_vales)
@@ -183,6 +198,24 @@ class TestKOT(unittest.TestCase):
 
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
+
+
+    def test_set_get_compress_test_file_size(self):
+
+        a_db = KOT("test_set_get_compress_test_file_size_1")
+        b_db = KOT("test_set_get_compress_test_file_size_2")
+        a_db.set("key1", "test_file.txt")
+        a_size = a_db.size("key1")
+
+        big_string = "a" * 1000000
+        with open("test_file.txt", "w") as f:
+            f.write(big_string)
+        b_db.set("key1", file="test_file.txt", compress=False, dont_remove_file=True)
+
+        b_size = b_db.size("key1")
+
+        self.assertGreater(b_size, a_size)
+
     def test_set_get_compress_encyrption_test(self):
 
         big_string = "a" * 1000000
@@ -209,6 +242,15 @@ class TestKOT(unittest.TestCase):
         self.KOT.set("key1", "value1aaaa", dont_delete_cache=True)
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
         self.KOT.set("key1", "value1aaaa", dont_delete_cache=False)
+        self.assertEqual(self.KOT.get("key1"), "value1aaaa")
+
+    def test_set_get_delete_function_cache(self):
+        self.KOT.set("key1", self.test_vales, cache_policy=30)
+        self.assertEqual(self.KOT.get("key1"), self.test_vales)
+        self.KOT.set("key1", "value1aaaa", dont_delete_cache=True)
+        self.assertEqual(self.KOT.get("key1"), self.test_vales)
+        self.KOT.delete("key1")
+        self.KOT.set("key1", "value1aaaa", dont_delete_cache=True)
         self.assertEqual(self.KOT.get("key1"), "value1aaaa")
 
 
@@ -243,6 +285,8 @@ class TestKOT(unittest.TestCase):
         self.KOT.clear_cache()
         self.assertEqual(self.KOT.get("key1"), "value1aaaa")
         self.assertEqual(os.path.exists(file_path), False)
+
+
 
 
     def test_backup_restore(self):
@@ -408,6 +452,26 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(value, "value1")
         self.assertEqual(value_2, "value1")
 
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1 enc")
+        value = KOT("settings").get("key1",encryption_key="enc")
+        value_2 = KOT.execute("GET settings key1 enc")
+        self.assertEqual(value, "value1")
+        self.assertEqual(value_2, "value1")
+
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1 enc True")
+        value = KOT("settings").get("key1",encryption_key="enc")
+        value_2 = KOT.execute("GET settings key1 enc")
+        self.assertEqual(value, "value1")
+        self.assertEqual(value_2, "value1")
+
+        # Use the execute function to set a key-value pair
+        KOT.execute("SET settings key1 value1 None True")
+        value = KOT("settings").get("key1")
+        value_2 = KOT.execute("GET settings key1")
+        self.assertEqual(value, "value1")
+        self.assertEqual(value_2, "value1")
 
         a_dict = {"hi":"hello"}
         # Use the execute function to set a key-value pair
@@ -429,7 +493,7 @@ class TestKOT(unittest.TestCase):
         self.assertIn("settings",value)
 
         # Use the execute function to set a key-value pair
-        KOT.execute('SET settings key1 "value1"')
+        KOT.execute("SET settings key1 value1")
         KOT.execute("DATABASE_DELETE settings")
         value = KOT.database_list()
         value_2 = KOT.execute("DATABASE_LIST")
@@ -493,15 +557,22 @@ class TestKOT(unittest.TestCase):
 
         # Retrieve the value
         value = self.KOT.get("key1")
+        value_4 = self.KOT.get("key1",raw_dict=True)
         value_2 = self.KOT.get("key1",get_shotcut=True)
         value_3 = self.KOT.get("key1",get_shotcut=True, raw_dict=True)
 
         # Check if the retrieved value is a reference to the original value
         self.assertEqual(value, self.test_vales)
+        self.assertEqual(value_4["value"], self.test_vales)
 
         self.assertEqual(os.path.exists("test_location.pickle"), True)
         self.assertEqual(value_2, custom_location)
         self.assertEqual(value_3["value"], custom_location)
+
+
+        self.assertEqual(os.path.exists(custom_location),True)
+        self.KOT.delete("key1")
+        self.assertEqual(os.path.exists(custom_location),False)
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
