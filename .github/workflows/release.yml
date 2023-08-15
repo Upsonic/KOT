@@ -17,12 +17,12 @@ jobs:
     environment: Release
     steps:
     - uses: actions/checkout@v3
-    - name: 'Get Previous tag'
-      id: previoustag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+    - name: Getting Tag
+      id: tag_extractor
+      run: echo "latest_tag=(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
   
     - uses: ncipollo/release-action@v1
       with:
-        name: KOT ${{ steps.previoustag.outputs.tag }}
+        name: KOT ${{ steps.tag_extractor.outputs.latest_tag }}
         generateReleaseNotes: true
-        tag: ${{ steps.previoustag.outputs.tag }}
+        tag: ${{ steps.tag_extractor.outputs.latest_tag }}
