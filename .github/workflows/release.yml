@@ -25,6 +25,6 @@ jobs:
   
     - uses: ncipollo/release-action@v1
       with:
-        name: KOT $(git describe --tags --abbrev=0)
+        name: KOT ${{ steps.tag_extractor.outputs.latest_tag }}
         generateReleaseNotes: true
-        tag: $(git describe --tags --abbrev=0)
+        tag: ${{ steps.tag_extractor.outputs.latest_tag }}
