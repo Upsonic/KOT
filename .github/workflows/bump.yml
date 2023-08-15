@@ -19,18 +19,14 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Run Version Bump Script
-        run: python bump.py major
 
       - name: setup git config
         run: |
           # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.email "<>"          
 
-      - name: Commit and Push Changes
-        run: |
-          git add .
-          git commit -m "Bump version"
-          git push
-            
+      - name: Run Version Bump Script
+        run: python bump.py major
+
+

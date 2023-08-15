@@ -38,13 +38,24 @@ def update_version(version):
 def create_tag(version):
     os.system(f"git tag aa{version}")
 
+def create_commit(version):
+    os.system("git add .")
+    os.system(f"git commit -m 'Changed version number with v{version}'")
+
+
+def push():
+    os.system("git push")
+    os.system("git push --tag")
+
 def main():
     part = sys.argv[1]
     version = read_version()
     new_version = increment_version(part, version)
     write_version(new_version)
     update_version(new_version)
+    create_commit(new_version)
     create_tag(new_version)
+    push()
 
 if __name__ == '__main__':
     main()
