@@ -1,6 +1,10 @@
 name: Releases
 
 on:
+  workflow_run:
+    workflows: ["Bump"]
+    types:
+      - completed
   push:
     # Sequence of patterns matched against refs/tags
     tags:
