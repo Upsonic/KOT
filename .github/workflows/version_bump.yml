@@ -1,0 +1,42 @@
+name: Version Bump
+
+on:
+  issues:
+    types:
+      - labeled
+
+jobs:
+  version_bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Label
+        id: check_label
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const label = context.payload.label.name;
+            const versionLabels = ['major', 'minor', 'patch'];
+            if (versionLabels.includes(label)) {
+              - name: Checkout Repository
+                uses: actions/checkout@v2
+
+              - name: Set Up Python
+                uses: actions/setup-python@v2
+                with:
+                  python-version: 3.x
+
+              - name: Install Dependencies
+                run: pip install -r requirements.txt
+
+              - name: Run Version Bump Script
+                run: python bump.py ${{ label }}
+
+              - name: Commit and Push Changes
+                run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add .
+                  git commit -m "Bump version"
+                  git push
+            }
