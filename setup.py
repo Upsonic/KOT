@@ -24,4 +24,4 @@ entry_points = {
     'console_scripts': ['KOT=kot.kot:main'],
 },
 python_requires=">= 3",
-zip_safe=False))
+zip_safe=False)
