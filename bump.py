@@ -13,8 +13,11 @@ def increment_version(part, version):
     major, minor, patch = map(int, version.split('.'))
     if part == 'major':
         major += 1
+        minor = 0
+        patch = 0
     elif part == 'minor':
         minor += 1
+        patch = 0
     elif part == 'patch':
         patch += 1
     return f'{major}.{minor}.{patch}'
