@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 name="kot_api",
-version='1.0.0',
+version='0.23.2',
 description="""This is API package for KOT""",
 url="https://github.com/onuratakan/KOT",
 author='Onur Atakan ULUSOY',

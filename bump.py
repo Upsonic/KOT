@@ -39,7 +39,7 @@ def update_version(version):
             f.write(content)
 
 def create_tag(version):
-    os.system(f"git tag aa{version}")
+    os.system(f"git tag v{version}")
 
 def create_commit(version):
     os.system("git add .")
