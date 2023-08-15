@@ -17,8 +17,12 @@ jobs:
     environment: Release
     steps:
     - uses: actions/checkout@v3
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+  
     - uses: ncipollo/release-action@v1
       with:
-        name: KOT ${{ github.ref_name }}
+        name: KOT ${{ steps.previoustag.outputs.tag }}
         generateReleaseNotes: true
-        token: ${{ secrets.ONUR_TOKEN }}
+        tag: ${{ steps.previoustag.outputs.tag }}
