@@ -17,12 +17,14 @@ jobs:
     environment: Release
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Getting Tag
       id: tag_extractor
       run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
   
     - uses: ncipollo/release-action@v1
       with:
-        name: KOT ${{ steps.tag_extractor.outputs.latest_tag }}
+        name: KOT $(git describe --tags --abbrev=0)
         generateReleaseNotes: true
-        tag: ${{ steps.tag_extractor.outputs.latest_tag }}
+        tag: $(git describe --tags --abbrev=0)
