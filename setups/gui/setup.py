@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 name="kot_gui",
-version='0.24.1',
+version='0.24.2',
 description="""This is GUI package for KOT""",
 url="https://github.com/onuratakan/KOT",
 author='Onur Atakan ULUSOY',
