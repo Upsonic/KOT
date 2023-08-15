@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
 name="kot_web",
-version='0.25.0',
+version='1.0.0',
 description="""This is WEB package for KOT""",
 url="https://github.com/onuratakan/KOT",
 author='Onur Atakan ULUSOY',
@@ -17,3 +17,4 @@ flet==0.8.4
 python_requires=">= 3",
 zip_safe=False,
 )
+
