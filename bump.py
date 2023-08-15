@@ -35,12 +35,16 @@ def update_version(version):
             f.seek(0)
             f.write(content)
 
+def create_tag(version):
+    os.system(f"git tag aa{version}")
+
 def main():
     part = sys.argv[1]
     version = read_version()
     new_version = increment_version(part, version)
     write_version(new_version)
     update_version(new_version)
+    create_tag(new_version)
 
 if __name__ == '__main__':
     main()
