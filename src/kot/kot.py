@@ -815,6 +815,30 @@ class KOT:
             return False # pragma: no cover
 
 
+    def save_output_by_name(self, func):
+        def runner(*args, **kwargs):
+            value = func(*args, **kwargs)
+            key = func.__name__
+            self.set(key,value)
+            return value
+        return runner
+
+    def save_output_by_name_time(self, func):
+        def runner(*args, **kwargs):
+            value = func(*args, **kwargs)
+            key = func.__name__+"-"+str(time.time())
+            self.set(key,value)
+            return value
+        return runner
+
+
+    def save_output_by_name_time_random(self, func):
+        def runner(*args, **kwargs):
+            value = func(*args, **kwargs)
+            key = func.__name__+"-"+str(time.time())+"-"+str(random.randint(10000,99999))
+            self.set(key,value)
+            return value
+        return runner
 
 
 
