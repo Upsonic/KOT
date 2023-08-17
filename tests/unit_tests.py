@@ -586,6 +586,59 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.get_key("dsadasdasdasdadsada"),None)
 
 
+    def test_decorator_1(self):
+        the_db = KOT("test_decorator_1")
+        @the_db.save_by_name
+        def my_function(param, param_optional="Optional Param"):
+            return "Hello, World!"
+
+        my_function("Hi",param_optional="World")
+        self.assertEqual(the_db.execute("GET test_decorator_1 my_function"), [(('Hi',), {'param_optional': 'World'}), 'Hello, World!'])
+
+
+
+    def test_decorator_2(self):
+        the_db = KOT("test_decorator_2")
+        the_db.execute("DATABASE_POP test_decorator_2")
+        @the_db.save_by_name_time
+        def my_function(param, param_optional="Optional Param"):
+            return "Hello, World!"
+
+        my_function("Hi",param_optional="World")
+
+        result = the_db.execute("GET_ALL test_decorator_2")
+
+        the_time = float(list(result)[0].split("-")[1])
+        result = result[list(result)[0]]
+
+        currently_time = float(time.time())
+
+        self.assertAlmostEqual(the_time, currently_time, delta=7)
+        self.assertEqual(result, [(('Hi',), {'param_optional': 'World'}), 'Hello, World!'])
+
+    def test_decorator_3(self):
+        the_db = KOT("test_decorator_3")
+        the_db.execute("DATABASE_POP test_decorator_3")
+        @the_db.save_by_name_time_random
+        def my_function(param, param_optional="Optional Param"):
+            return "Hello, World!"
+
+        my_function("Hi",param_optional="World")
+
+        result = the_db.execute("GET_ALL test_decorator_3")
+
+        the_time = float(list(result)[0].split("-")[1])
+        random = int(list(result)[0].split("-")[2])
+        result = result[list(result)[0]]
+
+        currently_time = float(time.time())
+
+        self.assertAlmostEqual(the_time, currently_time, delta=7)
+        self.assertEqual(result, [(('Hi',), {'param_optional': 'World'}), 'Hello, World!'])
+
+        self.assertGreater(random, 0)
+
+
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
