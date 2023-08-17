@@ -8,7 +8,7 @@ has_children: false
 This is an fast method for implementing KOT database to your function in one line.
 
 
-# Saving Outputs of an Function 
+# Saving of an Function 
 
 ## by Function Name
 ```python
@@ -16,16 +16,16 @@ from kot import KOT
 
 db = KOT("My_Database")
 
-@db.save_output_by_name
-def my_function():
+@db.save_by_name
+def my_function(param, param_optional="Optional Param"):
     return "Hello, World!"
 
-my_function()
+my_function("Hi",param_optional="World")
 ```
 ```console
 KOT execute "GET_ALL My_Database"
 
-> my_function: Hello, World!
+> my_function: [[["Hi"], {"param_optional": "World"}], "Hello, World!"]
 ```
 
 ## by Function Name + Time
@@ -34,16 +34,16 @@ from kot import KOT
 
 db = KOT("My_Database")
 
-@db.save_output_by_name_time
-def my_function():
+@db.save_by_name_time
+def my_function(param, param_optional="Optional Param"):
     return "Hello, World!"
 
-my_function()
+my_function("Hi",param_optional="World")
 ```
 ```console
 KOT execute "GET_ALL My_Database"
 
-> my_function-1692291105.6838315: Hello, World!
+> my_function-1692291105.6838315: [[["Hi"], {"param_optional": "World"}], "Hello, World!"]
 ```
 
 ## by Function Name + Time + Random (For High Speed Uses)
@@ -52,14 +52,14 @@ from kot import KOT
 
 db = KOT("My_Database")
 
-@db.save_output_by_name_time_random
-def my_function():
+@db.save_by_name_time_random
+def my_function(param, param_optional="Optional Param"):
     return "Hello, World!"
 
-my_function()
+my_function("Hi",param_optional="World")
 ```
 ```console
 KOT execute "GET_ALL My_Database"
 
-> my_function-1692291156.88717-91746: Hello, World!
+> my_function-1692291156.88717-91746: [[["Hi"], {"param_optional": "World"}], "Hello, World!"]
 ```
