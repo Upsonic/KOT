@@ -12,12 +12,12 @@ permissions:
   pull-requests: write
 
 jobs:
-  autopr3-5-turbo:
+  autopr3-5-turbo-16k:
     if: ${{ (github.event_name == 'issues' && 
-             contains( github.event.label.name, 'AutoPR-3.5-turbo')) || 
+             contains( github.event.label.name, 'AutoPR-3.5-turbo-16k')) || 
             (github.event_name == 'issue_comment' && 
              github.event.issue.pull_request &&
-             contains( github.event.comment.body, 'Hey AutoPR-3.5-turbo')) }}
+             contains( github.event.comment.body, 'Hey AutoPR-3.5-turbo-16k')) }}
     runs-on: ubuntu-latest
     steps:
     - name: Install jq
@@ -43,7 +43,7 @@ jobs:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        model: gpt-3.5-turbo
+        model: gpt-3.5-turbo-16k
         base_branch: master
 
   autopr4:
