@@ -1,4 +1,4 @@
-on:https://github.com/onuratakan/KOT/tree/master/.github/workflows/https%3A//openai.com
+on:
   issues:
     types: [labeled]
   issue_comment:
