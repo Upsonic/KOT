@@ -5,15 +5,11 @@ on:
     workflows: ["Bump"]
     types:
       - completed
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-
 jobs:
 
   build:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: Release
     steps:
     - uses: actions/checkout@v3
