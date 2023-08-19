@@ -7,7 +7,7 @@ on:
 
 jobs:
   major:
-    if: ${{ github.event.label.name == 'major' }}
+    if: ${{ github.event.label.name == 'major' && github.event.sender.login == 'onuratakan' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
 
 
   minor:
-    if: ${{ github.event.label.name == 'minor' }}
+    if: ${{ github.event.label.name == 'minor' && github.event.sender.login == 'onuratakan' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -56,7 +56,7 @@ jobs:
 
 
   patch:
-    if: ${{ github.event.label.name == 'patch' }}
+    if: ${{ github.event.label.name == 'patch' && github.event.sender.login == 'onuratakan' }}
     runs-on: ubuntu-latest
 
     steps:
