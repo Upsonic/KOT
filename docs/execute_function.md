@@ -18,6 +18,9 @@ The function returns the result of the query.
 Here are some examples of how to use the `KOT.execute` function:
 
 ```python
+from kot import KOT
+
+
 # Set a key-value pair
 KOT.execute("SET my_database my_key my_value")
 

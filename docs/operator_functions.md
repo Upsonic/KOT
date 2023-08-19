@@ -16,8 +16,13 @@ Transactional operations allow users to perform multiple operations (SET, GET, D
 Here is an example of how to use this method:
 
 ```python
+from kot import KOT
+
+# Creating a database
+my_db = KOT("my_database")
+
 operations = [('SET', 'key1', 'value1'), ('GET', 'key1'), ('DELETE', 'key1')]
-results = the_db.transactional_operations(operations)
+results = my_db.transactional_operations(operations)
 ```
 
 ## Asynchronous Operations
@@ -27,7 +32,12 @@ Asynchronous operations allow users to perform operations (SET, GET, DELETE) asy
 Here is an example of how to use this method:
 
 ```python
-thread = the_db.asynchronous_operations('SET', 'key1', 'value1')
+from kot import KOT
+
+# Creating a database
+my_db = KOT("my_database")
+
+thread = my_db.asynchronous_operations('SET', 'key1', 'value1')
 
 # Make other thinks without any delay
 
