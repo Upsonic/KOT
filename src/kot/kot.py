@@ -40,6 +40,25 @@ class HASHES:
 
 
 class KOT:
+    def bulk_set(self, kv_pairs: list) -> bool:
+        for pair in kv_pairs:
+            key, value = pair
+            self.set(key, value)
+        return True
+
+    def bulk_get(self, keys: list) -> dict:
+        result = {}
+        for key in keys:
+            value = self.get(key)
+            if value is not None:
+                result[key] = value
+        return result
+
+    def bulk_delete(self, keys: list) -> bool:
+        for key in keys:
+            self.delete(key)
+        return True
+
     @staticmethod
     def execute(query, value:bool=None, folder: str = ""):
         # Check if the input is a string

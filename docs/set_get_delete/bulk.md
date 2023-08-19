@@ -51,3 +51,42 @@ Output:
 ```console
 {}
 ```
+
+
+## Multiple Set
+The `bulk_set` function allows you to insert multiple key-value pairs into the database in a single operation. It accepts a list of key-value pairs and returns a boolean indicating the success of the operation.
+
+Example:
+```python
+from kot import KOT
+
+db = KOT("My_Database")
+
+kv_pairs = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
+db.bulk_set(kv_pairs)
+```
+
+## Multiple Get
+The `bulk_get` function allows you to retrieve multiple keys from the database in a single operation. It accepts a list of keys and returns a dictionary with the keys and their corresponding values.
+
+Example:
+```python
+from kot import KOT
+
+db = KOT("My_Database")
+
+keys = ["key1", "key2", "key3"]
+values = db.bulk_get(keys)
+```
+
+## Multiple Delete
+The `bulk_delete` function allows you to delete multiple keys from the database in a single operation. It accepts a list of keys and returns a boolean indicating the success of the operation.
+
+Example:
+```python
+from kot import KOT
+
+db = KOT("My_Database")
+
+keys = ["key1", "key2", "key3"]
+db.bulk_delete(keys)

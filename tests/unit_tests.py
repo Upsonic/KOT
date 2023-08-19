@@ -18,6 +18,29 @@ class test_object:
 
 class TestKOT(unittest.TestCase):
 
+    def test_bulk_set(self):
+        kv_pairs = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
+        self.KOT.bulk_set(kv_pairs)
+        self.assertEqual(self.KOT.get("key1"), "value1")
+        self.assertEqual(self.KOT.get("key2"), "value2")
+        self.assertEqual(self.KOT.get("key3"), "value3")
+
+    def test_bulk_get(self):
+        kv_pairs = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
+        self.KOT.bulk_set(kv_pairs)
+        keys = ["key1", "key2", "key3"]
+        values = self.KOT.bulk_get(keys)
+        self.assertEqual(values, {"key1": "value1", "key2": "value2", "key3": "value3"})
+
+    def test_bulk_delete(self):
+        kv_pairs = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
+        self.KOT.bulk_set(kv_pairs)
+        keys = ["key1", "key2", "key3"]
+        self.KOT.bulk_delete(keys)
+        self.assertEqual(self.KOT.get("key1"), None)
+        self.assertEqual(self.KOT.get("key2"), None)
+        self.assertEqual(self.KOT.get("key3"), None)
+
     def setUp(self):
 
         KOT.database_delete_all()
