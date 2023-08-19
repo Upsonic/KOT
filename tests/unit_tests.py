@@ -52,7 +52,7 @@ class TestKOT(unittest.TestCase):
         
     def tearDown(self):
         shutil.rmtree(self.KOT.location)
-
+        
     def test_set_get_delete(self):
         self.KOT.set("key1", self.test_vales)
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
@@ -639,6 +639,35 @@ class TestKOT(unittest.TestCase):
         self.assertAlmostEqual(the_time, currently_time, delta=7)
         self.assertEqual(result, [(('Hi',), {'param_optional': 'World'}), 'Hello, World!'])
 
+    
+    def test_transactional_operations(self):
+        the_db = KOT('test_db')
+        operations = [('SET', 'key1', 'value1'), ('GET', 'key1'), ('DELETE', 'key1')]
+        results = the_db.transactional_operations(operations)
+        self.assertEqual(results, [True, 'value1', True])
+        self.assertEqual(the_db.get("key1"), None)
+    
+        operations = [('SET', 'key1', 'value1'), ('GET', 'key1',None),]
+        results = the_db.transactional_operations(operations)
+        self.assertEqual(results, [True, 'value1'])
+        self.assertEqual(the_db.get("key1"), "value1")
+
+
+    
+    def test_asynchronous_operations(self):
+        the_db = KOT('test_db')
+        thread = the_db.asynchronous_operations('SET', 'key1', 'value1')
+        thread.join()
+        self.assertEqual(the_db.get('key1'), 'value1')
+    
+        thread = the_db.asynchronous_operations('GET', 'key1')
+        thread.join()
+        self.assertEqual(the_db.get('key1'), 'value1')
+    
+        thread = the_db.asynchronous_operations('DELETE', 'key1')
+        thread.join()
+        self.assertEqual(the_db.get('key1'), None)
+    
     def test_decorator_3(self):
         the_db = KOT("test_decorator_3")
         the_db.execute("DATABASE_POP test_decorator_3")
@@ -661,7 +690,7 @@ class TestKOT(unittest.TestCase):
 
         self.assertGreater(random, 0)
 
-
+        
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)

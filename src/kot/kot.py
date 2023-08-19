@@ -100,6 +100,38 @@ class KOT:
 
         # Return the result of the operation
         return result
+        
+
+        
+    def transactional_operations(self, operations: list, folder: str = ""):
+        results = []
+
+        for operation in operations:
+                if len(operation) == 2:
+                    command, key = operation
+                    value = None
+                elif len(operation) == 3:
+                    command, key, value = operation
+                if command == 'SET':
+                    result = self.set(key, value)
+                elif command == 'GET':
+                    result = self.get(key)
+                elif command == 'DELETE':
+                    result = self.delete(key)
+                results.append(result)
+
+        return results
+        
+    def asynchronous_operations(self, operation: str, key: str, value=None, folder: str = ""):
+        import threading
+        if operation == 'SET':
+            thread = threading.Thread(target=self.set, args=(key, value))
+        elif operation == 'GET':
+            thread = threading.Thread(target=self.get, args=(key,))
+        elif operation == 'DELETE':
+            thread = threading.Thread(target=self.delete, args=(key,))
+        thread.start()
+        return thread
 
     @staticmethod
     def parse_query(query):

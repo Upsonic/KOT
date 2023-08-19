@@ -18,6 +18,7 @@ The KOT database is a flexible, secure, and scalable database that supports mult
 - **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
 - **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
 - **Docker Avaibility**: You can use KOT database API as an container on Docker platform. It's good for more stable, safe and durable uses.
+- **Transactional and Asynchronous Operations**: Perform multiple operations in a single transaction or perform operations asynchronously for improved performance.
 
 
 
