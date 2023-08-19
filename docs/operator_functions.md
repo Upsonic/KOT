@@ -1,5 +1,5 @@
 ---
-title: Operator Functions
+title: OPERATOR FUNCTIONS
 nav_order: 13
 has_children: true
 ---
@@ -32,3 +32,4 @@ thread = the_db.asynchronous_operations('SET', 'key1', 'value1')
 # Make other thinks without any delay
 
 thread.join()
+```
