@@ -34,7 +34,7 @@ def update_version(version):
     for file in files:
         with open(file, 'r+') as f:
             content = f.read()
-            content = re.sub(r'    version=".*"', f'version="{version}"', content)
+            content = re.sub(r'    version=".*"', f'    version="{version}"', content)
             f.seek(0)
             f.write(content)
 
