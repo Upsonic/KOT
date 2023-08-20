@@ -970,6 +970,40 @@ class KOT:
 
         return runner
 
+    
+    def debug(self, message):
+        @self.save_by_name_time_random
+        def debug_writer():
+            print("DEBUG:", message)
+            return message
+        debug_writer()
+    def info(self, message):
+        @self.save_by_name_time_random
+        def info_writer():
+            print("INFO:", message)
+            return message
+        info_writer()
+    def warning(self, message):
+        @self.save_by_name_time_random
+        def warning_writer():
+            print("WARNING:", message)
+            return message
+        warning_writer()
+    def error(self, message):
+        @self.save_by_name_time_random
+        def error_writer():
+            print("ERROR:", message)
+            return message
+        error_writer()
+    def exception(self, message):
+        @self.save_by_name_time_random
+        def exception_writer():
+            print("EXCEPTION:", message)
+            return message
+        exception_writer()
+
+
+
 
 def KOT_serial(name, self_datas: bool = False, folder: str = ""):
     global start_location
