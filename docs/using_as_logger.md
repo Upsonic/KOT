@@ -35,15 +35,6 @@ The info function is used to log informational messages. It takes a single param
 Example usage:
 
 ```python
-## Info Function
-
-The info function is used to log informational messages. It takes a single parameter:
-
-- `message` (str): The message to be logged.
-
-Example usage:
-
-```python
 from kot import KOT
 
 # Creating a database
@@ -54,13 +45,6 @@ logger.info("This is an info message")
 
 The function does not return any value and does not raise any exceptions.
 
-## Warning Function
-
-The warning function is used to log warning messages. It takes a single parameter, `message`, which is the message to be logged.
-
-Example usage:
-
-```python
 ## Warning Function
 
 The warning function is used to log warning messages. It takes a single parameter:
@@ -82,18 +66,12 @@ The function does not return any value and does not raise any exceptions.
 
 ## Error Function
 
-The error function is used to log error messages. It takes a single parameter, `message`, which is the message to be logged.
-
-Example usage:
-
-```python
-## Error Function
-
 The error function is used to log error messages. It takes a single parameter:
 
 - `message` (str): The message to be logged.
 
 Example usage:
+
 
 ```python
 from kot import KOT
@@ -108,18 +86,12 @@ The function does not return any value and does not raise any exceptions.
 
 ## Exception Function
 
-The exception function is used to log exception messages. It takes a single parameter, `message`, which is the message to be logged.
-
-Example usage:
-
-```python
-## Exception Function
-
 The exception function is used to log exception messages. It takes a single parameter:
 
 - `message` (str): The message to be logged.
 
 Example usage:
+
 
 ```python
 from kot import KOT
