@@ -1,7 +1,6 @@
 ---
 title: OPERATOR FUNCTIONS
 nav_order: 13
-has_children: true
 ---
 
 # Operator Functions
