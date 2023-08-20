@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+from rich import print as rprint
 import base64
 import contextlib
 import hashlib
@@ -265,7 +266,7 @@ class KOT:
 
             GUI(folder, password)  # pragma: no cover
         except ModuleNotFoundError:
-            print(
+            rprint(
                 "Warning: GUI module not found. Please install the 'kot_gui' package."
             )  # pragma: no cover
 
@@ -278,7 +279,7 @@ class KOT:
 
             API(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
-            print(
+            rprint(
                 "Warning: API module not found. Please install the 'kot_api' package."
             )  # pragma: no cover
 
@@ -291,7 +292,7 @@ class KOT:
 
             WEB(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
-            print(
+            rprint(
                 "Warning: WEB module not found. Please install the 'kot_web' package."
             )  # pragma: no cover
 
@@ -930,12 +931,10 @@ class KOT:
                 print(f"Exception occurred in save_by_name: {e}")  # pragma: no cover
             return value
 
-
         return runner
 
     def save_by_name_time(self, func):
         def runner(*args, **kwargs):
-
             params = args, kwargs
             result = func(*args, **kwargs)
             value = [params, result]
@@ -950,59 +949,63 @@ class KOT:
 
     def save_by_name_time_random(self, func):
         def runner(*args, **kwargs):
-
             params = args, kwargs
             result = func(*args, **kwargs)
             value = [params, result]
             key = (
-                    func.__name__
-                    + "-"
-                    + str(time.time())
-                    + "-"
-                    + str(random.randint(10000, 99999))
-                )
+                func.__name__
+                + "-"
+                + str(time.time())
+                + "-"
+                + str(random.randint(10000, 99999))
+            )
             try:
                 self.set(key, value)
             except Exception as e:  # pragma: no cover
                 print(f"Exception occurred in save_by_name: {e}")  # pragma: no cover
             return value
 
-
         return runner
 
-    
     def debug(self, message):
         @self.save_by_name_time_random
         def debug_writer():
-            print("DEBUG:", message)
+            rprint("[green]DEBUG:[/green]", message)
             return message
+
         debug_writer()
+
     def info(self, message):
         @self.save_by_name_time_random
         def info_writer():
-            print("INFO:", message)
+            rprint("[blue]INFO:[/blue]", message)
             return message
+
         info_writer()
+
     def warning(self, message):
         @self.save_by_name_time_random
         def warning_writer():
-            print("WARNING:", message)
+            rprint("[yellow]WARNING:[/yellow]", message)
             return message
+
         warning_writer()
+
     def error(self, message):
         @self.save_by_name_time_random
         def error_writer():
-            print("ERROR:", message)
+            rprint("[red]ERROR:[/red]", message)
             return message
+
         error_writer()
+
     def exception(self, message):
         @self.save_by_name_time_random
         def exception_writer():
-            print("EXCEPTION:", message)
+            rprint("[magenta]EXCEPTION:[/magenta]", message)
             return message
+
         exception_writer()
-
-
 
 
 def KOT_serial(name, self_datas: bool = False, folder: str = ""):
