@@ -32,3 +32,5 @@ average2 = sum(data2) / len(data2)
 
 print("Average of data1:", average1)
 print("Average of data2:", average2)
+
+```

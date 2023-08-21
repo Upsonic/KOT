@@ -28,4 +28,4 @@ iot_data.set("device_1", temperature_data)
 retrieved_data = iot_data.get("device_1")
 
 # The retrieved data can now be used for monitoring, analysis, decision making, etc.
-# ...
+```

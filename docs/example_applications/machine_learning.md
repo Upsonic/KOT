@@ -42,4 +42,4 @@ clf = RandomForestClassifier(random_state=42)
 clf.fit(X_train_retrieved, y_train_retrieved)
 
 # Use the trained model for prediction, evaluation, etc.
-# ...
+```
