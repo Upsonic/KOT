@@ -256,10 +256,16 @@ class TestKOT(unittest.TestCase):
             self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), self.test_vales
         )
 
+        self.assertNotEqual(
+            self.KOT.get("key1"), self.test_vales
+        )
+
+
         self.assertNotEqual(self.KOT.dict(), {"key1": self.test_vales})
         self.assertEqual(
             self.KOT.dict(encryption_key="OnurAtakanULUSOY"), {"key1": self.test_vales}
         )
+        
 
     def test_set_get_delete_cache(self):
         self.KOT.set("key1", self.test_vales, cache_policy=30)

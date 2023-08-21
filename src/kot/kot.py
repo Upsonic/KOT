@@ -16,6 +16,7 @@ from shutil import move
 from shutil import rmtree
 from shutil import unpack_archive
 import random
+from cryptography.fernet import Fernet
 
 import copy as cpv
 
@@ -405,37 +406,20 @@ class KOT:
         self.open_files_db.delete_all()
 
     def encrypt(self, key, message):
-        from Crypto.Cipher import AES
-
-        # Serializing the message
-        message = pickle.dumps(message)
-        # Turning to string
-        message = base64.b64encode(message).decode("ascii")
-
-        def pad(s):
-            return s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-
-        padded_message = pad(message)
-        from Crypto import Random
-
-        iv = Random.new().read(AES.block_size)
-        cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
-        return base64.b64encode(iv + cipher.encrypt(padded_message.encode())).decode()
+        # Generate a Fernet key from the user-defined key
+        fernet_key = base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest())
+        # Initialize a Fernet object with the generated key
+        fernet = Fernet(fernet_key)
+        # Encrypt the message using the encrypt method of the Fernet object
+        encrypted_message = fernet.encrypt(pickle.dumps(message))
+        return encrypted_message
 
     def decrypt(self, key, message):
-        from Crypto.Cipher import AES
-
-        def unpad(s):
-            return s[: -ord(s[len(s) - 1 :])]
-
-        message = base64.b64decode(message.encode())
-        iv = message[: AES.block_size]
-        cipher = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
-        unpadded = unpad(cipher.decrypt(message[AES.block_size :])).decode()
-
-        unpadded = base64.b64decode(unpadded)
-
-        return pickle.loads(unpadded)
+        # Initialize a Fernet object with the user-defined key
+        fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest()))
+        # Decrypt the message using the decrypt method of the Fernet object
+        decrypted_message = pickle.loads(fernet.decrypt(message))
+        return decrypted_message
 
     def set_compress(
         self, key_location_loading, key_location_compress_indicator, the_dict

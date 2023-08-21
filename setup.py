@@ -19,8 +19,8 @@ setup(
     install_requires=[
         "fire==0.5.0",
         "mgzip==0.2.1",
-        "pycryptodome==3.18.0",
         "rich==13.5.2",
+        "cryptography==41.0.3",
     ],
     entry_points={
         "console_scripts": ["KOT=kot.kot:main"],
