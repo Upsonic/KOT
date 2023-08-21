@@ -48,13 +48,11 @@ time_4 = time.time()
 # SQLLITE
 time_5 = time.time()
 cursor.execute(f"SELECT * FROM Customer WHERE customer_id = {find_number}")
-print(cursor.fetchone())
 time_6 = time.time()
 
 # KOT
 the_list = client_address_db.get("users")
 time_7 = time.time()
-print(the_list[str(find_number)])
 time_8 = time.time()
 
 
