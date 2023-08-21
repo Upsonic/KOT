@@ -5,8 +5,9 @@ LABEL org.opencontainers.image.source https://github.com/onuratakan/KOT
 RUN mkdir /app
 
 RUN apk update && apk add python3-dev \
-                        gcc \
-                        libc-dev
+                          gcc \
+                          libc-dev \
+                          libffi-dev
 
 WORKDIR /app/
 
