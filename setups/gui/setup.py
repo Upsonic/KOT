@@ -11,7 +11,7 @@ with open(os.path.join(os.path.dirname(__file__), "..", "..","requirements",'gui
 
 setup(
     name="kot_gui",
-    version="0.28.0",
+    version="0.28.1",
     description="""This is GUI package for KOT""",
     url="https://github.com/onuratakan/KOT",
     author='Onur Atakan ULUSOY',

@@ -10,7 +10,7 @@ with open(os.path.join(os.path.dirname(__file__), "..", "..","requirements",'web
 
 setup(
     name="kot_web",
-    version="0.28.0",
+    version="0.28.1",
     description="""This is WEB package for KOT""",
     url="https://github.com/onuratakan/KOT",
     author='Onur Atakan ULUSOY',
