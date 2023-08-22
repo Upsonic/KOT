@@ -1028,6 +1028,26 @@ class KOT_remote:
 
         self.database_name = database_name
 
+    def debug(self, message):
+        data = {"message": message}
+        return self._send_request("POST", "/controller/debug", data)
+
+    def info(self, message):
+        data = {"message": message}
+        return self._send_request("POST", "/controller/info", data)
+
+    def warning(self, message):
+        data = {"message": message}
+        return self._send_request("POST", "/controller/warning", data)
+
+    def error(self, message):
+        data = {"message": message}
+        return self._send_request("POST", "/controller/error", data)
+
+    def exception(self, message):
+        data = {"message": message}
+        return self._send_request("POST", "/controller/exception", data)
+
     def _send_request(self, method, endpoint, data=None):
         try:
             response = self.requests.request(

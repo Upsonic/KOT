@@ -816,6 +816,45 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/pop_all'))
         self.assertEqual(mock_send_request._mock_call_args[1]["json"],None)
 
+    @patch('requests.request')
+    def test_debug(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        test_message = "This is a test message for the debug function."
+        mock_send_request.return_value.json.return_value = {'success': True}
+        result = kot_remote.debug(test_message)
+        self.assertEqual(result, {'success': True})
+
+    @patch('requests.request')
+    def test_info(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        test_message = "This is a test message for the info function."
+        mock_send_request.return_value.json.return_value = {'success': True}
+        result = kot_remote.info(test_message)
+        self.assertEqual(result, {'success': True})
+
+    @patch('requests.request')
+    def test_warning(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        test_message = "This is a test message for the warning function."
+        mock_send_request.return_value.json.return_value = {'success': True}
+        result = kot_remote.warning(test_message)
+        self.assertEqual(result, {'success': True})
+
+    @patch('requests.request')
+    def test_error(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        test_message = "This is a test message for the error function."
+        mock_send_request.return_value.json.return_value = {'success': True}
+        result = kot_remote.error(test_message)
+        self.assertEqual(result, {'success': True})
+
+    @patch('requests.request')
+    def test_exception(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        test_message = "This is a test message for the exception function."
+        mock_send_request.return_value.json.return_value = {'success': True}
+        result = kot_remote.exception(test_message)
+        self.assertEqual(result, {'success': True})
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
