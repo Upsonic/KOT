@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
-import os
 
-
-with open(os.path.join(os.path.dirname(__file__), "..", "..","requirements",'web.txt')) as fp:
+with open('requirements.txt') as fp:
     install_requires = fp.read()
 
 setup(
