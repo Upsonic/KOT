@@ -1011,3 +1011,63 @@ def main():  # pragma: no cover
     import fire  # pragma: no cover
 
     fire.Fire(KOT)  # pragma: no cover
+
+
+
+
+class KOT_remote:    
+    def __init__(self, api_url, password):    
+        import requests
+        from requests.auth import HTTPBasicAuth    
+
+        self.requests = requests
+        self.HTTPBasicAuth = HTTPBasicAuth
+
+        self.api_url = api_url
+        self.password = password
+
+    def _send_request(self, method, endpoint, data=None):
+        try:
+            response = self.requests.request(
+                method,
+                self.api_url + endpoint,
+                json=data,
+                auth=self.HTTPBasicAuth("", self.password),
+            )
+            response.raise_for_status()
+            return response.json()
+        except self.requests.exceptions.RequestException as e:
+            print(f"Error: {e}")
+            return None
+
+    def set(self, database_name, key, value, encryption_key=None, compress=None):
+        data = {
+            "database_name": database_name,
+            "key": key,
+            "value": value,
+            "encryption_key": encryption_key,
+            "compress": compress,
+        }
+        return self._send_request("POST", "/controller/set", data)
+
+    def get(self, database_name, key, compress=None):
+        data = {"database_name": database_name, "key": key, "compress": compress}
+        return self._send_request("POST", "/controller/get", data)
+
+    def delete(self, database_name, key):
+        data = {"database_name": database_name, "key": key}
+        return self._send_request("POST", "/controller/delete", data)
+
+    def delete_data(self, database_name, key):
+        data = {"database_name": database_name, "key": key}
+        return self._send_request("POST", "/controller/delete", data)
+
+    def list_databases(self):
+        return self._send_request("GET", "/database/list")
+
+    def pop_database(self, database_name):
+        data = {"database_name": database_name}
+        return self._send_request("POST", "/database/pop", data)
+
+    def pop_all_database(self):
+        return self._send_request("POST", "/database/pop_all")

@@ -40,7 +40,12 @@ jobs:
         key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('requirements/api.txt') }}-${{ hashFiles('requirements/gui.txt') }}-${{ hashFiles('requirements/tests.txt') }}-${{ hashFiles('requirements/remote_app.txt') }}-pytest-coverage
     - name: Install dependencies
       run: |
+        cd setups/api
         pip install .
+        cd .. 
+        cd ..
+        pip install .
+
         pip install pytest
         pip install coverage
     - name: Generate coverage report

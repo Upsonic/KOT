@@ -14,6 +14,7 @@ setup(
     install_requires="""
     flask==2.0.0
     waitress==2.1.2
+    requests==2.28.2
     """,
     python_requires=">= 3",
     zip_safe=False,

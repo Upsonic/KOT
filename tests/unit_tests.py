@@ -4,10 +4,11 @@ import unittest
 import os
 import sys
 import shutil
+from unittest.mock import patch
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from kot import KOT, HASHES, KOT_serial
+from kot import KOT, HASHES, KOT_serial, KOT_remote
 import kot
 
 
@@ -737,6 +738,36 @@ class TestKOT(unittest.TestCase):
         )
 
         self.assertGreater(random, 0)
+
+    @patch('requests.request')
+    def test_remote_send_request(self, mock_request):
+        # Create an instance of KOT_remote
+        kot_remote = KOT_remote('http://localhost:5000', 'password')
+
+        # Define the mock response
+        mock_response = mock_request.return_value
+        mock_response.json.return_value = {'success': True}
+
+        # Call the _send_request method
+        response = kot_remote._send_request('GET', '/endpoint')
+
+        # Check the response
+        self.assertEqual(response, {'success': True})
+
+    @patch('requests.request')
+    def test_remote_set(self, mock_send_request):
+        # Create an instance of KOT_remote
+        kot_remote = KOT_remote('http://localhost:5000', 'password')
+
+        # Call the set method
+        kot_remote.set('database_name', 'key', 'value')
+
+        # Check that _send_request was called with the correct arguments
+        self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
+
+        self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
+        self.assertEqual(mock_send_request._mock_call_args[1]["json"],{'database_name': 'database_name', 'key': 'key', 'value': 'value', 'encryption_key': None, 'compress': None})
+
 
 
 backup = sys.argv
