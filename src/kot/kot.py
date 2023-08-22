@@ -1016,7 +1016,7 @@ def main():  # pragma: no cover
 
 
 class KOT_remote:    
-    def __init__(self, api_url, password):    
+    def __init__(self, database_name, api_url, password):    
         import requests
         from requests.auth import HTTPBasicAuth    
 
@@ -1025,6 +1025,8 @@ class KOT_remote:
 
         self.api_url = api_url
         self.password = password
+
+        self.database_name = database_name
 
     def _send_request(self, method, endpoint, data=None):
         try:
@@ -1040,9 +1042,9 @@ class KOT_remote:
             print(f"Error: {e}")  # pragma: no cover
             return None  # pragma: no cover
 
-    def set(self, database_name, key, value, encryption_key=None, compress=None):
+    def set(self, key, value, encryption_key=None, compress=None):
         data = {
-            "database_name": database_name,
+            "database_name":self.database_name,
             "key": key,
             "value": value,
             "encryption_key": encryption_key,
@@ -1050,12 +1052,12 @@ class KOT_remote:
         }
         return self._send_request("POST", "/controller/set", data)
 
-    def get(self, database_name, key, compress=None):
-        data = {"database_name": database_name, "key": key, "compress": compress}
+    def get(self, key, compress=None):
+        data = {"database_name": self.database_name, "key": key, "compress": compress}
         return self._send_request("POST", "/controller/get", data)
 
-    def delete(self, database_name, key):
-        data = {"database_name": database_name, "key": key}
+    def delete(self, key):
+        data = {"database_name": self.database_name, "key": key}
         return self._send_request("POST", "/controller/delete", data)
 
     def database_list(self):
