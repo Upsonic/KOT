@@ -127,6 +127,51 @@ Deletes the specified database.
 Deletes all the databases.
 
 
+### `debug`
+
+- Method: POST
+- Endpoint: `/controller/debug`
+- Parameters:
+  - `message`: The message to log.
+
+Logs a debug message.
+
+### `info`
+
+- Method: POST
+- Endpoint: `/controller/info`
+- Parameters:
+  - `message`: The message to log.
+
+Logs an info message.
+
+### `warning`
+
+- Method: POST
+- Endpoint: `/controller/warning`
+- Parameters:
+  - `message`: The message to log.
+
+Logs a warning message.
+
+### `error`
+
+- Method: POST
+- Endpoint: `/controller/error`
+- Parameters:
+  - `message`: The message to log.
+
+Logs an error message.
+
+### `exception`
+
+- Method: POST
+- Endpoint: `/controller/exception`
+- Parameters:
+  - `message`: The message to log.
+
+Logs an exception message.
+
 ### `execute`
 
 - Method: POST
