@@ -1036,9 +1036,9 @@ class KOT_remote:
             )
             response.raise_for_status()
             return response.json()
-        except self.requests.exceptions.RequestException as e:
-            print(f"Error: {e}")
-            return None
+        except self.requests.exceptions.RequestException as e:  # pragma: no cover
+            print(f"Error: {e}")  # pragma: no cover
+            return None  # pragma: no cover
 
     def set(self, database_name, key, value, encryption_key=None, compress=None):
         data = {
@@ -1058,16 +1058,12 @@ class KOT_remote:
         data = {"database_name": database_name, "key": key}
         return self._send_request("POST", "/controller/delete", data)
 
-    def delete_data(self, database_name, key):
-        data = {"database_name": database_name, "key": key}
-        return self._send_request("POST", "/controller/delete", data)
-
-    def list_databases(self):
+    def database_list(self):
         return self._send_request("GET", "/database/list")
 
-    def pop_database(self, database_name):
+    def database_pop(self, database_name):
         data = {"database_name": database_name}
         return self._send_request("POST", "/database/pop", data)
 
-    def pop_all_database(self):
-        return self._send_request("POST", "/database/pop_all")
+    def database_pop_all(self):
+        return self._send_request("GET", "/database/pop_all")
