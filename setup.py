@@ -3,7 +3,8 @@
 
 from setuptools import setup
 
-
+with open('requirements.txt') as fp:
+    install_requires = fp.read()
 setup(
     name="kot",
     version="0.28.0",
@@ -16,12 +17,7 @@ setup(
     license="MIT",
     packages=["kot"],
     package_dir={"": "src"},
-    install_requires=[
-        "fire==0.5.0",
-        "mgzip==0.2.1",
-        "rich==13.5.2",
-        "cryptography==41.0.3",
-    ],
+    install_requires=install_requires,
     entry_points={
         "console_scripts": ["KOT=kot.kot:main"],
     },

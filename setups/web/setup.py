@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
+import os
+
+
+with open(os.path.join(os.path.dirname(__file__), "..", "..","requirements",'web.txt')) as fp:
+    install_requires = fp.read()
 
 setup(
     name="kot_web",
@@ -11,9 +16,7 @@ setup(
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',
-    install_requires="""
-    flet==0.8.4
-    """,
+    install_requires=install_requires,
     python_requires=">= 3",
     zip_safe=False,
 )

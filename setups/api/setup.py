@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
+import os
+
+
+with open(os.path.join(os.path.dirname(__file__), "..", "..","requirements",'api.txt')) as fp:
+    install_requires = fp.read()
+
 
 setup(
     name="kot_api",
@@ -11,11 +17,7 @@ setup(
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',
-    install_requires="""
-    flask==2.0.0
-    waitress==2.1.2
-    requests==2.28.2
-    """,
+    install_requires=install_requires,
     python_requires=">= 3",
     zip_safe=False,
 )
