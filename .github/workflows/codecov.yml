@@ -44,7 +44,7 @@ jobs:
         pip install .
         cd .. 
         cd ..
-        pip install .
+
 
         pip install pytest
         pip install coverage
