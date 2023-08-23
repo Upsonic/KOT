@@ -273,12 +273,12 @@ class KOT:
 
     @staticmethod
     def api(
-        password, folder: str = "", host="localhost", port=5000
+        password, folder: str = "", host="localhost", port=5000, restricted=""
     ):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
 
-            API(folder, password, host, port)  # pragma: no cover
+            API(folder, password, host, port, restricted)  # pragma: no cover
         except ModuleNotFoundError:
             rprint(
                 "Warning: API module not found. Please install the 'kot_api' package."

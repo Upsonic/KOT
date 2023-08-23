@@ -13,10 +13,43 @@ folder = None
 host = None
 port = None
 password = None
+restricted = None
+
+
+
+set_url = "/controller/set"
+get_url = "/controller/get"
+get_all_url = "/controller/get_all"
+delete_url = "/controller/delete"
+database_list_url = "/database/list"
+database_pop_url = "/database/pop"
+database_pop_all_url = "/database/pop_all"
+database_rename_url = "/database/rename"
+database_delete_url = "/database/delete"
+database_delete_all_url = "/database/delete_all"
+debug_url = "/controller/debug"
+info_url = "/controller/info"
+warning_url = "/controller/warning"
+error_url = "/controller/error"
+exception_url = "/controller/exception"
+execute_url = "/execute"
+
+
+
+
 
 
 @app.before_request
 def check_auth():
+
+    def return_restricted():
+        return Response(
+            "Access to this URL is restricted.\n"
+            "You do not have the necessary permissions", 
+            403,  # Change status code to 403 Forbidden
+            {"WWW-Authenticate": 'Basic realm="Access Required"'}
+        )
+
     global password
     auth = request.authorization
     if not auth or (auth.username != "" or auth.password != password):
@@ -26,10 +59,45 @@ def check_auth():
             401,
             {"WWW-Authenticate": 'Basic realm="Login Required"'},
         )
+    
+    for restrict in restricted:
+        if restrict == "set" and request.endpoint == set_url:
+            return return_restricted()
+        if restrict == "get" and request.endpoint == get_url:
+            return return_restricted()            
+        if restrict == "get_all" and request.endpoint == get_all_url:
+            return return_restricted()
+        if restrict == "delete" and request.endpoint == delete_url:
+            return return_restricted()
+        if restrict == "database_list" and request.endpoint == database_list_url:
+            return return_restricted()
+        if restrict == "database_list" and request.endpoint == database_list_url:
+            return return_restricted()
+        if restrict == "database_pop" and request.endpoint == database_pop_url:
+            return return_restricted()
+        if restrict == "database_pop_all" and request.endpoint == database_pop_all_url:
+            return return_restricted()
+        if restrict == "database_rename" and request.endpoint == database_rename_url:
+            return return_restricted()
+        if restrict == "database_delete" and request.endpoint == database_delete_url:
+            return return_restricted()
+        if restrict == "database_delete_all" and request.endpoint == database_delete_all_url:
+            return return_restricted()
+        if restrict == "info" and request.endpoint == info_url:
+            return return_restricted()
+        if restrict == "warning" and request.endpoint == warning_url:
+            return return_restricted()
+        if restrict == "error" and request.endpoint == error_url:
+            return return_restricted()                                                                    
+        if restrict == "exception" and request.endpoint == exception_url:
+            return return_restricted()        
+        if restrict == "execute" and request.endpoint == execute_url:
+            return return_restricted()        
 
 
-@app.route("/controller/set", methods=["POST"])
-def set_data():
+
+@app.route(set_url, methods=["POST"])
+def set():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
     value = request.form.get("value")
@@ -42,8 +110,8 @@ def set_data():
     return "Data set successfully"
 
 
-@app.route("/controller/get", methods=["POST"])
-def get_data():
+@app.route(get_url, methods=["POST"])
+def get():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
     encryption_key = request.form.get("encryption_key")
@@ -54,7 +122,7 @@ def get_data():
     return jsonify(data)
 
 
-@app.route("/controller/get_all", methods=["POST"])
+@app.route(get_all_url, methods=["POST"])
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
@@ -66,8 +134,8 @@ def get_all():
     return jsonify(datas)
 
 
-@app.route("/controller/delete", methods=["POST"])
-def delete_data():
+@app.route(delete_url, methods=["POST"])
+def delete():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
 
@@ -77,15 +145,15 @@ def delete_data():
     return "Data deleted successfully"
 
 
-@app.route("/database/list")
-def list_databases():
+@app.route(database_list_url)
+def database_list():
     databases = KOT.database_list(folder=folder)
 
     return jsonify(databases)
 
 
-@app.route("/database/pop", methods=["POST"])
-def pop_database():
+@app.route(database_pop_url, methods=["POST"])
+def database_pop():
     database_name = request.form.get("database_name")
 
     KOT.database_pop(database_name, folder=folder)
@@ -93,15 +161,15 @@ def pop_database():
     return "Database popped successfully"
 
 
-@app.route("/database/pop_all", methods=["POST"])
-def pop_all_database():
+@app.route(database_pop_all_url, methods=["POST"])
+def database_pop_all():
     KOT.database_pop_all(folder=folder)
 
     return "All database popped successfully"
 
 
-@app.route("/database/rename", methods=["POST"])
-def rename_database():
+@app.route(database_rename_url, methods=["POST"])
+def database_rename():
     database_name = request.form.get("database_name")
     new_name = request.form.get("new_database_name")
 
@@ -110,8 +178,8 @@ def rename_database():
     return "Database renamed successfully"
 
 
-@app.route("/database/delete", methods=["POST"])
-def delete_database():
+@app.route(database_delete_url, methods=["POST"])
+def database_delete():
     database_name = request.form.get("database_name")
 
     KOT.database_delete(database_name, folder=folder)
@@ -119,8 +187,8 @@ def delete_database():
     return "Database deleted successfully"
 
 
-@app.route("/database/delete_all", methods=["POST"])
-def delete_all_database():
+@app.route(database_delete_all_url, methods=["POST"])
+def database_delete_all():
     database_name = request.form.get("database_name")
 
     KOT.database_delete_all(folder=folder)
@@ -128,7 +196,7 @@ def delete_all_database():
     return "All database deleted successfully"
 
 
-@app.route("/controller/debug", methods=["POST"])
+@app.route(debug_url, methods=["POST"])
 def debug():
     message = request.form.get("message")
     database = KOT_serial("debug", folder=folder)
@@ -136,7 +204,7 @@ def debug():
     return "Debug message logged successfully"
 
 
-@app.route("/controller/info", methods=["POST"])
+@app.route(info_url, methods=["POST"])
 def info():
     message = request.form.get("message")
     database = KOT_serial("info", folder=folder)
@@ -144,7 +212,7 @@ def info():
     return "Info message logged successfully"
 
 
-@app.route("/controller/warning", methods=["POST"])
+@app.route(warning_url, methods=["POST"])
 def warning():
     message = request.form.get("message")
     database = KOT_serial("warning", folder=folder)
@@ -152,7 +220,7 @@ def warning():
     return "Warning message logged successfully"
 
 
-@app.route("/controller/error", methods=["POST"])
+@app.route(error_url, methods=["POST"])
 def error():
     message = request.form.get("message")
     database = KOT_serial("error", folder=folder)
@@ -160,7 +228,7 @@ def error():
     return "Error message logged successfully"
 
 
-@app.route("/controller/exception", methods=["POST"])
+@app.route(exception_url, methods=["POST"])
 def exception():
     message = request.form.get("message")
     database = KOT_serial("exception", folder=folder)
@@ -168,19 +236,21 @@ def exception():
     return "Exception message logged successfully"
 
 
-@app.route("/execute", methods=["POST"])
+@app.route(execute_url, methods=["POST"])
 def execute():
     query = request.form.get("query")
     return jsonify(KOT.execute(query, folder=folder))
 
 
-def API(folder_data, password_data, host_data, port_data):
+def API(folder_data, password_data, host_data, port_data, restricted_data):
     global folder
     global host
     global port
     global password
+    global restricted
     folder = folder_data
     host = host_data
     port = port_data
     password = password_data
+    restricted = restricted_data.split(",")
     serve(app, host=host, port=port)
