@@ -42,13 +42,6 @@ execute_url = "/execute"
 @app.before_request
 def check_auth():
 
-    def return_restricted():
-        return Response(
-            "Access to this URL is restricted.\n"
-            "You do not have the necessary permissions", 
-            403,  # Change status code to 403 Forbidden
-            {"WWW-Authenticate": 'Basic realm="Access Required"'}
-        )
 
     global password
     auth = request.authorization
@@ -59,41 +52,16 @@ def check_auth():
             401,
             {"WWW-Authenticate": 'Basic realm="Login Required"'},
         )
-    
+    print("restricteds", restricted)
     for restrict in restricted:
-        if restrict == "set" and request.endpoint == set_url:
-            return return_restricted()
-        if restrict == "get" and request.endpoint == get_url:
-            return return_restricted()            
-        if restrict == "get_all" and request.endpoint == get_all_url:
-            return return_restricted()
-        if restrict == "delete" and request.endpoint == delete_url:
-            return return_restricted()
-        if restrict == "database_list" and request.endpoint == database_list_url:
-            return return_restricted()
-        if restrict == "database_list" and request.endpoint == database_list_url:
-            return return_restricted()
-        if restrict == "database_pop" and request.endpoint == database_pop_url:
-            return return_restricted()
-        if restrict == "database_pop_all" and request.endpoint == database_pop_all_url:
-            return return_restricted()
-        if restrict == "database_rename" and request.endpoint == database_rename_url:
-            return return_restricted()
-        if restrict == "database_delete" and request.endpoint == database_delete_url:
-            return return_restricted()
-        if restrict == "database_delete_all" and request.endpoint == database_delete_all_url:
-            return return_restricted()
-        if restrict == "info" and request.endpoint == info_url:
-            return return_restricted()
-        if restrict == "warning" and request.endpoint == warning_url:
-            return return_restricted()
-        if restrict == "error" and request.endpoint == error_url:
-            return return_restricted()                                                                    
-        if restrict == "exception" and request.endpoint == exception_url:
-            return return_restricted()        
-        if restrict == "execute" and request.endpoint == execute_url:
-            return return_restricted()        
-
+        print("endpoitn:", type(request.endpoint) )
+        if restrict == request.endpoint:
+            return Response(
+            "Access to this URL is restricted.\n"
+            "You do not have the necessary permissions", 
+            403,  # Change status code to 403 Forbidden
+            {"WWW-Authenticate": 'Basic realm="Access Required"'}
+        )
 
 
 @app.route(set_url, methods=["POST"])
@@ -252,5 +220,5 @@ def API(folder_data, password_data, host_data, port_data, restricted_data):
     host = host_data
     port = port_data
     password = password_data
-    restricted = restricted_data.split(",")
+    restricted = list(restricted_data)
     serve(app, host=host, port=port)

@@ -29,11 +29,20 @@ You must use the API with `Basic Auth`.
   - Password: The password that you used for starting API.
 
 
+## Restriction
+You restrict some uses via `--restricted` argument. You can restrict api endpoints via the name and seperate by comma.
+
+```console
+KOT api <password> --host localhost --port 5000 --restricted "set, get, delete"
+```
+
+
+
 ## Referance
 
 The API provides the following endpoints for interacting with the KOT key-value database.
 
-### `set_data`
+### `set`
 
 - Method: POST
 - Endpoint: `/controller/set`
@@ -46,7 +55,7 @@ The API provides the following endpoints for interacting with the KOT key-value 
 
 Sets the value for the given key in the specified database.
 
-### `get_data`
+### `get`
 
 - Method: POST
 - Endpoint: `/controller/get`
@@ -67,7 +76,7 @@ Retrieves the value for the given key from the specified database.
 
 Retrieves all the data from the specified database.
 
-### `delete_data`
+### `delete`
 
 - Method: POST
 - Endpoint: `/controller/delete`
@@ -77,14 +86,14 @@ Retrieves all the data from the specified database.
 
 Deletes the value for the given key from the specified database.
 
-### `list_databases`
+### `database_list`
 
 - Method: GET
 - Endpoint: `/database/list`
 
 Lists all the databases.
 
-### `pop_database`
+### `database_pop`
 
 - Method: POST
 - Endpoint: `/database/pop`
@@ -93,14 +102,14 @@ Lists all the databases.
 
 Deletes the specified database.
 
-### `pop_all_database`
+### `database_pop_all`
 
 - Method: POST
 - Endpoint: `/database/pop_all`
 
 Deletes all the databases.
 
-### `rename_database`
+### `database_rename`
 
 - Method: POST
 - Endpoint: `/database/rename`
@@ -110,7 +119,7 @@ Deletes all the databases.
 
 Renames the specified database.
 
-### `delete_database`
+### `database_delete`
 
 - Method: POST
 - Endpoint: `/database/delete`
@@ -119,7 +128,7 @@ Renames the specified database.
 
 Deletes the specified database.
 
-### `delete_all_database`
+### `database_delete_all`
 
 - Method: POST
 - Endpoint: `/database/delete_all`
