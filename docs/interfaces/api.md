@@ -37,6 +37,14 @@ KOT api <password> --host localhost --port 5000 --restricted "set, get, delete"
 ```
 
 
+## Rate Limit
+You can set rate limits via `--rate_limit` argument. Write rate limits like this and seperate by comma.
+
+```console
+KOT api <password> --host localhost --port 5000 --rate_limit "5 per hour, 1 per minute"
+```
+
+
 
 ## Referance
 

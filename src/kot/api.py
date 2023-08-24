@@ -3,6 +3,8 @@
 
 from waitress import serve
 from flask import Flask, request, Response, jsonify
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from .kot import KOT_serial
 from .kot import KOT
 
@@ -14,7 +16,7 @@ host = None
 port = None
 password = None
 restricted = None
-
+rate_limit = None
 
 
 set_url = "/controller/set"
@@ -36,13 +38,13 @@ execute_url = "/execute"
 
 
 
+limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
+
 
 
 
 @app.before_request
 def check_auth():
-
-
     global password
     auth = request.authorization
     if not auth or (auth.username != "" or auth.password != password):
@@ -52,9 +54,9 @@ def check_auth():
             401,
             {"WWW-Authenticate": 'Basic realm="Login Required"'},
         )
-    print("restricteds", restricted)
+
     for restrict in restricted:
-        print("endpoitn:", type(request.endpoint) )
+
         if restrict == request.endpoint:
             return Response(
             "Access to this URL is restricted.\n"
@@ -63,8 +65,13 @@ def check_auth():
             {"WWW-Authenticate": 'Basic realm="Access Required"'}
         )
 
+    
+
+
+
 
 @app.route(set_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def set():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -79,6 +86,7 @@ def set():
 
 
 @app.route(get_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def get():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -91,6 +99,7 @@ def get():
 
 
 @app.route(get_all_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
@@ -103,6 +112,7 @@ def get_all():
 
 
 @app.route(delete_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def delete():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -121,6 +131,7 @@ def database_list():
 
 
 @app.route(database_pop_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def database_pop():
     database_name = request.form.get("database_name")
 
@@ -130,6 +141,7 @@ def database_pop():
 
 
 @app.route(database_pop_all_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def database_pop_all():
     KOT.database_pop_all(folder=folder)
 
@@ -137,6 +149,7 @@ def database_pop_all():
 
 
 @app.route(database_rename_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def database_rename():
     database_name = request.form.get("database_name")
     new_name = request.form.get("new_database_name")
@@ -147,6 +160,7 @@ def database_rename():
 
 
 @app.route(database_delete_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def database_delete():
     database_name = request.form.get("database_name")
 
@@ -156,6 +170,7 @@ def database_delete():
 
 
 @app.route(database_delete_all_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def database_delete_all():
     database_name = request.form.get("database_name")
 
@@ -165,6 +180,7 @@ def database_delete_all():
 
 
 @app.route(debug_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def debug():
     message = request.form.get("message")
     database = KOT_serial("debug", folder=folder)
@@ -173,6 +189,7 @@ def debug():
 
 
 @app.route(info_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def info():
     message = request.form.get("message")
     database = KOT_serial("info", folder=folder)
@@ -181,6 +198,7 @@ def info():
 
 
 @app.route(warning_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def warning():
     message = request.form.get("message")
     database = KOT_serial("warning", folder=folder)
@@ -189,6 +207,7 @@ def warning():
 
 
 @app.route(error_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def error():
     message = request.form.get("message")
     database = KOT_serial("error", folder=folder)
@@ -197,6 +216,7 @@ def error():
 
 
 @app.route(exception_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def exception():
     message = request.form.get("message")
     database = KOT_serial("exception", folder=folder)
@@ -205,20 +225,25 @@ def exception():
 
 
 @app.route(execute_url, methods=["POST"])
+@limiter.limit(rate_limit) 
 def execute():
     query = request.form.get("query")
     return jsonify(KOT.execute(query, folder=folder))
 
 
-def API(folder_data, password_data, host_data, port_data, restricted_data):
+def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data):
     global folder
     global host
     global port
     global password
     global restricted
+    global rate_limit
+    global limiter
     folder = folder_data
     host = host_data
     port = port_data
     password = password_data
     restricted = list(restricted_data)
+    rate_limit = rate_limit_data.split(",")
+    limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
     serve(app, host=host, port=port)
