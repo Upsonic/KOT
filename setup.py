@@ -16,7 +16,6 @@ setup(
     author_email="atadogan06@gmail.com",
     license="MIT",
     packages=["kot"],
-    package_dir={"": "src"},
     install_requires=install_requires,
     entry_points={
         "console_scripts": ["KOT=kot.kot:main"],
