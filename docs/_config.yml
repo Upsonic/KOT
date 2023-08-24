@@ -11,9 +11,9 @@ aux_links:
     - "//github.com/onuratakan/KOT"
 
 # External navigation links
-#nav_external_links:
-#  - title: naruno.org
-#    url: https://naruno.org/
+nav_external_links:
+  - title: @kot_database
+    url: https://twitter.com/kot_database
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
