@@ -16,7 +16,7 @@ docker pull ghcr.io/onuratakan/api:latest
 
 ## Run the Container
 ```console 
-docker run -d --name KOT_API -p 5000:5000 ghcr.io/onuratakan/api:latest KOT api <password> --host='0.0.0.0' --port=5001
+docker run -d --name KOT_API -p 5000:5000 ghcr.io/onuratakan/api:latest KOT api <password> --host='0.0.0.0' --port=5000
 ```
 
 ## Test
