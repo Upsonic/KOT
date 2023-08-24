@@ -12,7 +12,7 @@ aux_links:
 
 # External navigation links
 nav_external_links:
-  - title: @kot_database
+  - title: "@kot_database"
     url: https://twitter.com/kot_database
 
 # Makes Aux links open in a new tab. Default is false
