@@ -8,7 +8,7 @@ with open('requirements.txt') as fp:
 setup(
     name="kot",
     version="0.30.0",
-    description="""Efficient Key-Value Data Storage with Multithreaded Simultaneous Writing""",
+    description="""Flexible, secure and scalable database.""",
     long_description="".join(open("README.md", encoding="utf-8").readlines()),
     long_description_content_type="text/markdown",
     url="https://github.com/onuratakan/KOT",
