@@ -17,7 +17,9 @@ port = None
 password = None
 restricted = None
 rate_limit = None
-
+limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
+key_lenght = None
+value_lenght = None
 
 set_url = "/controller/set"
 get_url = "/controller/get"
@@ -38,14 +40,15 @@ execute_url = "/execute"
 
 
 
-limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
 
 
 
 
 @app.before_request
-def check_auth():
+def check():
     global password
+    global key_lenght
+    global value_lenght
     auth = request.authorization
     if not auth or (auth.username != "" or auth.password != password):
         return Response(
@@ -65,7 +68,28 @@ def check_auth():
             {"WWW-Authenticate": 'Basic realm="Access Required"'}
         )
 
-    
+
+    if key_lenght is not None:
+        if request.form.get("key") is not None:
+            if len(request.form.get("key")) > key_lenght:
+                return Response(
+                    "Key lenght is restricted.\n"
+                    "You do not have the true key lenght", 
+                    403,  # Change status code to 403 Forbidden
+                    {"WWW-Authenticate": 'Basic realm="True Key Lenght Required"'}
+                )            
+
+    if value_lenght is not None:
+        if request.form.get("value") is not None:
+            if len(request.form.get("value")) > value_lenght:
+                return Response(
+                    "Value lenght is restricted.\n"
+                    "You do not have the true value lenght", 
+                    403,  # Change status code to 403 Forbidden
+                    {"WWW-Authenticate": 'Basic realm="True Value Lenght Required"'}
+                )            
+
+
 
 
 
@@ -231,7 +255,7 @@ def execute():
     return jsonify(KOT.execute(query, folder=folder))
 
 
-def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data):
+def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data):
     global folder
     global host
     global port
@@ -239,6 +263,8 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     global restricted
     global rate_limit
     global limiter
+    global key_lenght
+    global value_lenght
     folder = folder_data
     host = host_data
     port = port_data
@@ -246,4 +272,6 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     restricted = list(restricted_data)
     rate_limit = rate_limit_data.split(",")
     limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
+    key_lenght = key_lenght_data
+    value_lenght = value_lenght_data
     serve(app, host=host, port=port)

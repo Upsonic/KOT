@@ -44,7 +44,23 @@ You can set rate limits via `--rate_limit` argument. Write rate limits like this
 KOT api <password> --host localhost --port 5000 --rate_limit "5 per hour, 1 per minute"
 ```
 
+## Key Lenght Limit
+You can set key lenght limits via `--key_lenght` argument. Write rate limits like this:
 
+```console
+KOT api <password> --host localhost --port 5000 --key_lenght 15
+```
+
+this will limit to 15 character.
+
+## Value Lenght Limit
+You can set value lenght limits via `--value_lenght` argument. Write rate limits like this:
+
+```console
+KOT api <password> --host localhost --port 5000 --value_lenght 15
+```
+
+this will limit to 15 character.
 
 ## Referance
 
