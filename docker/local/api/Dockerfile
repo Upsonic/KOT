@@ -13,8 +13,11 @@ WORKDIR /app/
 
 COPY KOT KOT
 
-WORKDIR /app/KOT
+WORKDIR /app/KOT/setups/api
 
+RUN pip install .
+
+WORKDIR /app/KOT
 
 RUN pip install .
 
