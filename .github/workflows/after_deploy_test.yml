@@ -1,0 +1,68 @@
+name: After Deploy Test
+
+on:
+  workflow_run:
+    workflows: ["Deploys"]
+    types:
+      - completed  
+
+jobs:
+  pypi:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.8'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install kot kot_api kot_gui kot_web
+
+      - name: Execute set and get_all operation
+        run: |
+          KOT --name test_db set test_key test_value
+          KOT --name test_db get_all
+  docker:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.8'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Pull
+        run: |
+          docker pull ghcr.io/onuratakan/api:latest
+
+
+      - name: Execute database_list operation
+        run: |
+          docker run -d --name KOT_API -p 5000:5000 ghcr.io/onuratakan/api:latest KOT api pass --host='0.0.0.0' --port=5000
+          curl --location 'http://localhost:5000/controller/set' \
+          --header 'Authorization: Basic OnBhc3M=' \
+          --form 'database_name="test_db"' \
+          --form 'key="test_key"' \
+          --form 'value="test_vaue"'
+          curl --location 'http://localhost:5000/controller/get' \
+          --header 'Authorization: Basic OnBhc3M=' \
+          --form 'database_name="test_user"' \
+          --form 'key="test_key"'
