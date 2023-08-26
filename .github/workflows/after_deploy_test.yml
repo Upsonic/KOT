@@ -4,7 +4,8 @@ on:
   workflow_run:
     workflows: ["Deploys"]
     types:
-      - completed  
+      - completed 
+  workflow_dispatch: 
 
 jobs:
   pypi:
@@ -26,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install kot kot_api kot_gui kot_web
+          pip install kot kot_api kot_gui kot_web --user
 
       - name: Execute set and get_all operation
         run: |
