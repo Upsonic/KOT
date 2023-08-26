@@ -12,6 +12,8 @@ aux_links:
 
 # External navigation links
 nav_external_links:
+  - title: Website
+    url: https://kotdatabase.my.canva.site/
   - title: "@kot_database"
     url: https://twitter.com/kot_database
 
