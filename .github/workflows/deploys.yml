@@ -5,8 +5,6 @@ on:
     workflows: ["Releases"]
     types:
       - completed  
-  release:
-    types: [published]
 
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
@@ -15,6 +13,7 @@ jobs:
   deploy-pypi:
 
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: Deploys
     strategy:
       matrix:
@@ -56,6 +55,7 @@ jobs:
   deploy-docker:
 
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment: Deploys
     strategy:
       matrix:
