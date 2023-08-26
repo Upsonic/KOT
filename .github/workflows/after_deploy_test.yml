@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install kot==0.27.3 kot_api kot_gui kot_web --user
+          pip install kot kot_api kot_gui kot_web --user
 
       - name: Execute set and get_all operation
         run: |
