@@ -53,14 +53,12 @@ print("Your Fernet key (SO Secret):", fernet_key)
 ```
 
 
-# Settng Global Encryption and Compress
+# Settng Global Encryption
 
 ```python
 from kot import KOT
 
 KOT.force_encrypt = "My_Global_Enc_Key"
-
-KOT.force_compress = True
 
 
 #Your operations

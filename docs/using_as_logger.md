@@ -9,9 +9,7 @@ has_children: false
 
 This document provides documentation for the debug, info, warning, error, and exception functions of the KOT class.
 
-## Debug Function
-
-The debug function is used to log debug messages. It takes a single parameter:
+These functions takes a single parameter:
 
 - `message` (str): The message to be logged.
 
@@ -20,89 +18,22 @@ Example usage:
 ```python
 from kot import KOT
 
-# Creating a database
-logger = KOT("logs")
-
-logger.debug("This is a debug message")
-```
-
-The function does not return any value and does not raise any exceptions.
-
-## Info Function
-
-The info function is used to log informational messages. It takes a single parameter, `message`, which is the message to be logged.
-
-Example usage:
-
-```python
-from kot import KOT
+#If you want you can set the global encrypton and compress for logs 
+#KOT.force_encrypt = "My_Global_Enc_Key"
+#KOT.force_compress = True
 
 # Creating a database
 logger = KOT("logs")
 
-logger.info("This is an info message")
+logger.debug("This is a log message")
+logger.info("This is a log message")
+logger.warning("This is a log message")
+logger.error("This is a log message")
+logger.exception("This is a log message")
+
+
 ```
 
-The function does not return any value and does not raise any exceptions.
-
-## Warning Function
-
-The warning function is used to log warning messages. It takes a single parameter:
-
-- `message` (str): The message to be logged.
-
-Example usage:
-
-```python
-from kot import KOT
-
-# Creating a database
-logger = KOT("logs")
-
-logger.warning("This is a warning message")
-```
-
-The function does not return any value and does not raise any exceptions.
-
-## Error Function
-
-The error function is used to log error messages. It takes a single parameter:
-
-- `message` (str): The message to be logged.
-
-Example usage:
-
-
-```python
-from kot import KOT
-
-# Creating a database
-logger = KOT("logs")
-
-logger.error("This is an error message")
-```
-
-The function does not return any value and does not raise any exceptions.
-
-## Exception Function
-
-The exception function is used to log exception messages. It takes a single parameter:
-
-- `message` (str): The message to be logged.
-
-Example usage:
-
-
-```python
-from kot import KOT
-
-# Creating a database
-logger = KOT("logs")
-
-logger.exception("This is an exception message")
-```
-
-The function does not return any value and does not raise any exceptions.
 
 
 

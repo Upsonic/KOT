@@ -27,3 +27,16 @@ Output:
 ```console
 LONG TEXT
 ```
+
+# Settng Global Compressing
+
+```python
+from kot import KOT
+
+
+KOT.force_compress = True
+
+
+#Your operations
+
+```
