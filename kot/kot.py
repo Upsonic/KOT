@@ -1015,10 +1015,10 @@ def main():  # pragma: no cover
 
 
 
-class KOT_remote:    
-    def __init__(self, database_name, api_url, password):    
+class KOT_remote:
+    def __init__(self, database_name, api_url, password):
         import requests
-        from requests.auth import HTTPBasicAuth    
+        from requests.auth import HTTPBasicAuth
 
         self.requests = requests
         self.HTTPBasicAuth = HTTPBasicAuth
@@ -1053,28 +1053,44 @@ class KOT_remote:
             response = self.requests.request(
                 method,
                 self.api_url + endpoint,
-                json=data,
+                data=data,
                 auth=self.HTTPBasicAuth("", self.password),
             )
             response.raise_for_status()
-            return response.json()
+            return response.text
         except self.requests.exceptions.RequestException as e:  # pragma: no cover
             print(f"Error: {e}")  # pragma: no cover
             return None  # pragma: no cover
 
     def set(self, key, value, encryption_key=None, compress=None):
+        # Encrypt the value
+        if encryption_key is not None:
+            db = KOT_serial(self.database_name)
+            db.set(key, value, encryption_key=encryption_key)
+            value = db.get(key)
+            db.delete(key)
+        
         data = {
-            "database_name":self.database_name,
+            "database_name": self.database_name,
             "key": key,
             "value": value,
-            "encryption_key": encryption_key,
             "compress": compress,
         }
         return self._send_request("POST", "/controller/set", data)
 
-    def get(self, key, compress=None):
-        data = {"database_name": self.database_name, "key": key, "compress": compress}
-        return self._send_request("POST", "/controller/get", data)
+    def get(self, key, encryption_key=None,):
+        data = {"database_name": self.database_name, "key": key}
+        response = self._send_request("POST", "/controller/get", data)
+        
+        # Decrypt the received value
+        if encryption_key is not None:
+            db = KOT_serial(self.database_name)
+            db.set(key, response)
+            response = db.get(key, encryption_key=encryption_key)
+            db.delete(key)
+        
+        
+        return response
 
     def delete(self, key):
         data = {"database_name": self.database_name, "key": key}

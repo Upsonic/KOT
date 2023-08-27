@@ -127,8 +127,6 @@ def get():
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
-    if encryption_key is None:
-        encryption_key = ""
     database = KOT_serial(database_name, folder=folder)
     datas = database.get_all(encryption_key=encryption_key)
 
