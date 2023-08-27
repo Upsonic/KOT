@@ -1066,7 +1066,9 @@ class KOT_remote:
             return None  # pragma: no cover
 
     def set(self, key, value, encryption_key="a", compress=None):
-        # Encrypt the value
+        compress = True if KOT.force_compress else compress
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+
         if encryption_key is not None:
             db = KOT_serial(self.database_name)
             db.set(key, value, encryption_key=encryption_key)
@@ -1082,6 +1084,8 @@ class KOT_remote:
         return self._send_request("POST", "/controller/set", data)
 
     def get(self, key, encryption_key="a"):
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+
         data = {"database_name": self.database_name, "key": key}
         response = self._send_request("POST", "/controller/get", data)
         
