@@ -3,5 +3,5 @@ from .kot import HASHES
 from .kot import KOT_serial
 from .kot import KOT_remote
 
-__version__ = '0.31.2'
+__version__ = '0.32.0'
 
