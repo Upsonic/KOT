@@ -21,8 +21,7 @@ from cryptography.fernet import Fernet
 import copy as cpv
 
 
-force_compress = False
-force_encrypt = False
+
 open_databases = {}
 start_location = os.getcwd()
 
@@ -43,6 +42,10 @@ class HASHES:
 
 
 class KOT:
+
+    force_compress = False
+    force_encrypt = False
+
     def bulk_set(self, kv_pairs: list) -> bool:
         for pair in kv_pairs:
             key, value = pair
@@ -161,9 +164,9 @@ class KOT:
     def benchmark_set(
         number: int = 10000, compress: bool = False, encryption_key: str = None
     ) -> float:  # pragma: no cover
-        compress = True if force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            force_encrypt if force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
 
         my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
@@ -186,9 +189,9 @@ class KOT:
         encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float:  # pragma: no cover
-        compress = True if force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            force_encrypt if force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
         my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
@@ -213,9 +216,9 @@ class KOT:
         encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float:  # pragma: no cover
-        compress = True if force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            force_encrypt if force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
         my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
@@ -237,9 +240,9 @@ class KOT:
     def benchmark(
         number: int = 10000, compress: bool = False, encryption_key: str = None
     ) -> float:  # pragma: no cover
-        compress = True if force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            force_encrypt if force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
         total_time = 0  # pragma: no cover
         total_time += KOT.benchmark_set(
@@ -471,8 +474,8 @@ class KOT:
         custom_key_location: str = "",
         short_cut: bool = False,
     ) -> bool:
-        compress = True if force_compress else compress
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
+        compress = True if KOT.force_compress else compress
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         self.counter += 1
 
         meta = {"type": "value", "file": None, "direct_file": True}
@@ -666,7 +669,7 @@ class KOT:
         raw_dict: bool = False,
         get_shotcut: bool = False,
     ):
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         if key in self.cache and not no_cache:
             cache_control = False
             currently = time.time()
@@ -831,7 +834,7 @@ class KOT:
         return True
 
     def dict(self, encryption_key: str = None, no_data: bool = False):
-        encryption_key = force_encrypt if force_encrypt != False else encryption_key
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         result = {}
         for key in os.listdir(self.location):
             if not "." in key:

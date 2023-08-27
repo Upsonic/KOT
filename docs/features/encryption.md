@@ -51,3 +51,18 @@ print(my_address_db.get("Onur", encryption_key=fernet_key))
 
 print("Your Fernet key (SO Secret):", fernet_key)
 ```
+
+
+# Settng Global Encryption and Compress
+
+```python
+from kot import KOT
+
+KOT.force_encrypt = "My_Global_Enc_Key"
+
+KOT.force_compress = True
+
+
+#Your operations
+
+```
