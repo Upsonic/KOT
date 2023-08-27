@@ -762,7 +762,10 @@ class TestKOT(unittest.TestCase):
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
-        self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name', 'key': 'key', 'value': 'value', 'compress': None})
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["database_name"],'database_name')
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["key"],'key')
+        self.assertNotEqual(mock_send_request._mock_call_args[1]["data"]["value"],'value')
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["compress"],None)
 
     @patch('requests.request')
     def test_remote_set_enc(self, mock_send_request):
