@@ -857,7 +857,7 @@ class TestKOT(unittest.TestCase):
         test_message = "This is a test message for the error function."
         mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.error(test_message)
-        self.assertEqual(result, {'success': True})
+        self.assertEqual(result(), {'success': True})
 
     @patch('requests.request')
     def test_remote_exception(self, mock_send_request):
