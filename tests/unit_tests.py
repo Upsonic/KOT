@@ -831,7 +831,7 @@ class TestKOT(unittest.TestCase):
     def test_remote_debug(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the debug function."
-        mock_send_request.return_value.json.return_value = {'success': True}
+        mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.debug(test_message)
         self.assertEqual(result(), {'success': True})
 
@@ -839,7 +839,7 @@ class TestKOT(unittest.TestCase):
     def test_remote_info(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the info function."
-        mock_send_request.return_value.json.return_value = {'success': True}
+        mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.info(test_message)
         self.assertEqual(result(), {'success': True})
 
@@ -847,7 +847,7 @@ class TestKOT(unittest.TestCase):
     def test_remote_warning(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the warning function."
-        mock_send_request.return_value.json.return_value = {'success': True}
+        mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.warning(test_message)
         self.assertEqual(result(), {'success': True})
 
@@ -855,7 +855,7 @@ class TestKOT(unittest.TestCase):
     def test_remote_error(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the error function."
-        mock_send_request.return_value.json.return_value = {'success': True}
+        mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.error(test_message)
         self.assertEqual(result, {'success': True})
 
@@ -863,7 +863,7 @@ class TestKOT(unittest.TestCase):
     def test_remote_exception(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the exception function."
-        mock_send_request.return_value.json.return_value = {'success': True}
+        mock_send_request.return_value.text.return_value = {'success': True}
         result = kot_remote.exception(test_message)
         self.assertEqual(result(), {'success': True})
 
