@@ -21,7 +21,6 @@ The KOT database is a flexible, secure and scalable database that supports multi
 - **Transactional and Asynchronous Operations**: Perform multiple operations in a single transaction or perform operations asynchronously for improved performance.
 
 
-
 ```mermaid
 graph TD;
     A[KOT Database];
@@ -57,39 +56,49 @@ You can install KOT by pip3:
 pip3 install kot
 ```
 
-## Usage
-KOT is aimed to be used in Python and command line as well. You can use it in your Python code or in command line.
-
-
-### In Python
+### Demo
 
 ```python
 from kot import KOT
 
 # Creating databases
-client_address_db = KOT("client_addresses")
+db = KOT("My_New_DB")
 
 
-# Setting functions
-client_address_db.set("Onur", "Sivas")
-#client_address_db.set("Onur", "Sivas", compress=True)
-#client_address_db.set("Onur", "Sivas", encryption_key="my_encryption_key"))
+# Flexible
+db.set("Key", "String")
+db.set("Key", 123)
+db.set("Key", 123.213)
+db.set("Key", Object())
+db.set("Key", ["Alist"])
+db.set("Key", {"a": "dict"})
+db.set("Key", (1,"Atuple"))
+db.set("Key", file="onur.jpg")
 
 
-# Getting functions
-print(my_kot.get("Onur"))
+# Secure
+db.set("Key", "String",        encryption_key="my_encryption_key")
+db.set("Key", 123,             encryption_key="my_encryption_key")
+db.set("Key", 123.213,         encryption_key="my_encryption_key")
+db.set("Key", Object(),        encryption_key="my_encryption_key")
+db.set("Key", ["Alist"],       encryption_key="my_encryption_key")
+db.set("Key", {"a": "dict"},   encryption_key="my_encryption_key")
+db.set("Key", (1,"Atuple"),    encryption_key="my_encryption_key")
+db.set("Key", file="onur.jpg", encryption_key="my_encryption_key")
 
-my_kot.delete("Onur")
+
+
+# Scalable
+db.get("Key") #Instant, no waiting and no searching
+
+
 ```
 
-### Console
-
-```console	
-KOT --name=client_addresses set Onur Sivas
-```
-```console
-KOT --name=client_addresses get Onur
-```
+### Interfaces
+- [CLI](https://onuratakan.github.io/KOT/interfaces/cli.html)
+- [GUI](https://onuratakan.github.io/KOT/interfaces/gui.html)
+- [WEB](https://onuratakan.github.io/KOT/interfaces/web.html)
+- [CLI](https://onuratakan.github.io/KOT/interfaces/api.html)
 
 ## Documentation
 You can find the documentation [here](https://onuratakan.github.io/KOT/).
