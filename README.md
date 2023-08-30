@@ -27,6 +27,7 @@ db.set("Key", ["Alist"])
 db.set("Key", {"a": "dict"})
 db.set("Key", (1,"Atuple"))
 db.set("Key", file="onur.jpg")
+db.set("Key", file="onur.anytype")
 
 
 # Secure
