@@ -88,7 +88,7 @@ class TestKOT(unittest.TestCase):
         with open("test_file.txt", "w") as f:
             f.write("test")
 
-        self.KOT.set("key1", file="test_file.txt")
+        self.KOT.set("key1", file="test_file.txt", dont_remove_original_file=False)
         self.assertEqual(os.path.exists("test_file.txt"), False)
         file_path = self.KOT.get("key1")
         with open(file_path, "r") as f:
@@ -302,7 +302,7 @@ class TestKOT(unittest.TestCase):
     def test_set_get_delete_cache_clear_cache(self):
         with open("test_file.txt", "w") as f:
             f.write("test")
-        self.KOT.set("key1", file="test_file.txt")
+        self.KOT.set("key1", file="test_file.txt", dont_remove_original_file=False)
         self.assertEqual(os.path.exists("test_file.txt"), False)
         file_path = self.KOT.get("key1")
         with open(file_path, "r") as f:
