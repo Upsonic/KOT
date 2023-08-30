@@ -4,6 +4,7 @@ import unittest
 import os
 import sys
 import shutil
+import copy
 from unittest.mock import patch
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
@@ -787,6 +788,17 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/get'))
         self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name', 'key': 'key'})
+
+    @patch('kot.KOT_remote._send_request')
+    def test_remote_get_all(self, mock_send_request):
+        backup = copy.copy(KOT.force_encrypt)
+        KOT.force_encrypt = None
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        mock_send_request.return_value = '{"success": "True"}'
+        the_return = kot_remote.get_all()
+        self.assertEqual(the_return, {'success': 'True'})
+        KOT.force_encrypt = backup
+
 
     @patch('requests.request')
     def test_remote_delete(self, mock_send_request):

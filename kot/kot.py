@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+import json
 from rich import print as rprint
 import base64
 import contextlib
@@ -1098,6 +1099,23 @@ class KOT_remote:
         
         
         return response
+
+
+
+    def get_all(self, encryption_key="a"):
+        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+
+        data = {"database_name": self.database_name}
+        datas = self._send_request("POST", "/controller/get_all", data)
+
+        datas = json.loads(datas)
+        db = KOT_serial(self.database_name)
+        for each in datas:
+                db.set(each, datas[each])
+                datas[each] = db.get(each, encryption_key=encryption_key)
+                db.delete(each)            
+        return datas
+
 
     def delete(self, key):
         data = {"database_name": self.database_name, "key": key}
