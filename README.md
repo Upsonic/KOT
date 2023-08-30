@@ -2,47 +2,6 @@
 
 The KOT database is a flexible, secure and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
 
-## Features
-
-- **Flexibility**: Save data in any format, including objects and files, providing great flexibility and adaptability to different use cases and data structures.
-- **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
-- **Encryption**: Keep sensitive information secure and private with the included encryption feature.
-- **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
-- **Fault Tolerance**: By the design of the KOT database, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
-- **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
-- **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
-- **Docker Avaibility**: You can use KOT database API as an container on Docker platform. It's good for more stable, safe and durable uses.
-- **Transactional and Asynchronous Operations**: Perform multiple operations in a single transaction or perform operations asynchronously for improved performance.
-
-
-```mermaid
-graph TD;
-    A[KOT Database];
-
-    A --> O[API];
-    A --> P[CLI];
-    A --> Q[GUI];
-    A --> R[Web];
-    O --> N[Interfaces];
-    P --> N[Interfaces];
-    Q --> N[Interfaces];
-    R --> N[Interfaces];
-
-    N --> J[Functions];
-
-
-    J --> B[Features];
-    B --> C[Multi-threaded Writing];
-    B --> D[Compression];
-    B --> E[Encryption];
-    B --> F[Scalability];
-    B --> G[Fault Tolerance];
-    B --> H[Memory Friendly];
-    B --> I[Cross-Platform Compatibility];
-
-
-```
-
 ## Installation
 You can install KOT by pip3:
 
@@ -93,6 +52,47 @@ db.get("Key") #Instant, no waiting and no searching
 - [GUI](https://onuratakan.github.io/KOT/interfaces/gui.html)
 - [WEB](https://onuratakan.github.io/KOT/interfaces/web.html)
 - [CLI](https://onuratakan.github.io/KOT/interfaces/api.html)
+
+## Features
+
+- **Flexibility**: Save data in any format, including objects and files, providing great flexibility and adaptability to different use cases and data structures.
+- **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
+- **Encryption**: Keep sensitive information secure and private with the included encryption feature.
+- **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
+- **Fault Tolerance**: By the design of the KOT database, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
+- **Memory Friendly**: The KOT database is designed to use as little memory as possible. It only loads the data you want to access into memory.
+- **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
+- **Docker Avaibility**: You can use KOT database API as an container on Docker platform. It's good for more stable, safe and durable uses.
+- **Transactional and Asynchronous Operations**: Perform multiple operations in a single transaction or perform operations asynchronously for improved performance.
+
+
+```mermaid
+graph TD;
+    A[KOT Database];
+
+    A --> O[API];
+    A --> P[CLI];
+    A --> Q[GUI];
+    A --> R[Web];
+    O --> N[Interfaces];
+    P --> N[Interfaces];
+    Q --> N[Interfaces];
+    R --> N[Interfaces];
+
+    N --> J[Functions];
+
+
+    J --> B[Features];
+    B --> C[Multi-threaded Writing];
+    B --> D[Compression];
+    B --> E[Encryption];
+    B --> F[Scalability];
+    B --> G[Fault Tolerance];
+    B --> H[Memory Friendly];
+    B --> I[Cross-Platform Compatibility];
+
+
+```
 
 ## Documentation
 You can find the documentation [here](https://onuratakan.github.io/KOT/).
