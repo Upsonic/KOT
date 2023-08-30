@@ -8,6 +8,11 @@ parent: INTERFACES
 
 # API
 
+## Install
+```console
+pip3 install kot_api
+```
+
 ## Start
 You can start the API with `api` command but you must give an password.
 

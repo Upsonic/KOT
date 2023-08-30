@@ -8,6 +8,11 @@ parent: INTERFACES
 
 # WEB
 
+## Install
+```console
+pip3 install kot_web
+```
+
 ## Start
 You can start the WEB with `web` command but you must give an password.
 

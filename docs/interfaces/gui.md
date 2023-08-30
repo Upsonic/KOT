@@ -8,6 +8,12 @@ parent: INTERFACES
 
 # GUI
 
+
+## Install
+```console
+pip3 install kot_gui
+```
+
 ## Start
 You can start the GUI with `gui` command but you must give an password.
 

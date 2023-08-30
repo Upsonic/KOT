@@ -8,6 +8,12 @@ parent: INTERFACES
 
 # CLI
 
+## Start
+You can use `KOT` command directly.
+```console
+KOT --help
+```
+
 ## Referance
 
 You can use KOT in command line. KOT has a support all functions in command line.
