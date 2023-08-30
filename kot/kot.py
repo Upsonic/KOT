@@ -471,7 +471,7 @@ class KOT:
         encryption_key: str = None,
         cache_policy: int = 0,
         dont_delete_cache: bool = False,
-        dont_remove_file: bool = True,
+        dont_remove_original_file: bool = True,
         custom_key_location: str = "",
         short_cut: bool = False,
     ) -> bool:
@@ -508,7 +508,7 @@ class KOT:
                     encryption_key=encryption_key,
                     cache_policy=cache_policy,
                     dont_delete_cache=dont_delete_cache,
-                    dont_remove_file=dont_remove_file,
+                    dont_remove_original_file=dont_remove_original_file,
                     short_cut=True,
                 )
 
@@ -520,7 +520,7 @@ class KOT:
                 try:
                     if not compress and encryption_key == None:
                         value = ""
-                        if not dont_remove_file:
+                        if not dont_remove_original_file:
                             move(file, meta["file"])
                         else:
                             copy(file, meta["file"])

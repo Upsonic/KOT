@@ -204,13 +204,13 @@ class TestKOT(unittest.TestCase):
 
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
-    def test_set_get_compress_test_file_and_dont_remove_file(self):
+    def test_set_get_compress_test_file_and_dont_remove_original_file(self):
         big_string = "a" * 1000000
         with open("test_file.txt", "w") as f:
             f.write(big_string)
 
         self.KOT.set(
-            "key1", file="test_file.txt", compress=False, dont_remove_file=True
+            "key1", file="test_file.txt", compress=False, dont_remove_original_file=True
         )
         the_size_of_not_compress = self.KOT.size_all()
         self.KOT.delete_all()
@@ -234,7 +234,7 @@ class TestKOT(unittest.TestCase):
         big_string = "a" * 1000000
         with open("test_file.txt", "w") as f:
             f.write(big_string)
-        b_db.set("key1", file="test_file.txt", compress=False, dont_remove_file=True)
+        b_db.set("key1", file="test_file.txt", compress=False, dont_remove_original_file=True)
 
         b_size = b_db.size("key1")
 
