@@ -18,7 +18,7 @@ my_image_db = KOT("images_of_team_members")
 
 # Set data
 my_location_db.set("Onur", "Sivas")
-#my_image_db.set("Onur", file="onur.jpg", dont_remove_file=False)
+#my_image_db.set("Onur", file="onur.jpg", dont_remove_file=True)
 
 # Get data
 print(my_location_db.get("Onur"))

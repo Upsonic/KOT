@@ -471,7 +471,7 @@ class KOT:
         encryption_key: str = None,
         cache_policy: int = 0,
         dont_delete_cache: bool = False,
-        dont_remove_file: bool = False,
+        dont_remove_file: bool = True,
         custom_key_location: str = "",
         short_cut: bool = False,
     ) -> bool:
