@@ -9,7 +9,7 @@ You can install KOT by pip3:
 pip3 install kot
 ```
 
-### Demo
+## Demo
 
 ```python
 from kot import KOT
@@ -48,7 +48,7 @@ db.get("Key") #Instant, no waiting and no searching
 
 ```
 
-### Interfaces
+## Interfaces
 - [CLI](https://onuratakan.github.io/KOT/interfaces/cli.html)
 - [GUI](https://onuratakan.github.io/KOT/interfaces/gui.html)
 - [WEB](https://onuratakan.github.io/KOT/interfaces/web.html)
