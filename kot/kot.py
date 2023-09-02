@@ -17,7 +17,7 @@ from shutil import move
 from shutil import rmtree
 from shutil import unpack_archive
 import random
-from cryptography.fernet import Fernet
+
 
 import copy as cpv
 
@@ -46,6 +46,11 @@ class KOT:
 
     force_compress = False
     force_encrypt = False
+
+    @staticmethod
+    def cloud_key():
+        from cryptography.fernet import Fernet
+        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30]
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -416,6 +421,7 @@ class KOT:
         self.open_files_db.delete_all()
 
     def encrypt(self, key, message):
+        from cryptography.fernet import Fernet
         # Generate a Fernet key from the user-defined key
         fernet_key = base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest())
         # Initialize a Fernet object with the generated key
@@ -425,6 +431,7 @@ class KOT:
         return encrypted_message
 
     def decrypt(self, key, message):
+        from cryptography.fernet import Fernet
         # Initialize a Fernet object with the user-defined key
         fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest()))
         # Decrypt the message using the decrypt method of the Fernet object
@@ -1144,3 +1151,8 @@ class KOT_remote:
 
     def database_pop_all(self):
         return self._send_request("GET", "/database/pop_all")
+
+
+
+def KOT_cloud(database_name):
+    return KOT_remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan')

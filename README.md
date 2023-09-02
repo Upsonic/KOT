@@ -9,6 +9,51 @@ You can install KOT by pip3:
 pip3 install kot
 ```
 
+
+## 🎉 KOT Cloud is published !
+KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
+
+- "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
+
+![KOT Cloud](https://github.com/onuratakan/KOT/assets/41792982/fb3aa83d-d641-4f79-b4ea-46d33dba0ad1)
+![KOT Cloud 2](https://github.com/onuratakan/KOT/assets/41792982/2c8b7479-a766-490e-aa6c-0a35dc142d93)
+![Copy of Instant get (5)](https://github.com/onuratakan/KOT/assets/41792982/9c250e71-bd9c-45f5-8270-b5eaf34b0a0f)
+
+
+### Creating Your Free Cloud Key
+```console
+KOT cloud_key
+```
+
+### Using Your Cloud | Setting
+
+```python
+from kot import KOT_cloud
+
+
+cloud = KOT_cloud("YOUR_CLOUD_KEY")
+
+
+
+def get_address():
+    return "Hello World I am from KOT Cloud"
+
+
+cloud.set("get_address", get_address)
+```
+
+### Using Your Cloud | Getting
+
+```python
+from kot import KOT_cloud
+
+
+cloud = KOT_cloud("YOUR_CLOUD_KEY")
+
+
+print(cloud.get("get_address")())
+```
+
 ## Demo
 
 ```python
