@@ -31,6 +31,10 @@ key_name_caches = []
 maximum_database_amount_user = None
 database_name_caches_user = {}
 
+
+maximum_key_amount_user = None
+key_name_caches_user = {}
+
 set_url = "/controller/set"
 get_url = "/controller/get"
 get_all_url = "/controller/get_all"
@@ -66,6 +70,8 @@ def check():
     global key_name_caches
     global maximum_database_amount_user
     global database_name_caches_user
+    global maximum_key_amount_user
+    global key_name_caches_user
 
     auth = request.authorization
     if not auth or (auth.username != "" or auth.password != password):
@@ -161,6 +167,23 @@ def check():
             else:
                 if request.form.get("database_name") not in database_name_caches_user[user]:
                     database_name_caches_user[user].append(request.form.get("database_name"))
+
+
+    if maximum_key_amount_user is not None:
+        if request.form.get("key") is not None:
+            user = request.remote_addr
+            if user not in key_name_caches_user:
+                key_name_caches_user[user] = []
+            if len(key_name_caches_user[user]) >= maximum_key_amount_user:
+                return Response(
+                    "You cant create more key (USER).\n"
+                    "You do not have right to create more key (USER)", 
+                    403,  # Change status code to 403 Forbidden
+                    {"WWW-Authenticate": 'Basic realm="Reached Different Key Limit (USER)"'}
+                )
+            else:
+                if request.form.get("key") not in key_name_caches_user[user]:
+                    key_name_caches_user[user].append(request.form.get("key"))
 
 
 @app.route(set_url, methods=["POST"])
@@ -322,7 +345,7 @@ def execute():
     return jsonify(KOT.execute(query, folder=folder))
 
 
-def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data, maximum_database_amount_user_data):
+def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data, maximum_database_amount_user_data, maximum_key_amount_user_data):
     global folder
     global host
     global port
@@ -335,7 +358,8 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     global database_name_lenght
     global maximum_database_amount
     global maximum_key_amount
-    global maximum_database_amount_user    
+    global maximum_database_amount_user
+    global maximum_key_amount_user
     folder = folder_data
     host = host_data
     port = port_data
@@ -349,4 +373,5 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     maximum_database_amount = maximum_database_amount_data
     maximum_key_amount = maximum_key_amount_data
     maximum_database_amount_user = maximum_database_amount_user_data
+    maximum_key_amount_user = maximum_key_amount_user_data
     serve(app, host=host, port=port)
