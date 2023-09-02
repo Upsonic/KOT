@@ -48,10 +48,10 @@ class KOT:
     force_encrypt = False
 
     def __enter__(self):
-        return self
+        return self  # pragma: no cover
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
+        pass  # pragma: no cover
 
     def bulk_set(self, kv_pairs: list) -> bool:
         for pair in kv_pairs:
@@ -1026,6 +1026,14 @@ def main():  # pragma: no cover
 
 
 class KOT_remote:
+
+
+    def __enter__(self):
+        return self  # pragma: no cover
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass  # pragma: no cover
+
     def __init__(self, database_name, api_url, password):
         import requests
         from requests.auth import HTTPBasicAuth
