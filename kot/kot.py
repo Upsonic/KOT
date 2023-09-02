@@ -47,6 +47,12 @@ class KOT:
     force_compress = False
     force_encrypt = False
 
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
     def bulk_set(self, kv_pairs: list) -> bool:
         for pair in kv_pairs:
             key, value = pair
