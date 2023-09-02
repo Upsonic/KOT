@@ -283,12 +283,12 @@ class KOT:
 
     @staticmethod
     def api(
-        password, folder: str = "", host="localhost", port=5000, restricted="", rate_limit="", key_lenght = None, value_lenght = None, database_name_lenght = None, maximum_database_amount = None, maximum_key_amount = None,
+        password, folder: str = "", host="localhost", port=5000, restricted="", rate_limit="", key_lenght = None, value_lenght = None, database_name_lenght = None, maximum_database_amount = None, maximum_key_amount = None, maximum_database_amount_user = None, 
     ):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
 
-            API(folder, password, host, port, restricted, rate_limit, key_lenght, value_lenght, database_name_lenght, maximum_database_amount, maximum_key_amount)  # pragma: no cover
+            API(folder, password, host, port, restricted, rate_limit, key_lenght, value_lenght, database_name_lenght, maximum_database_amount, maximum_key_amount, maximum_database_amount_user)  # pragma: no cover
         except ModuleNotFoundError:
             rprint(
                 "Warning: API module not found. Please install the 'kot_api' package."

@@ -89,7 +89,6 @@ KOT api <password> --host localhost --port 5000 --maximum_database_amount 15
 this will limit to 15 database.
 
 
-
 ## Key Amount Limit
 You can set amount of keys via `--maximum_key_amount` argument. Write rate limits like this:
 
@@ -98,6 +97,16 @@ KOT api <password> --host localhost --port 5000 --maximum_key_amount 15
 ```
 
 this will limit to 15 key.
+
+
+## Each IP Different Databases Lımıt
+You can set a limit for every IP via `--maximum_database_amount_user` argument. Write rate limits like this:
+
+```console
+KOT api <password> --host localhost --port 5000 --maximum_database_amount_user 5
+```
+this will limit to 5 database.
+
 
 
 ## Referance

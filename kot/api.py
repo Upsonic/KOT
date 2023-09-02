@@ -24,9 +24,12 @@ database_name_lenght=None
 maximum_database_amount = None
 database_name_caches = []
 
+
 maximum_key_amount = None
 key_name_caches = []
 
+maximum_database_amount_user = None
+database_name_caches_user = {}
 
 set_url = "/controller/set"
 get_url = "/controller/get"
@@ -61,6 +64,8 @@ def check():
     global database_name_caches
     global maximum_key_amount
     global key_name_caches
+    global maximum_database_amount_user
+    global database_name_caches_user
 
     auth = request.authorization
     if not auth or (auth.username != "" or auth.password != password):
@@ -118,10 +123,10 @@ def check():
         if request.form.get("database_name") is not None:
             if len(database_name_caches) >= maximum_database_amount:
                 return Response(
-                    "You cant create more database.\n"
-                    "You do not have right to create more database", 
+                    "You cant create more database (SYSTEM).\n"
+                    "You do not have right to create more database (SYSTEM)", 
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="Reached Different Database Limit"'}
+                    {"WWW-Authenticate": 'Basic realm="Reached Different Database Limit (SYSTEM)"'}
                 )
             else:
                 if request.form.get("database_name") not in database_name_caches:
@@ -140,6 +145,22 @@ def check():
                 if request.form.get("key") not in key_name_caches:
                     key_name_caches.append(request.form.get("key"))
 
+
+    if maximum_database_amount_user is not None:
+        if request.form.get("database_name") is not None:
+            user = request.remote_addr
+            if user not in database_name_caches_user:
+                database_name_caches_user[user] = []
+            if len(database_name_caches_user[user]) >= maximum_database_amount_user:
+                return Response(
+                    "You cant create more database (USER).\n"
+                    "You do not have right to create more database (USER)", 
+                    403,  # Change status code to 403 Forbidden
+                    {"WWW-Authenticate": 'Basic realm="Reached Different Database Limit (USER)"'}
+                )
+            else:
+                if request.form.get("database_name") not in database_name_caches_user[user]:
+                    database_name_caches_user[user].append(request.form.get("database_name"))
 
 
 @app.route(set_url, methods=["POST"])
@@ -301,7 +322,7 @@ def execute():
     return jsonify(KOT.execute(query, folder=folder))
 
 
-def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data):
+def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data, maximum_database_amount_user_data):
     global folder
     global host
     global port
@@ -314,6 +335,7 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     global database_name_lenght
     global maximum_database_amount
     global maximum_key_amount
+    global maximum_database_amount_user    
     folder = folder_data
     host = host_data
     port = port_data
@@ -326,4 +348,5 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     database_name_lenght = database_name_lenght_data
     maximum_database_amount = maximum_database_amount_data
     maximum_key_amount = maximum_key_amount_data
+    maximum_database_amount_user = maximum_database_amount_user_data
     serve(app, host=host, port=port)
