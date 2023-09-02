@@ -78,6 +78,17 @@ KOT api <password> --host localhost --port 5000 --database_name_lenght 15
 
 this will limit to 15 character.
 
+
+## Database Amount Limit
+You can set amount of databases via `--maximum_database_amount` argument. Write rate limits like this:
+
+```console
+KOT api <password> --host localhost --port 5000 --maximum_database_amount 15
+```
+
+this will limit to 15 database.
+
+
 ## Referance
 
 The API provides the following endpoints for interacting with the KOT key-value database.
