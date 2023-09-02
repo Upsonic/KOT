@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - '.github/workflows/codecov.yml'
-      - 'src/**'
+      - 'kot/**'
       - 'tests/**'
       - '.coveragerc'
   pull_request:
     paths:
       - '.github/workflows/codecov.yml'
-      - 'src/**'
+      - 'kot/**'
       - 'tests/**'
       - '.coveragerc'
   workflow_dispatch:

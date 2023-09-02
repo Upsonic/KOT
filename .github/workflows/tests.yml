@@ -4,12 +4,12 @@ on:
   push:
     paths:
       - '.github/workflows/tests.yml'
-      - 'src/**'
+      - 'kot/**'
       - 'tests/**'
   pull_request:
     paths:
       - '.github/workflows/tests.yml'
-      - 'src/**'
+      - 'kot/**'
       - 'tests/**'
   release:
     types: [published]   
