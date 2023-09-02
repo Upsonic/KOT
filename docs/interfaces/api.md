@@ -67,6 +67,17 @@ KOT api <password> --host localhost --port 5000 --value_lenght 15
 
 this will limit to 15 character.
 
+
+
+## Database Name Lenght Limit
+You can set database name lenght limits via `--database_name_lenght` argument. Write rate limits like this:
+
+```console
+KOT api <password> --host localhost --port 5000 --database_name_lenght 15
+```
+
+this will limit to 15 character.
+
 ## Referance
 
 The API provides the following endpoints for interacting with the KOT key-value database.
