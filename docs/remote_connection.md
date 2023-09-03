@@ -17,6 +17,12 @@ my_db = KOT_remote("my_db", 'http://localhost:5000', 'dockerpass')
 my_db.set("My_key", "My_value")
 my_db.get("My_key")
 my_db.delete("My_key")
+ 
+def my_function():
+    print("Hi how are you")
+my_db.function(my_function)
+my_db.function("my_function")()
+
 
 
 my_db.database_list()
@@ -28,5 +34,6 @@ my_db.info("This is an info message")
 my_db.warning("This is a warning message")
 my_db.error("This is an error message")
 my_db.exception("This is an exception message")
+
 
 ```

@@ -29,8 +29,17 @@ my_location_db.delete("Onur")
 #my_image_db.delete("Onur")
 ```
 
+def my_function():
+    print("Hi how are you")
+
+my_location_db.function(my_function)
+
+my_location_db.function("my_function")()
+
+
 Output:
 
 ```console
 Sivas
+Hi how are you
 ```

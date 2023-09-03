@@ -1008,6 +1008,18 @@ class KOT:
 
         exception_writer()
 
+    def function(self, function,
+        custom_key_location: str = "",
+        encryption_key: str = None,
+        no_cache: bool = False,
+        raw_dict: bool = False,
+        get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
+        if type(function) == str:
+            return self.get(function, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
+
+        self.set(function.__name__, function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+
+
 
 def KOT_serial(name, self_datas: bool = False, folder: str = ""):
     global start_location
@@ -1120,6 +1132,15 @@ class KOT_remote:
         
         
         return response
+
+
+    def function(self, function, encryption_key="a", compress=None):
+        if type(function) == str:
+            return self.get(function, encryption_key=encryption_key)
+        
+        self.set(function.__name__, function, encryption_key=encryption_key, compress=compress)
+
+
 
 
 
