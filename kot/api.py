@@ -254,7 +254,7 @@ def database_pop():
     return "Database popped successfully"
 
 
-@app.route(database_pop_all_url, methods=["POST"])
+@app.route(database_pop_all_url, methods=["GET"])
 @limiter.limit(rate_limit) 
 def database_pop_all():
     KOT.database_pop_all(folder=folder)
@@ -283,7 +283,7 @@ def database_delete():
     return "Database deleted successfully"
 
 
-@app.route(database_delete_all_url, methods=["POST"])
+@app.route(database_delete_all_url, methods=["GET"])
 @limiter.limit(rate_limit) 
 def database_delete_all():
     database_name = request.form.get("database_name")
