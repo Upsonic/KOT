@@ -237,7 +237,7 @@ class TestKOT(unittest.TestCase):
 
 
     def test_set_get_enable_fast(self):
-        big_string = "a" * 1000000
+        big_string = "a" * 10000000
 
         time_1 = time.time()
         KOT("aaa", enable_fast=True).set("sadas", big_string)
