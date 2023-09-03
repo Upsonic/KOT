@@ -1184,6 +1184,13 @@ class KOT_remote:
     def database_pop_all(self):
         return self._send_request("GET", "/database/pop_all")
 
+    def database_delete(self, database_name):
+        data = {"database_name": database_name}
+        return self._send_request("POST", "/database/delete", data)
+
+    def database_delete_all(self):
+        return self._send_request("GET", "/database/delete_all")
+
 
 
 def KOT_cloud(database_name):
