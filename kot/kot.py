@@ -6,7 +6,7 @@ import base64
 import contextlib
 import hashlib
 import os
-import pickle
+import dill as pickle
 import time
 import traceback
 from datetime import datetime
@@ -1016,7 +1016,7 @@ class KOT:
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
 
 
-        key = value.__name__  if callable(value) or isinstance(value, type) else f'{value=}'.partition('=')[0]
+        key = _function.__name__
 
 
 
@@ -1140,7 +1140,7 @@ class KOT_remote:
 
 
     def active(self, value, encryption_key="a", compress=None):
-        key = value.__name__  if callable(value) or isinstance(value, type) else f'{value=}'.partition('=')[0]
+        key = value.__name__
 
         self.set(key, value, encryption_key=encryption_key, compress=compress)
         return value
