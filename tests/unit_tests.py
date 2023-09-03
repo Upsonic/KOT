@@ -891,6 +891,28 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/pop_all'))
         self.assertEqual(mock_send_request._mock_call_args[1]["data"],None)
 
+
+    @patch('requests.request')
+    def test_remote_delete(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+
+        kot_remote.database_delete('database_name',)
+
+        self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
+        self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/database/delete'))
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name'})
+
+
+    @patch('requests.request')
+    def test_remote_delete_all(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+
+        kot_remote.database_delete_all()
+
+        self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
+        self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/delete_all'))
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"],None)
+
     @patch('requests.request')
     def test_remote_debug(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
