@@ -850,7 +850,7 @@ class TestKOT(unittest.TestCase):
 
 
     @patch('requests.request')
-    def test_remote_delete(self, mock_send_request):
+    def test_remote_delete_key(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
 
         kot_remote.delete('key')
