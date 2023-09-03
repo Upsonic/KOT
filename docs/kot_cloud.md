@@ -25,35 +25,42 @@ from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 ```
 
-# Sending
+## Sending
 
 
 ```python
 #FUNCTION
-@cloud.active
 def remove_lines(string):
     return string.replace("\n","")
+cloud.active(remove_lines)
 
 #CLASS
-@cloud.active
 class human:
     def __init__(self, name, age):
         self.name = name
         self.age = age
+cloud.active(human)
 
 #VARIABLE
 price = 15.2
-cloud.active(price)
+cloud.set("price", price)
 ```
 
 
-# Getting
+## Getting
 
 ```python
 #FUNCTION
 cloud.get("remove_lines")
+
 #CLASS
 cloud.get("human")
+
 #VARIABLE
 cloud.get("price")
 ```
+
+
+
+## Encryption
+You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to KOT cloud.

@@ -1016,7 +1016,7 @@ class KOT:
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
 
 
-        key = _function.__name__  if callable(_function) or isinstance(_function, object) else f'{_function=}'.partition('=')[0]
+        key = value.__name__  if callable(value) or isinstance(value, type) else f'{value=}'.partition('=')[0]
 
 
 
@@ -1139,11 +1139,11 @@ class KOT_remote:
         return response
 
 
-    def active(self, _function, encryption_key="a", compress=None):
-        key = _function.__name__  if callable(_function) or isinstance(_function, object) else f'{_function=}'.partition('=')[0]
+    def active(self, value, encryption_key="a", compress=None):
+        key = value.__name__  if callable(value) or isinstance(value, type) else f'{value=}'.partition('=')[0]
 
-        self.set(key, _function, encryption_key=encryption_key, compress=compress)
-        return _function
+        self.set(key, value, encryption_key=encryption_key, compress=compress)
+        return value
 
 
 
