@@ -49,8 +49,8 @@ class KOT:
 
     @staticmethod
     def cloud_key():
-        from cryptography.fernet import Fernet
-        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30]
+        from cryptography.fernet import Fernet # pragma: no cover
+        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30] # pragma: no cover
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -1015,10 +1015,9 @@ class KOT:
         raw_dict: bool = False,
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
 
-        if callable(_function) or isinstance(_function, object):
-            key = _function.__name__
-        else:
-            key = f'{_function=}'.partition('=')[0]
+
+        key = _function.__name__  if callable(_function) or isinstance(_function, object) else f'{_function=}'.partition('=')[0]
+
 
 
         self.set(key, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
@@ -1141,10 +1140,7 @@ class KOT_remote:
 
 
     def active(self, _function, encryption_key="a", compress=None):
-        if callable(_function) or isinstance(_function, object):
-            key = _function.__name__
-        else:
-            key = f'{_function=}'.partition('=')[0]
+        key = _function.__name__  if callable(_function) or isinstance(_function, object) else f'{_function=}'.partition('=')[0]
 
         self.set(key, _function, encryption_key=encryption_key, compress=compress)
         return _function
