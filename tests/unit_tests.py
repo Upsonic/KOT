@@ -236,7 +236,7 @@ class TestKOT(unittest.TestCase):
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
 
-    def test_set_get_compress_test_file_and_dont_remove_original_file(self):
+    def test_set_get_enable_fast(self):
         big_string = "a" * 1000000
 
         time_1 = time.time()
