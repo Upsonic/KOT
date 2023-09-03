@@ -1008,16 +1008,30 @@ class KOT:
 
         exception_writer()
 
-    def function(self, function,
+    def _function(self, _function,
         custom_key_location: str = "",
         encryption_key: str = None,
         no_cache: bool = False,
         raw_dict: bool = False,
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
-        if type(function) == str:
-            return self.get(function, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
+        if type(_function) == str:
+            return self.get(_function, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
 
-        self.set(function.__name__, function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+        self.set(_function.__name__, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+
+    def _class(self, _class,
+        custom_key_location: str = "",
+        encryption_key: str = None,
+        no_cache: bool = False,
+        raw_dict: bool = False,
+        get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
+        if type(_class) == str:
+            return self.get(_class, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
+
+        self.set(_class.__name__, _class, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+
+
+
 
 
 
@@ -1134,11 +1148,18 @@ class KOT_remote:
         return response
 
 
-    def function(self, function, encryption_key="a", compress=None):
-        if type(function) == str:
-            return self.get(function, encryption_key=encryption_key)
+    def _function(self, _function, encryption_key="a", compress=None):
+        if type(_function) == str:
+            return self.get(_function, encryption_key=encryption_key)
         
-        self.set(function.__name__, function, encryption_key=encryption_key, compress=compress)
+        self.set(_function.__name__, _function, encryption_key=encryption_key, compress=compress)
+
+    def _class(self, _class, encryption_key="a", compress=None):
+        if type(_class) == str:
+            return self.get(_class, encryption_key=encryption_key)
+        
+        self.set(_class.__name__, _class, encryption_key=encryption_key, compress=compress)
+
 
 
 

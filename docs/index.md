@@ -42,7 +42,7 @@ def get_address():
     return "Hello World I am from KOT Cloud"
 
 
-cloud.function(get_address)
+cloud._function(get_address)
 ```
 
 ### Using Your Cloud | Getting
@@ -54,7 +54,7 @@ from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
 
-print(cloud.function("get_address")())
+print(cloud._function("get_address")())
 ```
 
 ## Demo

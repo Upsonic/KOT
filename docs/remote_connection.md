@@ -20,8 +20,8 @@ my_db.delete("My_key")
  
 def my_function():
     print("Hi how are you")
-my_db.function(my_function)
-my_db.function("my_function")()
+my_db._function(my_function)
+my_db._function("my_function")()
 
 
 
