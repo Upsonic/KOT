@@ -36,11 +36,9 @@ KOT cloud_key
 from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
-
+@cloud.active
 def get_address():
     return "Hello World I am from KOT Cloud"
-
-cloud.active(get_address)
 ```
 
 ### Using Your Cloud | Getting

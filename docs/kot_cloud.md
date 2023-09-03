@@ -30,16 +30,16 @@ cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
 ```python
 #FUNCTION
+@cloud.active
 def remove_lines(string):
     return string.replace("\n","")
-cloud.active(remove_lines)
 
 #CLASS
+@cloud.active
 class human:
     def __init__(self, name, age):
         self.name = name
         self.age = age
-cloud.active(human)
 
 #VARIABLE
 price = 15.2
@@ -51,10 +51,10 @@ cloud.set("price", price)
 
 ```python
 #FUNCTION
-cloud.get("remove_lines")
+cloud.get("remove_lines")("Hi,\nhow are you")
 
 #CLASS
-cloud.get("human")
+cloud.get("human")("Onur", 100)
 
 #VARIABLE
 cloud.get("price")
