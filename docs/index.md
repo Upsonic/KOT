@@ -4,6 +4,7 @@ title: INTRODUCTION
 nav_order: 1
 has_children: false
 ---
+
 # KOT database | [![Tests](https://github.com/onuratakan/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT) | [![After Deploy Test](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml)
 
 The KOT database is a flexible, secure and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
@@ -16,14 +17,13 @@ pip3 install kot
 ```
 
 
-## 🎉 KOT Cloud is published !
+## 🎉 KOT Cloud is published ! | [Go to Docs](https://onuratakan.github.io/KOT/kot_cloud.html)
 KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
 
 - "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
 
 ![KOT Cloud](https://github.com/onuratakan/KOT/assets/41792982/fb3aa83d-d641-4f79-b4ea-46d33dba0ad1)
-![KOT Cloud 2](https://github.com/onuratakan/KOT/assets/41792982/2c8b7479-a766-490e-aa6c-0a35dc142d93)
-![Copy of Instant get (5)](https://github.com/onuratakan/KOT/assets/41792982/9c250e71-bd9c-45f5-8270-b5eaf34b0a0f)
+
 
 
 ### Creating Your Free Cloud Key
@@ -35,17 +35,14 @@ KOT cloud_key
 
 ```python
 from kot import KOT_cloud
-
-
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
-
 
 
 def get_address():
     return "Hello World I am from KOT Cloud"
 
 
-cloud.set("get_address", get_address)
+cloud.function(get_address)
 ```
 
 ### Using Your Cloud | Getting
@@ -57,7 +54,7 @@ from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
 
-print(cloud.get("get_address")())
+print(cloud.function("get_address")())
 ```
 
 ## Demo
