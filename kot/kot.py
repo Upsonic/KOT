@@ -6,7 +6,6 @@ import base64
 import contextlib
 import hashlib
 import os
-import dill as pickle
 import time
 import traceback
 from datetime import datetime
@@ -46,7 +45,7 @@ class KOT:
 
     force_compress = False
     force_encrypt = False
-
+    
     @staticmethod
     def cloud_key():
         from cryptography.fernet import Fernet # pragma: no cover
@@ -383,13 +382,20 @@ class KOT:
             return False
         return True
 
-    def __init__(self, name, self_datas: bool = False, folder: str = ""):
+    def __init__(self, name, self_datas: bool = False, folder: str = "", enable_fast:bool=False):
         self.name = name
         self.hashed_name = HASHES.get_hash(name)
         global start_location
         the_main_folder = start_location if not folder != "" else folder
         self.the_main_folder = the_main_folder
         self.location = os.path.join(the_main_folder, "KOT-" + self.hashed_name)
+
+        if enable_fast:
+            import pickle
+            self.engine = pickle
+        else:
+            import dill
+            self.engine = dill
 
         if not self_datas:
             self.open_files_db = KOT_serial(
@@ -427,7 +433,7 @@ class KOT:
         # Initialize a Fernet object with the generated key
         fernet = Fernet(fernet_key)
         # Encrypt the message using the encrypt method of the Fernet object
-        encrypted_message = fernet.encrypt(pickle.dumps(message))
+        encrypted_message = fernet.encrypt(self.engine.dumps(message))
         return encrypted_message
 
     def decrypt(self, key, message):
@@ -435,7 +441,7 @@ class KOT:
         # Initialize a Fernet object with the user-defined key
         fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest()))
         # Decrypt the message using the decrypt method of the Fernet object
-        decrypted_message = pickle.loads(fernet.decrypt(message))
+        decrypted_message = self.engine.loads(fernet.decrypt(message))
         return decrypted_message
 
     def set_compress(
@@ -445,7 +451,7 @@ class KOT:
         import mgzip
 
         with mgzip.open(key_location_loading, "wb") as f:
-            pickle.dump(the_dict, f)
+            self.engine.dump(the_dict, f)
 
     def set_normal(
         self, key_location_loading, key_location_compress_indicator, the_dict
@@ -453,20 +459,20 @@ class KOT:
         self.indicator_remover(key_location_compress_indicator)
 
         with open(key_location_loading, "wb") as f:
-            pickle.dump(the_dict, f)
+            self.engine.dump(the_dict, f)
 
     def get_encryption(self, key_location):
         import mgzip
 
         result = None
         with mgzip.open(key_location, "rb") as f:
-            result = pickle.load(f)
+            result = self.engine.load(f)
         return result
 
     def get_normal(self, key_location):
         result = None
         with open(key_location, "rb") as f:
-            result = pickle.load(f)
+            result = self.engine.load(f)
         return result
 
     def read_file(self, file):
@@ -783,10 +789,10 @@ class KOT:
                 import mgzip
 
                 with mgzip.open(os.path.join(self.location, key_location), "rb") as f:
-                    result = pickle.load(f)
+                    result = self.engine.load(f)
             else:
                 with open(os.path.join(self.location, key_location), "rb") as f:
-                    result = pickle.load(f)
+                    result = self.engine.load(f)
 
             if not "cache_time" in result:
                 result["cache_time"] = 0
