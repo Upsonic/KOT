@@ -18,6 +18,7 @@ KOT cloud_key
 ```
 
 > cloud-HWP0iUIvUlFd18acOgrNa6UmLx6yua
+
 ```python
 from kot import KOT_cloud
 
