@@ -235,6 +235,24 @@ class TestKOT(unittest.TestCase):
 
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
+
+    def test_set_get_compress_test_file_and_dont_remove_original_file(self):
+        big_string = "a" * 1000000
+
+        time_1 = time.time()
+        KOT("aaa", enable_fast=True).set("sadas", big_string)
+        time_2 = time.time()
+
+        time_3 = time.time()
+        KOT("aaa").set("sadas", big_string)
+        time_4 = time.time()
+
+
+        time_fast = time_2 - time_1
+        time_slow = time_4 - time_3
+
+        self.assertGreater(time_slow, time_fast)
+
     def test_set_get_compress_test_file_size(self):
         a_db = KOT("test_set_get_compress_test_file_size_1")
         b_db = KOT("test_set_get_compress_test_file_size_2")

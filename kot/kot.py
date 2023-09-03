@@ -1187,4 +1187,4 @@ class KOT_remote:
 
 
 def KOT_cloud(database_name):
-    return KOT_remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan')
+    return KOT_remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover
