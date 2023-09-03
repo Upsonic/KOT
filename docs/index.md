@@ -4,7 +4,6 @@ title: INTRODUCTION
 nav_order: 1
 has_children: false
 ---
-
 # KOT database | [![Tests](https://github.com/onuratakan/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT) | [![After Deploy Test](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml)
 
 The KOT database is a flexible, secure and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
@@ -37,12 +36,9 @@ KOT cloud_key
 from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
-
+@cloud.active
 def get_address():
     return "Hello World I am from KOT Cloud"
-
-
-cloud._function(get_address)
 ```
 
 ### Using Your Cloud | Getting
@@ -54,7 +50,7 @@ from kot import KOT_cloud
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 
 
-print(cloud._function("get_address")())
+print(cloud.get("get_address")())
 ```
 
 ## Demo

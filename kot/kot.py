@@ -1008,30 +1008,22 @@ class KOT:
 
         exception_writer()
 
-    def _function(self, _function,
+    def active(self, _function,
         custom_key_location: str = "",
         encryption_key: str = None,
         no_cache: bool = False,
         raw_dict: bool = False,
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
-        if type(_function) == str:
-            return self.get(_function, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
 
-        self.set(_function.__name__, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
-
-    def _class(self, _class,
-        custom_key_location: str = "",
-        encryption_key: str = None,
-        no_cache: bool = False,
-        raw_dict: bool = False,
-        get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
-        if type(_class) == str:
-            return self.get(_class, custom_key_location=custom_key_location, encryption_key=encryption_key, no_cache=no_cache, raw_dict=raw_dict, get_shotcut=get_shotcut)
-
-        self.set(_class.__name__, _class, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+        if callable(_function) or isinstance(_function, object):
+            key = _function.__name__
+        else:
+            key = f'{_function=}'.partition('=')[0]
 
 
+        self.set(key, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
 
+        return _function
 
 
 
@@ -1148,18 +1140,14 @@ class KOT_remote:
         return response
 
 
-    def _function(self, _function, encryption_key="a", compress=None):
-        if type(_function) == str:
-            return self.get(_function, encryption_key=encryption_key)
-        
-        self.set(_function.__name__, _function, encryption_key=encryption_key, compress=compress)
+    def active(self, _function, encryption_key="a", compress=None):
+        if callable(_function) or isinstance(_function, object):
+            key = _function.__name__
+        else:
+            key = f'{_function=}'.partition('=')[0]
 
-    def _class(self, _class, encryption_key="a", compress=None):
-        if type(_class) == str:
-            return self.get(_class, encryption_key=encryption_key)
-        
-        self.set(_class.__name__, _class, encryption_key=encryption_key, compress=compress)
-
+        self.set(key, _function, encryption_key=encryption_key, compress=compress)
+        return _function
 
 
 

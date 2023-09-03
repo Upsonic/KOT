@@ -11,76 +11,48 @@ KOT Cloud: the ultimate, free cloud database for all Python developers. Experien
 “Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!”
 
 
-## Generate a key for your cloud
 
+## Enable the cloud connection in your Python
 ```console
 KOT cloud_key
 ```
-```console
+
 > cloud-HWP0iUIvUlFd18acOgrNa6UmLx6yua
-
-```
-
-## Enable the cloud connection in your Python
-
 ```python
 from kot import KOT_cloud
+
 cloud = KOT_cloud("YOUR_CLOUD_KEY")
 ```
 
+# Sending
 
-## Cloud Functions
-
-This function is removes the lines of given string and when you want to access this function to anywhere you can send to cloud.
 
 ```python
+#FUNCTION
+@cloud.active
 def remove_lines(string):
     return string.replace("\n","")
 
-cloud._function(remove_lines) # Sending to Cloud
-```
-
-Now its sent to your cloud and now you can access easily in another code and another machine.
-```python
-
-from kot import KOT_cloud
-cloud = KOT_cloud("YOUR_CLOUD_KEY")
-
-my_string = "Hello\n I am Onur\n Who are you ?"
-
-my_removed_lines_string = cloud._function("remove_lines")(my_string)
-```
-
-Now you the `my_removed_lines_string` variable is equal to:
-
-```python
-"Hello I am Onur Who are you ?"
-```
-
-
-## Cloud Classes
-
-This class have `name` and `age` records and when you want to access this class to anywhere you can send to cloud.
-
-```python
+#CLASS
+@cloud.active
 class human:
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
-
-cloud._class(human)
-
+#VARIABLE
+price = 15.2
+cloud.active(price)
 ```
 
-Now its sent to your cloud and now you can access easily in another code and another machine.
+
+# Getting
+
 ```python
-
-from kot import KOT_cloud
-cloud = KOT_cloud("YOUR_CLOUD_KEY")
-
-onur = cloud._class("human")("Onur", 100)
+#FUNCTION
+cloud.get("remove_lines")
+#CLASS
+cloud.get("human")
+#VARIABLE
+cloud.get("price")
 ```
-
-Now you the `onur` variable is an object of human class.
-

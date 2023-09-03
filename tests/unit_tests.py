@@ -74,15 +74,10 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.get("key1"), None)
 
 
-    def test_function(self):
+    def test_active(self):
 
-        self.KOT._function(my_function)
-        self.assertEqual(self.KOT._function("my_function")(), 123)
-
-    def test_class(self):
-
-        self.KOT._class(test_object)
-        self.assertEqual(self.KOT._class("test_object")().exp(), {"test": "test"})
+        self.KOT.active(my_function)
+        self.assertEqual(self.KOT.get("my_function")(), 123)
 
 
     def test_set_get_delete_location(self):
@@ -788,10 +783,10 @@ class TestKOT(unittest.TestCase):
 
 
     @patch('requests.request')
-    def test_remote_function(self, mock_send_request):
+    def test_remote_active(self, mock_send_request):
         kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote._function(my_function)
+        kot_remote.active(my_function)
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
@@ -801,18 +796,7 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[1]["data"]["compress"],None)
 
 
-    @patch('requests.request')
-    def test_remote_class(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote._class(test_object)
-
-        self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
-        self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
-        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["database_name"],'database_name')
-        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["key"],'test_object')
-        self.assertNotEqual(mock_send_request._mock_call_args[1]["data"]["value"],'value')
-        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["compress"],None)
 
 
     @patch('requests.request')
