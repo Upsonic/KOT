@@ -10,7 +10,7 @@ pip3 install kot
 ```
 
 
-## 🎉 KOT Cloud is published ! | [![Cloud Test Every - 15 Minute](https://github.com/onuratakan/KOT/actions/workflows/cloud.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/cloud.yml) | [Go to Docs](https://onuratakan.github.io/KOT/KOT_Cloud.html)
+## 🎉 KOT Cloud is published ! | [![Cloud Test Every - 15 Minute](https://github.com/onuratakan/KOT/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/cloud_test.yml) | [Go to Docs](https://onuratakan.github.io/KOT/KOT_Cloud.html)
 KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
 
 - "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
