@@ -35,7 +35,8 @@ class TestDocker(unittest.TestCase):
     def setUpClass(cls):
         os.chdir(os.path.join(os.path.dirname(__file__), "..",".."))
         os.system("docker build -t ghcr.io/onuratakan/api:latest -f KOT/docker/local/api/Dockerfile .")
-        os.system("docker run -d --name KOT_API -p 5000:5000 ghcr.io/onuratakan/api:latest KOT api pass                --host='0.0.0.0' --port=5000")
+        os.system("docker run -d --name KOT_API -p 5000:5000 ghcr.io/onuratakan/api:latest KOT api pass --host='0.0.0.0' --port=5000")
+        time.sleep(100)
 
         cls.remote = KOT_Remote("TestRemote", "http://localhost:5000", 'pass')
 
@@ -46,7 +47,6 @@ class TestDocker(unittest.TestCase):
         os.system("docker container rm KOT_API")
 
         os.chdir(os.path.join(os.path.dirname(__file__), ".."))
-
 
 
     def test_remote_api_set_get_deletestring(self):
@@ -61,6 +61,10 @@ class TestDocker(unittest.TestCase):
 
 
         self.assertNotEqual(self.remote.get("key"), value)
+
+    def test_remote_api_active(self):
+        self.remote.active(my_function)
+        self.assertEqual(self.remote.get("my_function")(), 123)
 
 
 
