@@ -58,11 +58,6 @@ jobs:
       with:
         python-version: 3.8
 
-    - uses: actions/cache@v2
-      with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('requirements/api.txt') }}-${{ hashFiles('requirements/web.txt') }}-${{ hashFiles('requirements/gui.txt') }}
-
     - name: Install dependencies
       run: |
         docker pull ghcr.io/onuratakan/api:latest
