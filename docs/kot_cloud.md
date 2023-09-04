@@ -20,9 +20,9 @@ KOT cloud_key
 > cloud-HWP0iUIvUlFd18acOgrNa6UmLx6yua
 
 ```python
-from kot import KOT_cloud
+from kot import KOT_Cloud
 
-cloud = KOT_cloud("YOUR_CLOUD_KEY")
+cloud = KOT_Cloud("YOUR_CLOUD_KEY")
 ```
 
 ## Sending

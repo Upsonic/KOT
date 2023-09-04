@@ -95,15 +95,15 @@ class KOT:
             value = custom_value
 
         if command == "SET":
-            result = KOT_serial(database_name, folder=folder).set(
+            result = KOT_Serial(database_name, folder=folder).set(
                 key, value, encryption_key=encryption_key, compress=compress
             )
         elif command == "GET":
-            result = KOT_serial(database_name, folder=folder).get(
+            result = KOT_Serial(database_name, folder=folder).get(
                 key, encryption_key=value
             )
         elif command == "DELETE":
-            result = KOT_serial(database_name, folder=folder).delete(key)
+            result = KOT_Serial(database_name, folder=folder).delete(key)
         elif command == "DATABASE_DELETE":
             result = KOT.database_delete(database_name, folder=folder)
         elif command == "DATABASE_DELETE_ALL":
@@ -115,7 +115,7 @@ class KOT:
         elif command == "DATABASE_LIST":
             result = KOT.database_list(folder=folder)
         elif command == "GET_ALL":
-            result = KOT_serial(database_name, folder=folder).get_all()
+            result = KOT_Serial(database_name, folder=folder).get_all()
         else:
             raise ValueError(f"Unsupported command: {command}")
 
@@ -180,7 +180,7 @@ class KOT:
             KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
 
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         start = time.time()  # pragma: no cover
         for i in range(number):  # pragma: no cover
             my_db.set(
@@ -204,7 +204,7 @@ class KOT:
         encryption_key = (
             KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
             for i in range(number):  # pragma: no cover
                 my_db.set(
@@ -231,7 +231,7 @@ class KOT:
         encryption_key = (
             KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
-        my_db = KOT_serial("KOT-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
             for i in range(number):  # pragma: no cover
                 my_db.set(
@@ -269,7 +269,7 @@ class KOT:
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
-        database_index = KOT_serial(
+        database_index = KOT_Serial(
             "KOT-database-index", self_datas=True, folder=folder
         )
         return database_index.dict()
@@ -313,7 +313,7 @@ class KOT:
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
-        database_index = KOT_serial(
+        database_index = KOT_Serial(
             "KOT-database-index", self_datas=True, folder=folder
         )
 
@@ -331,7 +331,7 @@ class KOT:
 
     @staticmethod
     def database_delete_all(folder: str = ""):
-        database_index = KOT_serial(
+        database_index = KOT_Serial(
             "KOT-database-index", self_datas=True, folder=folder
         )
 
@@ -343,7 +343,7 @@ class KOT:
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
-        database_index = KOT_serial(
+        database_index = KOT_Serial(
             "KOT-database-index", self_datas=True, folder=folder
         )
         the_db = KOT(name, folder=folder, self_datas=True)
@@ -354,7 +354,7 @@ class KOT:
 
     @staticmethod
     def database_pop_all(folder: str = ""):
-        database_index = KOT_serial(
+        database_index = KOT_Serial(
             "KOT-database-index", self_datas=True, folder=folder
         )
 
@@ -398,10 +398,10 @@ class KOT:
             self.engine = dill
 
         if not self_datas:
-            self.open_files_db = KOT_serial(
+            self.open_files_db = KOT_Serial(
                 "KOT-open_files_db", self_datas=True, folder=folder
             )
-            database_index = KOT_serial(
+            database_index = KOT_Serial(
                 "KOT-database-index", self_datas=True, folder=folder
             )
             database_index.set(self.name, self.location)
@@ -1035,7 +1035,7 @@ class KOT:
 
 
 
-def KOT_serial(name, self_datas: bool = False, folder: str = ""):
+def KOT_Serial(name, self_datas: bool = False, folder: str = ""):
     global start_location
     folder = start_location if not folder != "" else folder
 
@@ -1058,7 +1058,7 @@ def main():  # pragma: no cover
 
 
 
-class KOT_remote:
+class KOT_Remote:
 
 
     def __enter__(self):
@@ -1118,7 +1118,7 @@ class KOT_remote:
         encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
 
         if encryption_key is not None:
-            db = KOT_serial(self.database_name)
+            db = KOT_Serial(self.database_name)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
@@ -1139,7 +1139,7 @@ class KOT_remote:
         
         # Decrypt the received value
         if encryption_key is not None:
-            db = KOT_serial(self.database_name)
+            db = KOT_Serial(self.database_name)
             db.set(key, response)
             response = db.get(key, encryption_key=encryption_key)
             db.delete(key)
@@ -1169,7 +1169,7 @@ class KOT_remote:
         datas = self._send_request("POST", "/controller/get_all", data)
 
         datas = json.loads(datas)
-        db = KOT_serial(self.database_name)
+        db = KOT_Serial(self.database_name)
         for each in datas:
                 db.set(each, datas[each])
                 datas[each] = db.get(each, encryption_key=encryption_key)
@@ -1200,5 +1200,5 @@ class KOT_remote:
 
 
 
-def KOT_cloud(database_name):
-    return KOT_remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover
+def KOT_Cloud(database_name):
+    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover

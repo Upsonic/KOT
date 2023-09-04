@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from kot import KOT, HASHES, KOT_serial, KOT_remote
+from kot import KOT, HASHES, KOT_Serial, KOT_Remote
 import kot
 
 
@@ -636,9 +636,9 @@ class TestKOT(unittest.TestCase):
             self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), big_string
         )
 
-    def test_database_delete_open_databases_pop_kot_serial(self):
+    def test_database_delete_open_databases_pop_KOT_Serial(self):
         # Create a test database
-        test_db = KOT_serial("test_db")
+        test_db = KOT_Serial("test_db")
 
         # Call the database_delete method
 
@@ -776,26 +776,26 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_send_request(self, mock_request):
-        # Create an instance of KOT_remote
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        # Create an instance of KOT_Remote
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
         # Define the mock response
         mock_response = mock_request.return_value
         mock_response.text.return_value = {'success': True}
 
         # Call the _send_request method
-        response = kot_remote._send_request('GET', '/endpoint')
+        response = KOT_Remote._send_request('GET', '/endpoint')
 
         # Check the response
         self.assertEqual(response(), {'success': True})
 
     @patch('requests.request')
     def test_remote_set(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
 
 
-        kot_remote.set('key', 'value')
+        KOT_Remote.set('key', 'value')
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
@@ -808,9 +808,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_active(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.active(my_function)
+        KOT_Remote.active(my_function)
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
@@ -821,9 +821,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_active_with_enc(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.active(my_function,  encryption_key="3123213123")
+        KOT_Remote.active(my_function,  encryption_key="3123213123")
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
@@ -839,9 +839,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_set_enc(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.set('key', 'value', encryption_key="dsadad")
+        KOT_Remote.set('key', 'value', encryption_key="dsadad")
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
@@ -850,30 +850,30 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_get(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.get('key', "dsadasda")
+        KOT_Remote.get('key', "dsadasda")
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/get'))
         self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name', 'key': 'key'})
 
-    @patch('kot.KOT_remote._send_request')
+    @patch('kot.KOT_Remote._send_request')
     def test_remote_get_all(self, mock_send_request):
         backup = copy.copy(KOT.force_encrypt)
         KOT.force_encrypt = None
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         mock_send_request.return_value = '{"success": "True"}'
-        the_return = kot_remote.get_all()
+        the_return = KOT_Remote.get_all()
         self.assertEqual(the_return, {'success': 'True'})
         KOT.force_encrypt = backup
 
 
     @patch('requests.request')
     def test_remote_delete_key(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.delete('key')
+        KOT_Remote.delete('key')
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/delete'))
@@ -881,9 +881,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_list(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.database_list()
+        KOT_Remote.database_list()
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/list'))
@@ -892,9 +892,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_pop(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.database_pop('database_name',)
+        KOT_Remote.database_pop('database_name',)
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/database/pop'))
@@ -903,9 +903,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_pop_all(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.database_pop_all()
+        KOT_Remote.database_pop_all()
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/pop_all'))
@@ -914,9 +914,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_delete(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.database_delete('database_name',)
+        KOT_Remote.database_delete('database_name',)
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/database/delete'))
@@ -925,9 +925,9 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_delete_all(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
 
-        kot_remote.database_delete_all()
+        KOT_Remote.database_delete_all()
 
         self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
         self.assertEqual(mock_send_request._mock_call_args[0],('GET', 'http://localhost:5000/database/delete_all'))
@@ -935,42 +935,42 @@ class TestKOT(unittest.TestCase):
 
     @patch('requests.request')
     def test_remote_debug(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the debug function."
         mock_send_request.return_value.text.return_value = {'success': True}
-        result = kot_remote.debug(test_message)
+        result = KOT_Remote.debug(test_message)
         self.assertEqual(result(), {'success': True})
 
     @patch('requests.request')
     def test_remote_info(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the info function."
         mock_send_request.return_value.text.return_value = {'success': True}
-        result = kot_remote.info(test_message)
+        result = KOT_Remote.info(test_message)
         self.assertEqual(result(), {'success': True})
 
     @patch('requests.request')
     def test_remote_warning(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the warning function."
         mock_send_request.return_value.text.return_value = {'success': True}
-        result = kot_remote.warning(test_message)
+        result = KOT_Remote.warning(test_message)
         self.assertEqual(result(), {'success': True})
 
     @patch('requests.request')
     def test_remote_error(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the error function."
         mock_send_request.return_value.text.return_value = {'success': True}
-        result = kot_remote.error(test_message)
+        result = KOT_Remote.error(test_message)
         self.assertEqual(result(), {'success': True})
 
     @patch('requests.request')
     def test_remote_exception(self, mock_send_request):
-        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+        KOT_Remote = KOT_Remote("database_name",'http://localhost:5000', 'password')
         test_message = "This is a test message for the exception function."
         mock_send_request.return_value.text.return_value = {'success': True}
-        result = kot_remote.exception(test_message)
+        result = KOT_Remote.exception(test_message)
         self.assertEqual(result(), {'success': True})
 
 backup = sys.argv

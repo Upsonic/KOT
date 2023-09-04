@@ -6,13 +6,13 @@ has_children: false
 ---
 
 # Remote Connection
-KOT project have a module that named as `KOT_remote` with this you can easily use remote KOT API's. In this example we will use the docker api installation.
+KOT project have a module that named as `KOT_Remote` with this you can easily use remote KOT API's. In this example we will use the docker api installation.
 
 ```python
-from kot import KOT_remote
+from kot import KOT_Remote
 
 # Creating a database
-my_db = KOT_remote("my_db", 'http://localhost:5000', 'dockerpass')
+my_db = KOT_Remote("my_db", 'http://localhost:5000', 'dockerpass')
 
 my_db.set("My_key", "My_value")
 my_db.get("My_key")

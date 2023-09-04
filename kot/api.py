@@ -5,7 +5,7 @@ from waitress import serve
 from flask import Flask, request, Response, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from .kot import KOT_serial
+from .kot import KOT_Serial
 from .kot import KOT
 
 app = Flask(__name__)
@@ -195,7 +195,7 @@ def set():
     compress = request.form.get("compress")
     encryption_key = request.form.get("encryption_key")
 
-    database = KOT_serial(database_name, folder=folder)
+    database = KOT_Serial(database_name, folder=folder)
     database.set(key, value, compress=compress, encryption_key=encryption_key)
 
     return "Data set successfully"
@@ -208,7 +208,7 @@ def get():
     key = request.form.get("key")
     encryption_key = request.form.get("encryption_key")
 
-    database = KOT_serial(database_name, folder=folder)
+    database = KOT_Serial(database_name, folder=folder)
     data = database.get(key, encryption_key=encryption_key)
 
     return jsonify(data)
@@ -219,7 +219,7 @@ def get():
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
-    database = KOT_serial(database_name, folder=folder)
+    database = KOT_Serial(database_name, folder=folder)
     datas = database.get_all(encryption_key=encryption_key)
 
     return jsonify(datas)
@@ -231,7 +231,7 @@ def delete():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
 
-    database = KOT_serial(database_name, folder=folder)
+    database = KOT_Serial(database_name, folder=folder)
     database.delete(key)
 
     return "Data deleted successfully"
@@ -297,7 +297,7 @@ def database_delete_all():
 @limiter.limit(rate_limit) 
 def debug():
     message = request.form.get("message")
-    database = KOT_serial("debug", folder=folder)
+    database = KOT_Serial("debug", folder=folder)
     database.debug(message)
     return "Debug message logged successfully"
 
@@ -306,7 +306,7 @@ def debug():
 @limiter.limit(rate_limit) 
 def info():
     message = request.form.get("message")
-    database = KOT_serial("info", folder=folder)
+    database = KOT_Serial("info", folder=folder)
     database.info(message)
     return "Info message logged successfully"
 
@@ -315,7 +315,7 @@ def info():
 @limiter.limit(rate_limit) 
 def warning():
     message = request.form.get("message")
-    database = KOT_serial("warning", folder=folder)
+    database = KOT_Serial("warning", folder=folder)
     database.warning(message)
     return "Warning message logged successfully"
 
@@ -324,7 +324,7 @@ def warning():
 @limiter.limit(rate_limit) 
 def error():
     message = request.form.get("message")
-    database = KOT_serial("error", folder=folder)
+    database = KOT_Serial("error", folder=folder)
     database.error(message)
     return "Error message logged successfully"
 
@@ -333,7 +333,7 @@ def error():
 @limiter.limit(rate_limit) 
 def exception():
     message = request.form.get("message")
-    database = KOT_serial("exception", folder=folder)
+    database = KOT_Serial("exception", folder=folder)
     database.exception(message)
     return "Exception message logged successfully"
 

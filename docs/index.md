@@ -16,7 +16,7 @@ pip3 install kot
 ```
 
 
-## 🎉 KOT Cloud is published ! | [Go to Docs](https://onuratakan.github.io/KOT/kot_cloud.html)
+## 🎉 KOT Cloud is published ! | [Go to Docs](https://onuratakan.github.io/KOT/KOT_Cloud.html)
 KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
 
 - "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
@@ -33,8 +33,8 @@ KOT cloud_key
 ### Using Your Cloud | Setting
 
 ```python
-from kot import KOT_cloud
-cloud = KOT_cloud("YOUR_CLOUD_KEY")
+from kot import KOT_Cloud
+cloud = KOT_Cloud("YOUR_CLOUD_KEY")
 
 @cloud.active
 def get_address():
@@ -44,8 +44,8 @@ def get_address():
 ### Using Your Cloud | Getting
 
 ```python
-from kot import KOT_cloud
-cloud = KOT_cloud("YOUR_CLOUD_KEY")
+from kot import KOT_Cloud
+cloud = KOT_Cloud("YOUR_CLOUD_KEY")
 
 
 print(cloud.get("get_address")())
