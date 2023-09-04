@@ -26,8 +26,6 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"          
 
-      - name: Run Version Bump Script
-        run: python bump.py major
 
       - uses: actions/github-script@v6
         with:
@@ -59,8 +57,6 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"          
 
-      - name: Run Version Bump Script
-        run: python bump.py minor
 
       - uses: actions/github-script@v6
         with:
@@ -92,8 +88,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"          
 
-      - name: Run Version Bump Script
-        run: python bump.py patch
+
 
       - uses: actions/github-script@v6
         with:
