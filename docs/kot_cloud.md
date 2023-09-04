@@ -64,3 +64,11 @@ cloud.get("price")
 
 ## Encryption
 You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to KOT cloud.
+
+```python
+@cloud.active(encryption_key="")
+...
+
+cloud.set(..., encryption_key="")
+
+```
