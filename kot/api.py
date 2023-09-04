@@ -50,7 +50,6 @@ info_url = "/controller/info"
 warning_url = "/controller/warning"
 error_url = "/controller/error"
 exception_url = "/controller/exception"
-execute_url = "/execute"
 
 
 
@@ -339,11 +338,7 @@ def exception():
     return "Exception message logged successfully"
 
 
-@app.route(execute_url, methods=["POST"])
-@limiter.limit(rate_limit) 
-def execute():
-    query = request.form.get("query")
-    return jsonify(KOT.execute(query, folder=folder))
+
 
 
 def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data, maximum_database_amount_user_data, maximum_key_amount_user_data):

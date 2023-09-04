@@ -260,9 +260,3 @@ Logs an error message.
 
 Logs an exception message.
 
-### `execute`
-
-- Method: POST
-- Endpoint: `/execute`
-
-Executes the query.
