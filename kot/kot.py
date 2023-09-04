@@ -16,7 +16,7 @@ from shutil import move
 from shutil import rmtree
 from shutil import unpack_archive
 import random
-
+import ast
 
 import copy as cpv
 
@@ -1182,7 +1182,7 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/delete", data)
 
     def database_list(self):
-        return self._send_request("GET", "/database/list")
+        return ast.literal_eval(self._send_request("GET", "/database/list"))
 
     def database_pop(self, database_name):
         data = {"database_name": database_name}

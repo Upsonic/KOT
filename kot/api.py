@@ -11,11 +11,11 @@ from .kot import KOT
 app = Flask(__name__)
 
 
-folder = None
+folder = ""
 host = None
 port = None
 password = None
-restricted = None
+restricted = []
 rate_limit = None
 limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
 key_lenght = None
@@ -82,15 +82,16 @@ def check():
             {"WWW-Authenticate": 'Basic realm="Login Required"'},
         )
 
+
     for restrict in restricted:
 
-        if restrict == request.endpoint:
-            return Response(
-            "Access to this URL is restricted.\n"
-            "You do not have the necessary permissions", 
-            403,  # Change status code to 403 Forbidden
-            {"WWW-Authenticate": 'Basic realm="Access Required"'}
-        )
+            if restrict == request.endpoint:
+                return Response(
+                "Access to this URL is restricted.\n"
+                "You do not have the necessary permissions", 
+                403,  # Change status code to 403 Forbidden
+                {"WWW-Authenticate": 'Basic realm="Access Required"'}
+            )
 
 
     if key_lenght is not None:
