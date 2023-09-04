@@ -361,18 +361,18 @@ def API(folder_data, password_data, host_data, port_data, restricted_data, rate_
     global maximum_key_amount
     global maximum_database_amount_user
     global maximum_key_amount_user
-    folder = folder_data
-    host = host_data
-    port = port_data
-    password = password_data
-    restricted = list(restricted_data)
-    rate_limit = rate_limit_data.split(",")
-    limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
-    key_lenght = key_lenght_data
-    value_lenght = value_lenght_data
-    database_name_lenght = database_name_lenght_data
-    maximum_database_amount = maximum_database_amount_data
-    maximum_key_amount = maximum_key_amount_data
-    maximum_database_amount_user = maximum_database_amount_user_data
-    maximum_key_amount_user = maximum_key_amount_user_data
-    serve(app, host=host, port=port)
+    folder = folder_data  # pragma: no cover
+    host = host_data  # pragma: no cover
+    port = port_data  # pragma: no cover
+    password = password_data  # pragma: no cover
+    restricted = list(restricted_data)  # pragma: no cover
+    rate_limit = rate_limit_data.split(",")  # pragma: no cover
+    limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)  # pragma: no cover
+    key_lenght = key_lenght_data  # pragma: no cover
+    value_lenght = value_lenght_data  # pragma: no cover
+    database_name_lenght = database_name_lenght_data  # pragma: no cover
+    maximum_database_amount = maximum_database_amount_data  # pragma: no cover
+    maximum_key_amount = maximum_key_amount_data  # pragma: no cover
+    maximum_database_amount_user = maximum_database_amount_user_data  # pragma: no cover
+    maximum_key_amount_user = maximum_key_amount_user_data  # pragma: no cover
+    serve(app, host=host, port=port)  # pragma: no cover

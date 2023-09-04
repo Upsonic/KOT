@@ -1137,15 +1137,18 @@ class KOT_Remote:
         data = {"database_name": self.database_name, "key": key}
         response = self._send_request("POST", "/controller/get", data)
         
-        # Decrypt the received value
-        if encryption_key is not None:
-            db = KOT_Serial(self.database_name)
-            db.set(key, response)
-            response = db.get(key, encryption_key=encryption_key)
-            db.delete(key)
-        
-        
-        return response
+        if not response == "null\n":
+            # Decrypt the received value
+            if encryption_key is not None:
+                db = KOT_Serial(self.database_name)
+                db.set(key, response)
+                response = db.get(key, encryption_key=encryption_key)
+                db.delete(key)
+            
+            
+            return response
+        else:
+            return None
 
 
     def active(self,value=None, encryption_key="a", compress=None):

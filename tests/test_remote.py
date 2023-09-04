@@ -240,13 +240,18 @@ class TestRemote(unittest.TestCase):
 
     ## WITH API
 
-    def test_remote_api_set_get_string(self):
+    def test_remote_api_set_get_deletestring(self):
         the = time.time()
         value = f"Value{the}"
 
         self.remote.set("key", value)
         self.assertEqual(self.local.get("key", encryption_key="a"), value)
         self.assertEqual(self.remote.get("key",), value)
+
+        self.remote.delete("key")
+
+        self.assertNotEqual(self.local.get("key", encryption_key="a"), value)
+        self.assertNotEqual(self.remote.get("key"), value)
 
     def test_remote_api_set_get_compex(self):
         the = time.time()
@@ -274,12 +279,36 @@ class TestRemote(unittest.TestCase):
         self.remote.database_delete("aaaaaaa")
         self.assertNotIn("aaaaaaa", self.local.database_list())
 
-
-    def test_remote_api_database_delete(self):
+    def test_remote_api_database_delete_all(self):
         KOT("aaaaaaa")
         self.assertIn("aaaaaaa", self.local.database_list())
-        self.remote.database_delete("aaaaaaa")
+        self.remote.database_delete_all()
         self.assertNotIn("aaaaaaa", self.local.database_list())
+        self.assertEqual(len(self.remote.database_list()), 0)
+        KOT("TestRemote")
+
+
+    def test_remote_api_database_pop(self):
+        KOT("aaaaaaa").set("sdad", "32413")
+        KOT("aaaaaaaaaa").set("sdad", "32413")
+        self.assertGreater(len(KOT("aaaaaaa").get_all()), 0)
+        self.assertGreater(len(KOT("aaaaaaaaaa").get_all()), 0)
+        self.remote.database_pop("aaaaaaaaaa")
+        self.assertGreater(len(KOT("aaaaaaa").get_all()), 0)
+        self.assertEqual(len(KOT("aaaaaaaaaa").get_all()), 0)
+
+
+    def test_remote_api_database_pop_all(self):
+        KOT("aaaaaaa").set("sdad", "32413")
+        KOT("aaaaaaaaaa").set("sdad", "32413")
+        self.assertGreater(len(KOT("aaaaaaa").get_all()), 0)
+        self.assertGreater(len(KOT("aaaaaaaaaa").get_all()), 0)
+        self.remote.database_pop_all()
+        self.assertEqual(len(KOT("aaaaaaa").get_all()), 0)
+        self.assertEqual(len(KOT("aaaaaaaaaa").get_all()), 0)
+
+
+
 
 
 backup = sys.argv
