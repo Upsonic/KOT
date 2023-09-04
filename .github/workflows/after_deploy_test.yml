@@ -1,10 +1,6 @@
 name: After Deploy Test Every 15 Minute
 
 on:
-  workflow_run:
-    workflows: ["Deploys"]
-    types:
-      - completed 
   schedule:
     - cron:  '*/15 * * * *'      
   workflow_dispatch: 
