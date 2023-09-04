@@ -29,6 +29,15 @@ jobs:
       - name: Run Version Bump Script
         run: python bump.py major
 
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["major"]
+            })
 
   minor:
     if: ${{ github.event.label.name == 'minor' && github.event.sender.login == 'onuratakan' }}
@@ -53,7 +62,15 @@ jobs:
       - name: Run Version Bump Script
         run: python bump.py minor
 
-
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["minor"]
+            })
 
   patch:
     if: ${{ github.event.label.name == 'patch' && github.event.sender.login == 'onuratakan' }}
@@ -77,3 +94,13 @@ jobs:
 
       - name: Run Version Bump Script
         run: python bump.py patch
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["patch"]
+            })
