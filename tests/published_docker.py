@@ -14,11 +14,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from kot import KOT, HASHES, KOT_Serial, KOT_Remote
 import kot
 
-import kot
 
-
-kot.api.password = "pass"
-kot.api.folder = os.getcwd()
 
 class test_object:
     def exp(self):
