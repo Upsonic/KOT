@@ -6,7 +6,6 @@ import sys
 import shutil
 import copy
 from unittest.mock import patch
-from waitress.server import create_server
 import threading
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
