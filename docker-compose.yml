@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    User:
+        ports:
+            - '5000:5000'
+        volumes:
+            - 'KOT_Volume:/app/KOT'
+        image: ghcr.io/onuratakan/api:latest
+        command: KOT api onuratakan --host=0.0.0.0 --port=5000 --rate_limit "400 per hour, 40 per minute" --key_lenght 100 --value_lenght 1000 --restricted "database_list, database_pop_all, database_delete_all, debug, info, warning, error, exception" --database_name_lenght 50 --maximum_database_amount 200 --maximum_key_amount 500 --maximum_database_amount_user 5 --maximum_key_amount_user 50
+        
+    Admin:
+        ports:
+            - '5001:5001'
+        volumes:
+            - 'KOT_Volume:/app/KOT'
+        image: ghcr.io/onuratakan/api:latest
+        command: KOT api onuratakan --host=0.0.0.0 --port=5001
+
+
+volumes:
+  KOT_Volume:
