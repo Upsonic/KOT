@@ -27,14 +27,16 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Install dependencies
-        run: |
-          pip install kot kot_api kot_gui kot_web --no-cache --upgrade
 
       - name: Install pytest
         run: |
           python -m pip install --upgrade pip
           pip install pytest
+
+      - name: Install dependencies
+        run: |
+          pip install kot kot_api kot_gui kot_web --no-cache --upgrade
+
 
       - name: Test with pytest
         run: |
