@@ -80,6 +80,12 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(self.KOT.get("my_function")(), 123)
 
 
+
+    def test_active_with_enc(self):
+
+        self.KOT.active(my_function, encryption_key="dsadasdda")
+        self.assertEqual(self.KOT.get("my_function", encryption_key="dsadasdda")(), 123)
+
     def test_set_get_delete_location(self):
         self.KOT.set("key1", self.test_vales)
         self.assertEqual(self.KOT.get("key1"), self.test_vales)
@@ -812,6 +818,20 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[1]["data"]["key"],'my_function')
         self.assertNotEqual(mock_send_request._mock_call_args[1]["data"]["value"],'value')
         self.assertEqual(mock_send_request._mock_call_args[1]["data"]["compress"],None)
+
+    @patch('requests.request')
+    def test_remote_active_with_enc(self, mock_send_request):
+        kot_remote = KOT_remote("database_name",'http://localhost:5000', 'password')
+
+        kot_remote.active(my_function,  encryption_key="3123213123")
+
+        self.assertEqual(mock_send_request._mock_call_args[1]["auth"].__dict__, {'username': '', 'password': 'password'})
+        self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/set'))
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["database_name"],'database_name')
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["key"],'my_function')
+        self.assertNotEqual(mock_send_request._mock_call_args[1]["data"]["value"],'value')
+        self.assertEqual(mock_send_request._mock_call_args[1]["data"]["compress"],None)
+
 
 
 

@@ -1014,7 +1014,7 @@ class KOT:
 
         exception_writer()
 
-    def active(self, _function,
+    def active(self, _function=None,
         custom_key_location: str = "",
         encryption_key: str = None,
         no_cache: bool = False,
@@ -1022,13 +1022,16 @@ class KOT:
         get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
 
 
-        key = _function.__name__
+        def decorate(_function):
 
+            key = _function.__name__
+            self.set(key, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
 
-
-        self.set(key, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
-
-        return _function
+        if _function == None:
+            return decorate
+        else:
+            decorate(_function)
+            return _function
 
 
 
@@ -1145,11 +1148,15 @@ class KOT_remote:
         return response
 
 
-    def active(self, value, encryption_key="a", compress=None):
-        key = value.__name__
-
-        self.set(key, value, encryption_key=encryption_key, compress=compress)
-        return value
+    def active(self,value=None, encryption_key="a", compress=None):
+        def decorate(value):
+            key = value.__name__
+            self.set(key, value, encryption_key=encryption_key, compress=compress)
+        if value == None:
+            return decorate
+        else:
+            decorate(value)
+            return value
 
 
 
