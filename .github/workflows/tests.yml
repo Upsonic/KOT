@@ -83,4 +83,4 @@ jobs:
         cd ..
     - name: Test with pytest
       run: |
-        pytest tests/test_all.py -v
+        pytest tests/ -v
