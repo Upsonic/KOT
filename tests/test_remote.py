@@ -311,6 +311,41 @@ class TestRemote(unittest.TestCase):
 
 
 
+
+    def test_info_function(self):
+        kot_instance = KOT_Remote("info", "http://localhost:7777", 'pass')
+        test_message = "This is a test message for the info function."
+        kot_instance.info(test_message)
+        record = kot_instance.get_all(encryption_key=None)
+        logged_message = record[list(record)[0]][1]
+        self.assertEqual(logged_message, test_message)
+
+    def test_warning_function(self):
+        kot_instance = KOT_Remote("warning", "http://localhost:7777", 'pass')
+        test_message = "This is a test message for the warning function."
+        kot_instance.warning(test_message)
+        record = kot_instance.get_all(encryption_key=None)
+        logged_message = record[list(record)[0]][1]
+        self.assertEqual(logged_message, test_message)
+    def test_error_function(self):
+        kot_instance = KOT_Remote("error", "http://localhost:7777", 'pass')
+        test_message = "This is a test message for the error function."
+        kot_instance.error(test_message)
+        record = kot_instance.get_all(encryption_key=None)
+        logged_message = record[list(record)[0]][1]
+        self.assertEqual(logged_message, test_message)
+
+    def test_exception_function(self):
+        kot_instance = KOT_Remote("exception", "http://localhost:7777", 'pass')
+        test_message = "This is a test message for the exception function."
+        kot_instance.exception(test_message)
+        record = kot_instance.get_all(encryption_key=None)
+        logged_message = record[list(record)[0]][1]
+        self.assertEqual(logged_message, test_message)
+
+
+
+
 backup = sys.argv
 sys.argv = [sys.argv[0]]
 unittest.main(exit=False)
