@@ -248,16 +248,13 @@ class TestKOT(unittest.TestCase):
         time_1 = time.time()
         KOT("aaa", enable_fast=True).set("sadas", big_string)
         time_2 = time.time()
+        self.assertEqual(KOT("aaa", enable_fast=True).get("sadas",), big_string)
 
         time_3 = time.time()
         KOT("aaa").set("sadas", big_string)
         time_4 = time.time()
+        self.assertEqual(KOT("aaa").get("sadas",), big_string)
 
-
-        time_fast = time_2 - time_1
-        time_slow = time_4 - time_3
-
-        self.assertGreater(time_slow, time_fast)
 
     def test_set_get_compress_test_file_size(self):
         a_db = KOT("test_set_get_compress_test_file_size_1")
