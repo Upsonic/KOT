@@ -32,9 +32,9 @@ my_location_db.delete("Onur")
 def my_function():
     print("Hi how are you")
 
-my_location_db._function(my_function)
+my_location_db.active(my_function)
 
-my_location_db._function("my_function")()
+my_location_db.get("my_function")()
 
 
 Output:
