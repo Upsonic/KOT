@@ -4,7 +4,8 @@ on:
   issues:
     types:
       - labeled
-
+permissions:
+  issues: write
 jobs:
   major:
     if: ${{ github.event.label.name == 'major' && github.event.sender.login == 'onuratakan' }}
