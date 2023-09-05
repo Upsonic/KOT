@@ -27,7 +27,7 @@ class TestCloud(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.remote = KOT_Cloud(KOT.cloud_key())
+        cls.remote = KOT_Cloud("cloud-workflow")
 
     def test_remote_api_set_get_deletestring(self):
 
@@ -48,6 +48,7 @@ class TestCloud(unittest.TestCase):
     def test_remote_api_active(self):
         self.remote.active(my_function)
         self.assertEqual(self.remote.get("my_function")(), 123)
+        self.remote.delete("my_function")
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
