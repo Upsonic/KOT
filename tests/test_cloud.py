@@ -37,16 +37,19 @@ class TestCloud(unittest.TestCase):
         value = f"Value{the}"
 
         self.remote.set("key", value)
+        time.sleep(1)
 
         self.assertEqual(self.remote.get("key",), value)
 
         self.remote.delete("key")
+        time.sleep(1)
 
 
         self.assertNotEqual(self.remote.get("key"), value)
 
     def test_remote_api_active(self):
         self.remote.active(my_function)
+        time.sleep(1)
         self.assertEqual(self.remote.get("my_function")(), 123)
         self.remote.delete("my_function")
 
