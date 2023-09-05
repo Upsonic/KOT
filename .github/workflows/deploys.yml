@@ -6,6 +6,9 @@ on:
     types:
       - completed  
 
+permissions:
+  contents: write
+
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
   cancel-in-progress: true
