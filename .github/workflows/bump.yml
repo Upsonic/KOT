@@ -6,6 +6,7 @@ on:
       - labeled
 permissions:
   issues: write
+  contents: write
 jobs:
   major:
     if: ${{ github.event.label.name == 'major' && github.event.sender.login == 'onuratakan' }}
