@@ -84,7 +84,7 @@ jobs:
       run: |
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         cd .. 
-        docker build -t ghcr.io/KOT-database/api:latest -f KOT/docker/local/api/Dockerfile .
-        docker build -t ghcr.io/KOT-database/api:$VERSION -f KOT/docker/local/api/Dockerfile .  
-        docker push ghcr.io/KOT-database/api:latest
-        docker push ghcr.io/KOT-database/api:$VERSION
+        docker build -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile .
+        docker build -t ghcr.io/kot-database/api:$VERSION -f KOT/docker/local/api/Dockerfile .  
+        docker push ghcr.io/kot-database/api:latest
+        docker push ghcr.io/kot-database/api:$VERSION
