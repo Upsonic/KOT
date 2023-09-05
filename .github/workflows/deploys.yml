@@ -7,7 +7,8 @@ on:
       - completed  
 
 permissions:
-  contents: write
+  packages: write      
+
 
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}

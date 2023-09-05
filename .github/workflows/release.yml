@@ -5,8 +5,11 @@ on:
     workflows: ["Bump"]
     types:
       - completed
-jobs:
 
+permissions:
+  contents: write      
+
+jobs:
   build:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
