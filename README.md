@@ -1,4 +1,4 @@
-# KOT database | [![Tests](https://github.com/onuratakan/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/onuratakan/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/onuratakan/KOT) | [![After Deploy Test Every 15 Minute](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/after_deploy_test.yml)
+# KOT database | [![Tests](https://github.com/KOT-database/KOT/actions/workflows/tests.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/KOT-database/KOT/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/KOT-database/KOT) | [![After Deploy Test Every 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/after_deploy_test.yml)
 
 The KOT database is a flexible, secure and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
 
@@ -10,12 +10,12 @@ pip3 install kot
 ```
 
 
-## 🎉 KOT Cloud is published ! | [![Cloud Test Every - 15 Minute](https://github.com/onuratakan/KOT/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/onuratakan/KOT/actions/workflows/cloud_test.yml) | [Go to Docs](https://onuratakan.github.io/KOT/kot_cloud.html)
+## 🎉 KOT Cloud is published ! | [![Cloud Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_test.yml) | [Go to Docs](https://KOT-database.github.io/KOT/kot_cloud.html)
 KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
 
 - "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
 
-![KOT Cloud](https://github.com/onuratakan/KOT/assets/41792982/24fe141d-392b-4801-8f3c-541b3ad5a472)
+![KOT Cloud](https://github.com/KOT-database/KOT/assets/41792982/24fe141d-392b-4801-8f3c-541b3ad5a472)
 
 
 
@@ -85,10 +85,10 @@ db.get("Key") #Instant, no waiting and no searching
 ```
 
 ## Interfaces
-- [CLI](https://onuratakan.github.io/KOT/interfaces/cli.html)
-- [GUI](https://onuratakan.github.io/KOT/interfaces/gui.html)
-- [WEB](https://onuratakan.github.io/KOT/interfaces/web.html)
-- [CLI](https://onuratakan.github.io/KOT/interfaces/api.html)
+- [CLI](https://KOT-database.github.io/KOT/interfaces/cli.html)
+- [GUI](https://KOT-database.github.io/KOT/interfaces/gui.html)
+- [WEB](https://KOT-database.github.io/KOT/interfaces/web.html)
+- [CLI](https://KOT-database.github.io/KOT/interfaces/api.html)
 
 ## Features
 
@@ -132,7 +132,7 @@ graph TD;
 ```
 
 ## Documentation
-You can find the documentation [here](https://onuratakan.github.io/KOT/).
+You can find the documentation [here](https://KOT-database.github.io/KOT/).
 
 
 ## Contributing

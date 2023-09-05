@@ -11,7 +11,7 @@ setup(
     name="kot_api",
     version="0.37.3",
     description="""This is API package for KOT""",
-    url="https://github.com/onuratakan/KOT",
+    url="https://github.com/KOT-database/KOT",
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',

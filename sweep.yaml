@@ -11,7 +11,7 @@ description: 'KOT: Multithreaded Simultaneous Writing Key-Value DB. This project
 
 
 docs: 
-  kot: ["https://onuratakan.github.io/KOT/", "It's project official document"]
+  kot: ["https://KOT-database.github.io/KOT/", "It's project official document"]
   flet: ["https://flet.dev/docs/", "It's our web and gui system"]
   fire: ["https://github.com/google/python-fire/blob/master/docs/guide.md", "It's our cli system"]
   waitress: ["https://docs.pylonsproject.org/projects/waitress/en/latest/", "It's for our API serving"]

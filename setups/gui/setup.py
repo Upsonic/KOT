@@ -10,7 +10,7 @@ setup(
     name="kot_gui",
     version="0.37.3",
     description="""This is GUI package for KOT""",
-    url="https://github.com/onuratakan/KOT",
+    url="https://github.com/KOT-database/KOT",
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',

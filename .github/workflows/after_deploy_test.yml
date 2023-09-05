@@ -101,7 +101,7 @@ jobs:
 
     - name: Install docker
       run: |
-        docker pull ghcr.io/onuratakan/api:latest
+        docker pull ghcr.io/KOT-database/api:latest
     - name: Test with pytest
       run: |
         pytest tests/published_docker.py -v          
