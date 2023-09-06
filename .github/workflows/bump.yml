@@ -41,25 +41,6 @@ jobs:
               name: ["major"]
             })
 
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Deployed"]
-            })
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Failed"]
-            })
-
 
   minor:
     if: ${{ github.event.label.name == 'minor' && github.event.sender.login == 'onuratakan' }}
@@ -94,24 +75,6 @@ jobs:
               name: ["minor"]
             })
 
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Deployed"]
-            })
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Failed"]
-            })
 
 
   patch:
@@ -147,6 +110,43 @@ jobs:
               name: ["patch"]
             })
 
+
+
+
+  deployed:
+    if: ${{ github.event.label.name == 'Deployed'}}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+
+      - name: setup git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"          
+
+      - name: Run Version Bump Script
+        run: python bump.py patch
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["patch"]
+            })
+
+
       - uses: actions/github-script@v6
         with:
           script: |
@@ -156,6 +156,43 @@ jobs:
               repo: context.repo.repo,
               name: ["Deployed"]
             })
+
+
+
+  failed:
+    if: ${{ github.event.label.name == 'Failed'}}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+
+      - name: setup git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"          
+
+      - name: Run Version Bump Script
+        run: python bump.py patch
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["patch"]
+            })
+
+
       - uses: actions/github-script@v6
         with:
           script: |
@@ -165,3 +202,4 @@ jobs:
               repo: context.repo.repo,
               name: ["Failed"]
             })
+            
