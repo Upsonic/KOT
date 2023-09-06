@@ -27,4 +27,4 @@ KOT web <password> --host localhost --port 5000
 ```
 
 ## Authorization
-You must enter you password to your browser tab (http//localhost:5000) `Password` input are and press enter.
+You must enter you password to your browser tab (http//localhost:5000/p/kot/) `Password` input are and press enter.

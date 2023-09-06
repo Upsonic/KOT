@@ -38,4 +38,4 @@ docker run -d --name KOT_WEB -p 5003:5003 ghcr.io/kot-database/web:latest KOT we
 ```
 
 ## Test
-http://localhost:5003/
+http://localhost:5003/p/kot/
