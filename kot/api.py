@@ -23,7 +23,6 @@ access_key_lists = os.environ.get("access_key_folder","")
 access_key_lists = access_key_lists.split(",")
 access_key_lists_cache = int(os.environ.get("access_key_lists_cache",0))
 restricted = os.environ.get("restricted","")
-restricted = restricted.split(",")
     
 
 
