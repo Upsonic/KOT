@@ -23,19 +23,43 @@ jobs:
         with:
           webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
           content: "success ${{ steps.tag_extractor.outputs.latest_tag }}"           
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: 233,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["Deployed"]
+            })
+
+
   failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion != 'success' }}
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Getting Tag
-      id: tag_extractor
-      run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Getting Tag
+        id: tag_extractor
+        run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
 
-    - name: Discord Webhook Action
-      uses: tsickert/discord-webhook@v5.3.0
-      with:
-        webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
-        content: "failure <@&1148701924615520256> ${{ steps.tag_extractor.outputs.latest_tag }}"           
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
+          content: "failure <@&1148701924615520256> ${{ steps.tag_extractor.outputs.latest_tag }}"           
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.removeLabel({
+              issue_number: 233,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: ["Failed"]
+            })
+
+        
