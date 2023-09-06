@@ -1206,4 +1206,4 @@ def KOT_Cloud(database_name):
     return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover
 
 def KOT_Cloud_Pro(database_name, access_key):
-    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5001', access_key=access_key) # pragma: no cover
+    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5001', access_key) # pragma: no cover
