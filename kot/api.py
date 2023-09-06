@@ -28,7 +28,7 @@ restricted = restricted.split(",")
 
 
 rate_limit = os.environ.get("rate_limit","")
-restricted = restricted.split(",")
+rate_limit = rate_limit.split(",")
 key_lenght = (os.environ.get("key_lenght",None))
 key_lenght = int(key_lenght) if key_lenght is not None else key_lenght
 value_lenght = (os.environ.get("value_lenght",None))
