@@ -93,22 +93,22 @@ def check():
                     401,
                     {"WWW-Authenticate": 'Basic realm="Login Required"'},
                 )
-    
-    elif (auth.username != "" or auth.password != password) and not access_key:
-            return Response(
-                "Could not verify your access level for that URL. Use password.\n"
-                "You have to login with proper credentials",
-                401,
-                {"WWW-Authenticate": 'Basic realm="Login Required"'},
-            )
-
-    elif (auth.password not in access_keys()):
-            return Response(
-                "Could not verify your access level for that URL. Use access key.\n"
-                "You have to login with proper credentials",
-                401,
-                {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
-            )
+    if not access_key:
+        if (auth.username != "" or auth.password != password):
+                return Response(
+                    "Could not verify your access level for that URL. Use password.\n"
+                    "You have to login with proper credentials",
+                    401,
+                    {"WWW-Authenticate": 'Basic realm="Login Required"'},
+                )
+    else:
+        if (auth.password not in access_keys()):
+                return Response(
+                    "Could not verify your access level for that URL. Use access key.\n"
+                    "You have to login with proper credentials",
+                    401,
+                    {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
+                )
    
 
 
