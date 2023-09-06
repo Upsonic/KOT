@@ -29,13 +29,20 @@ restricted = restricted.split(",")
 
 rate_limit = os.environ.get("rate_limit","")
 rate_limit = rate_limit.split(",")
-key_lenght = int(os.environ.get("key_lenght",None))
-value_lenght = int(os.environ.get("value_lenght",None))
-database_name_lenght = int(os.environ.get("database_name_lenght",None))
-maximum_database_amount = int(os.environ.get("maximum_database_amount",None))
-maximum_key_amount = int(os.environ.get("maximum_key_amount",None))
-maximum_database_amount_user = int(os.environ.get("maximum_database_amount_user",None))
-maximum_key_amount_user = int(os.environ.get("maximum_key_amount_user",None))
+key_lenght = (os.environ.get("key_lenght",None))
+key_lenght = int(key_lenght) if key_lenght is not None else key_lenght
+value_lenght = (os.environ.get("value_lenght",None))
+value_lenght = int(value_lenght) if value_lenght is not None else value_lenght
+database_name_lenght = (os.environ.get("database_name_lenght",None))
+database_name_lenght = int(database_name_lenght) if database_name_lenght is not None else database_name_lenght
+maximum_database_amount = (os.environ.get("maximum_database_amount",None))
+maximum_database_amount = int(maximum_database_amount) if maximum_database_amount is not None else maximum_database_amount
+maximum_key_amount = (os.environ.get("maximum_key_amount",None))
+maximum_key_amount = int(maximum_key_amount) if maximum_key_amount is not None else maximum_key_amount
+maximum_database_amount_user = (os.environ.get("maximum_database_amount_user",None))
+maximum_database_amount_user = int(maximum_database_amount_user) if maximum_database_amount_user is not None else maximum_database_amount_user
+maximum_key_amount_user = (os.environ.get("maximum_key_amount_user",None))
+maximum_key_amount_user = int(maximum_key_amount_user) if maximum_key_amount_user is not None else maximum_key_amount_user
 
 
 
