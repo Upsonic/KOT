@@ -21,20 +21,21 @@ access_key = (os.environ.get("access_key","false").lower() == "true")
 access_key_folder = os.environ.get("access_key_folder","")
 access_key_lists = os.environ.get("access_key_folder","")
 access_key_lists = access_key_lists.split(",")
-access_key_lists_cache = os.environ.get("access_key_lists_cache",0)
+access_key_lists_cache = int(os.environ.get("access_key_lists_cache",0))
 restricted = os.environ.get("restricted","")
 restricted = restricted.split(",")
     
 
 
 rate_limit = os.environ.get("rate_limit","")
-key_lenght = os.environ.get("key_lenght",None)
-value_lenght = os.environ.get("value_lenght",None)
-database_name_lenght = os.environ.get("database_name_lenght",None)
-maximum_database_amount = os.environ.get("maximum_database_amount",None)
-maximum_key_amount = os.environ.get("maximum_key_amount",None)
-maximum_database_amount_user = os.environ.get("maximum_database_amount_user",None)
-maximum_key_amount_user = os.environ.get("maximum_key_amount_user",None)
+rate_limit = rate_limit.split(",")
+key_lenght = int(os.environ.get("key_lenght",None))
+value_lenght = int(os.environ.get("value_lenght",None))
+database_name_lenght = int(os.environ.get("database_name_lenght",None))
+maximum_database_amount = int(os.environ.get("maximum_database_amount",None))
+maximum_key_amount = int(os.environ.get("maximum_key_amount",None))
+maximum_database_amount_user = int(os.environ.get("maximum_database_amount_user",None))
+maximum_key_amount_user = int(os.environ.get("maximum_key_amount_user",None))
 
 
 
