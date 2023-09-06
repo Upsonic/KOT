@@ -6,6 +6,9 @@ on:
     types:
       - completed  
 
+permissions:
+  issues: write
+
 jobs:
   success:
     runs-on: ubuntu-latest
