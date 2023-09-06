@@ -8,7 +8,7 @@ with open('requirements.txt') as fp:
 
 setup(
     name="kot_web",
-    version="0.38.2",
+    version="0.38.3",
     description="""This is WEB package for KOT""",
     url="https://github.com/KOT-database/KOT",
     author='Onur Atakan ULUSOY',
