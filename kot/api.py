@@ -11,11 +11,11 @@ from .kot import KOT
 
 app = Flask(__name__)
 
-
+""
 folder = os.environ.get("folder","")
 password = os.environ.get("password","KOT")
 access_key = os.environ.get("access_key",False)
-access_key_folder = os.environ.get("access_key_folder",False)
+access_key_folder = os.environ.get("access_key_folder","")
 access_key_lists = os.environ.get("access_key_folder","")
 access_key_lists = list(access_key_lists)
 access_key_lists_cache = os.environ.get("access_key_lists_cache",0)

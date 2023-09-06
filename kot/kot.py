@@ -287,7 +287,7 @@ class KOT:
 
     @staticmethod
     def api(
-        folder: None, host=None, port=None,):  # pragma: no cover
+        host=None, port=None,):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
 
