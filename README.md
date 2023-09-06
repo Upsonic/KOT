@@ -143,3 +143,18 @@ Contributions to KOT are welcome! If you have any suggestions or find a bug, ple
 
 ## License
 KOT is released under the MIT License.
+
+<h2 align="center">
+    Contributors
+</h2>
+<p align="center">
+    Thank you for your contribution!
+</p>
+<p align="center">
+    <a href="https://github.com/KOT-database/KOT/graphs/contributors">
+      <img src="https://contrib.rocks/image?repo=KOT-database/KOT" />
+    </a>
+</p>
+<p align="center">
+    and <a href="https://sweep.dev/">Sweep !</a>
+</p>
