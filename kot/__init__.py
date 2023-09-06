@@ -4,5 +4,5 @@ from .kot import KOT_Serial
 from .kot import KOT_Remote
 from .kot import KOT_Cloud
 
-__version__ = '0.38.0'
+__version__ = '0.38.1'
 
