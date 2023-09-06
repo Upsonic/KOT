@@ -166,7 +166,7 @@ def check():
                 )
             else:
                 if request.form.get("database_name") not in database_name_caches_user[user]:
-                    database_name_caches_user[user].append(request.form.get("database_name"))
+                    database_name_caches_user[user].append(request.form.get("database_name")) if request.form.get("database_name") not in database_name_caches_user[user] else pass
 
 
     if maximum_key_amount_user is not None:
@@ -183,7 +183,7 @@ def check():
                 )
             else:
                 if request.form.get("key") not in key_name_caches_user[user]:
-                    key_name_caches_user[user].append(request.form.get("key"))
+                    key_name_caches_user[user].append(request.form.get("key")) if request.form.get("key") not in key_name_caches_user[user] else pass
 
 
 @app.route(set_url, methods=["POST"])
