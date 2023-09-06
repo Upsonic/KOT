@@ -89,3 +89,9 @@ jobs:
         docker build -t ghcr.io/kot-database/api:$VERSION -f KOT/docker/local/api/Dockerfile .  
         docker push ghcr.io/kot-database/api:latest
         docker push ghcr.io/kot-database/api:$VERSION
+
+        docker build -t ghcr.io/kot-database/web:latest -f KOT/docker/local/web/Dockerfile .
+        docker build -t ghcr.io/kot-database/web:$VERSION -f KOT/docker/local/web/Dockerfile .  
+        docker push ghcr.io/kot-database/web:latest
+        docker push ghcr.io/kot-database/web:$VERSION
+
