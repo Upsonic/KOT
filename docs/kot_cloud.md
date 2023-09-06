@@ -78,6 +78,6 @@ cloud.set(..., encryption_key="")
 You can use access_key for accessing pro:
 
 ```python
-from kot import KOT_Cloud
-cloud = KOT_Cloud_Pro("YOUR_CLOUD_KEY", access_key="YOUR_ACCESS_KEY")
+from kot import KOT_Cloud_Pro
+cloud = KOT_Cloud_Pro("YOUR_CLOUD_KEY", "YOUR_ACCESS_KEY")
 ```

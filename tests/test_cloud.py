@@ -27,7 +27,7 @@ class TestCloud(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.remote = KOT_Cloud("cloud-workflow")
+        cls.remote = KOT_Cloud(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"))
 
     def test_remote_api_set_get_deletestring(self):
 
