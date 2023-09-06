@@ -6,8 +6,7 @@ on:
     types:
       - completed  
 
-permissions:
-  issues: write
+
 
 jobs:
   success:
@@ -27,15 +26,6 @@ jobs:
           webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
           content: "success ${{ steps.tag_extractor.outputs.latest_tag }}"           
 
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: 233,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Deployed"]
-            })
 
 
   failure:
@@ -54,15 +44,3 @@ jobs:
         with:
           webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
           content: "failure <@&1148701924615520256> ${{ steps.tag_extractor.outputs.latest_tag }}"           
-
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.removeLabel({
-              issue_number: 233,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              name: ["Failed"]
-            })
-
-        
