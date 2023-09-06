@@ -10,7 +10,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
-            restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             rate_limit : "400 per hour, 40 per minute"
             key_lenght : 100
@@ -31,12 +31,13 @@ services:
             - '5001:5000'
         volumes:
             - 'KOT_Volume_Pro:/app/KOT'
+            - 'KOT_Volume_Access:/'
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
             password : "KOT"
-            restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             rate_limit : "400 per hour, 40 per minute"
             key_lenght : 100
@@ -63,7 +64,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
-            restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+    
 
             rate_limit : "400 per hour, 40 per minute"
             key_lenght : 100
@@ -90,9 +91,35 @@ services:
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
-            folder: "/" # "/"
+            folder: "" # "/"
             password : "KOT"
-            restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+
+
+            rate_limit : "400 per hour, 40 per minute"
+            key_lenght : 100
+            value_lenght : 10000
+            database_name_lenght : 50
+            maximum_database_amount: 200
+            maximum_key_amount: 500
+            maximum_database_amount_user: 5
+            maximum_key_amount_user: 50
+
+            access_key: False
+            access_key_folder: "" # "/"
+            access_key_lists: "" # "aa, 231"
+            access_key_lists_cache: 60     
+
+    Admin_api_pro_access:
+        ports:
+            - '4997:5000'
+        volumes:
+            - 'KOT_Volume_Access:/app/KOT'
+        image: ghcr.io/kot-database/api:latest
+        command: KOT api --host=0.0.0.0 --port=5000
+        environment:
+            folder: "" # "/"
+            password : "KOT"
+
 
             rate_limit : "400 per hour, 40 per minute"
             key_lenght : 100
@@ -116,9 +143,10 @@ services:
         volumes:
             - 'KOT_Volume:/app/KOT'
         image: ghcr.io/kot-database/web:latest
-        command: KOT web onuratakan --host=0.0.0.0 --port=5000
+        command: KOT web KOT --host=0.0.0.0 --port=5000
 
 
 volumes:
   KOT_Volume:
   KOT_Volume_Pro:
+  KOT_Volume_Access:
