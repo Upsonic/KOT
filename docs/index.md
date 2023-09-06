@@ -97,7 +97,7 @@ db.get("Key") #Instant, no waiting and no searching
 - [CLI](https://KOT-database.github.io/KOT/interfaces/cli.html)
 - [GUI](https://KOT-database.github.io/KOT/interfaces/gui.html)
 - [WEB](https://KOT-database.github.io/KOT/interfaces/web.html)
-- [CLI](https://KOT-database.github.io/KOT/interfaces/api.html)
+- [API](https://KOT-database.github.io/KOT/interfaces/api.html)
 
 ## Features
 
