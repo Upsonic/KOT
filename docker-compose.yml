@@ -6,7 +6,7 @@ services:
         volumes:
             - 'KOT_Volume:/app/KOT'
         image: ghcr.io/kot-database/api:latest
-        command: KOT api--host=0.0.0.0 --port=5000
+        command: KOT api --host=0.0.0.0 --port=5000
         environment:
             - folder = "" # "/"
             - password  = "KOT"

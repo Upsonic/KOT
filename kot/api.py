@@ -11,7 +11,7 @@ from .kot import KOT
 
 app = Flask(__name__)
 
-""
+
 folder = os.environ.get("folder","")
 password = os.environ.get("password","KOT")
 access_key = os.environ.get("access_key",False)
@@ -88,7 +88,7 @@ def check():
     auth = request.authorization
     if not auth:
         return Response(
-                    "Could not verify your access level for that URL.\n"
+                    "Could not verify your access level for that URL. Make basic auth.\n"
                     "You have to login with proper credentials",
                     401,
                     {"WWW-Authenticate": 'Basic realm="Login Required"'},
@@ -96,7 +96,7 @@ def check():
     
     elif (auth.username != "" or auth.password != password) and not access_key:
             return Response(
-                "Could not verify your access level for that URL.\n"
+                "Could not verify your access level for that URL. Use password.\n"
                 "You have to login with proper credentials",
                 401,
                 {"WWW-Authenticate": 'Basic realm="Login Required"'},
@@ -104,7 +104,7 @@ def check():
 
     elif (auth.password not in access_keys()):
             return Response(
-                "Could not verify your access level for that URL.\n"
+                "Could not verify your access level for that URL. Use access key.\n"
                 "You have to login with proper credentials",
                 401,
                 {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
