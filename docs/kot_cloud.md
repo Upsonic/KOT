@@ -72,3 +72,12 @@ You can give `encryption_key` to all functions, this will encrypt your things in
 cloud.set(..., encryption_key="")
 
 ```
+
+
+## Cloud Pro
+You can use access_key for accessing pro:
+
+```python
+from kot import KOT_Cloud
+cloud = KOT_Cloud_Pro("YOUR_CLOUD_KEY", access_key="YOUR_ACCESS_KEY")
+```

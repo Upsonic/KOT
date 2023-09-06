@@ -14,9 +14,13 @@ KOT API is on github packages system and you can easily install and run as a ser
 docker pull ghcr.io/kot-database/api:latest
 ```
 
+# Configuration
+Open `.env.template` and made your changes after that save as `.env`
+
+
 ## Run the Container
 ```console 
-docker run -d --name KOT_API -p 5000:5000 ghcr.io/kot-database/api:latest KOT api <password> --host='0.0.0.0' --port=5000
+docker run --env-file .env -d --name KOT_API -p 5000:5000 ghcr.io/kot-database/api:latest KOT api --host='0.0.0.0' --port=5000
 ```
 
 ## Test

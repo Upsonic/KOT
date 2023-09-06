@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import os
 from waitress import serve
 from flask import Flask, request, Response, jsonify
 from flask_limiter import Limiter
@@ -11,29 +12,35 @@ from .kot import KOT
 app = Flask(__name__)
 
 
-folder = ""
-host = None
-port = None
-password = None
-restricted = []
-rate_limit = None
-limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
-key_lenght = None
-value_lenght = None
-database_name_lenght=None
-maximum_database_amount = None
+folder = os.environ.get("folder","")
+password = os.environ.get("password","KOT")
+access_key = os.environ.get("access_key",False)
+access_key_folder = os.environ.get("access_key_folder",False)
+access_key_lists = os.environ.get("access_key_folder","")
+access_key_lists = list(access_key_lists)
+access_key_lists_cache = os.environ.get("access_key_lists_cache",0)
+restricted = os.environ.get("restricted","")
+restricted = list(restricted)
+    
+
+
+rate_limit = os.environ.get("rate_limit","")
+key_lenght = os.environ.get("key_lenght",None)
+value_lenght = os.environ.get("value_lenght",None)
+database_name_lenght = os.environ.get("database_name_lenght",None)
+maximum_database_amount = os.environ.get("maximum_database_amount",None)
+maximum_key_amount = os.environ.get("maximum_key_amount",None)
+maximum_database_amount_user = os.environ.get("maximum_database_amount_user",None)
+maximum_key_amount_user = os.environ.get("maximum_key_amount_user",None)
+
+
+
 database_name_caches = []
-
-
-maximum_key_amount = None
 key_name_caches = []
-
-maximum_database_amount_user = None
 database_name_caches_user = {}
-
-
-maximum_key_amount_user = None
 key_name_caches_user = {}
+limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)
+
 
 set_url = "/controller/set"
 get_url = "/controller/get"
@@ -52,7 +59,10 @@ error_url = "/controller/error"
 exception_url = "/controller/exception"
 
 
-
+access_key_database = KOT("access_key_database", folder=access_key_folder)
+access_key_database.set("access_keys", access_key_lists, cache_policy=access_key_lists_cache)
+def access_keys():
+    return access_key_database.get("access_keys")
 
 
 
@@ -71,15 +81,35 @@ def check():
     global database_name_caches_user
     global maximum_key_amount_user
     global key_name_caches_user
+    global access_key
+
+
 
     auth = request.authorization
-    if not auth or (auth.username != "" or auth.password != password):
+    if not auth:
         return Response(
-            "Could not verify your access level for that URL.\n"
-            "You have to login with proper credentials",
-            401,
-            {"WWW-Authenticate": 'Basic realm="Login Required"'},
-        )
+                    "Could not verify your access level for that URL.\n"
+                    "You have to login with proper credentials",
+                    401,
+                    {"WWW-Authenticate": 'Basic realm="Login Required"'},
+                )
+    
+    elif (auth.username != "" or auth.password != password) and not access_key:
+            return Response(
+                "Could not verify your access level for that URL.\n"
+                "You have to login with proper credentials",
+                401,
+                {"WWW-Authenticate": 'Basic realm="Login Required"'},
+            )
+
+    elif (auth.password not in access_keys()):
+            return Response(
+                "Could not verify your access level for that URL.\n"
+                "You have to login with proper credentials",
+                401,
+                {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
+            )
+   
 
 
     for restrict in restricted:
@@ -341,33 +371,7 @@ def exception():
 
 
 
-def API(folder_data, password_data, host_data, port_data, restricted_data, rate_limit_data, key_lenght_data, value_lenght_data, database_name_lenght_data, maximum_database_amount_data, maximum_key_amount_data, maximum_database_amount_user_data, maximum_key_amount_user_data):
-    global folder
-    global host
-    global port
-    global password
-    global restricted
-    global rate_limit
-    global limiter
-    global key_lenght
-    global value_lenght
-    global database_name_lenght
-    global maximum_database_amount
-    global maximum_key_amount
-    global maximum_database_amount_user
-    global maximum_key_amount_user
-    folder = folder_data  # pragma: no cover
-    host = host_data  # pragma: no cover
-    port = port_data  # pragma: no cover
-    password = password_data  # pragma: no cover
-    restricted = list(restricted_data)  # pragma: no cover
-    rate_limit = rate_limit_data.split(",")  # pragma: no cover
-    limiter = Limiter(get_remote_address, app=app, default_limits=rate_limit)  # pragma: no cover
-    key_lenght = key_lenght_data  # pragma: no cover
-    value_lenght = value_lenght_data  # pragma: no cover
-    database_name_lenght = database_name_lenght_data  # pragma: no cover
-    maximum_database_amount = maximum_database_amount_data  # pragma: no cover
-    maximum_key_amount = maximum_key_amount_data  # pragma: no cover
-    maximum_database_amount_user = maximum_database_amount_user_data  # pragma: no cover
-    maximum_key_amount_user = maximum_key_amount_user_data  # pragma: no cover
+def API(host_data, port_data,):
+    host = host_data if host_data is not None else host  # pragma: no cover
+    port = port_data if port_data is not None else port  # pragma: no cover
     serve(app, host=host, port=port)  # pragma: no cover

@@ -287,12 +287,11 @@ class KOT:
 
     @staticmethod
     def api(
-        password, folder: str = "", host="localhost", port=5000, restricted="", rate_limit="", key_lenght = None, value_lenght = None, database_name_lenght = None, maximum_database_amount = None, maximum_key_amount = None, maximum_database_amount_user = None, maximum_key_amount_user = None, 
-    ):  # pragma: no cover
+        folder: None, host=None, port=None,):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
 
-            API(folder, password, host, port, restricted, rate_limit, key_lenght, value_lenght, database_name_lenght, maximum_database_amount, maximum_key_amount, maximum_database_amount_user, maximum_key_amount_user)  # pragma: no cover
+            API(host, port)  # pragma: no cover
         except ModuleNotFoundError:
             rprint(
                 "Warning: API module not found. Please install the 'kot_api' package."
@@ -1067,7 +1066,7 @@ class KOT_Remote:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass  # pragma: no cover
 
-    def __init__(self, database_name, api_url, password):
+    def __init__(self, database_name, api_url, password=None, access_key = None):
         import requests
         from requests.auth import HTTPBasicAuth
 
@@ -1076,6 +1075,8 @@ class KOT_Remote:
 
         self.api_url = api_url
         self.password = password
+
+        self.access_key = access_key
 
         self.database_name = database_name
 
@@ -1100,6 +1101,8 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/exception", data)
 
     def _send_request(self, method, endpoint, data=None):
+        if self.access_key != None:
+            data["access_key"] = self.access_key
         response = self.requests.request(
                 method,
                 self.api_url + endpoint,
@@ -1205,3 +1208,6 @@ class KOT_Remote:
 
 def KOT_Cloud(database_name):
     return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover
+
+def KOT_Cloud_Pro(database_name, access_key):
+    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5001', access_key=access_key) # pragma: no cover

@@ -14,106 +14,25 @@ pip3 install kot_api
 ```
 
 ## Start
-You can start the API with `api` command but you must give an password.
+You can start the API with `api` command, you can specify the 'host' and 'port'.
 
 ```console
-KOT api <password>
+KOT api --host localhost --port 5000
 ```
 
-Also you can specify the 'host' and 'port'.
 
-```console
-KOT api <password> --host localhost --port 5000
-```
+## Configuration
+Open `.env.template` and made your changes after that save as `.env`
 
-## Authorization
+
+## Authorization no `access_key`
 You must use the API with `Basic Auth`.
 
 - Authorization Type: Basic Auth
   - Username: ""
   - Password: The password that you used for starting API.
-
-
-## Restriction
-You restrict some uses via `--restricted` argument. You can restrict api endpoints via the name and seperate by comma.
-
-```console
-KOT api <password> --host localhost --port 5000 --restricted "set, get, delete"
-```
-
-
-## Rate Limit
-You can set rate limits via `--rate_limit` argument. Write rate limits like this and seperate by comma.
-
-```console
-KOT api <password> --host localhost --port 5000 --rate_limit "5 per hour, 1 per minute"
-```
-
-## Key Lenght Limit
-You can set key lenght limits via `--key_lenght` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --key_lenght 15
-```
-
-this will limit to 15 character.
-
-## Value Lenght Limit
-You can set value lenght limits via `--value_lenght` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --value_lenght 15
-```
-
-this will limit to 15 character.
-
-
-
-## Database Name Lenght Limit
-You can set database name lenght limits via `--database_name_lenght` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --database_name_lenght 15
-```
-
-this will limit to 15 character.
-
-
-## Database Amount Limit
-You can set amount of databases via `--maximum_database_amount` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --maximum_database_amount 15
-```
-
-this will limit to 15 database.
-
-
-## Key Amount Limit
-You can set amount of keys via `--maximum_key_amount` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --maximum_key_amount 15
-```
-
-this will limit to 15 key.
-
-
-## Each IP Different Databases Limit
-You can set a limit for every IP via `--maximum_database_amount_user` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --maximum_database_amount_user 5
-```
-this will limit to 5 database.
-
-## Each IP Different Key Amount
-You can set a limit for every IP via `--maximum_key_amount_user` argument. Write rate limits like this:
-
-```console
-KOT api <password> --host localhost --port 5000 --maximum_key_amount_user 5
-```
-this will limit to 5 key.
+## Access Key
+You must give your `access_key` on your all requests.
 
 
 
