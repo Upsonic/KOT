@@ -74,7 +74,7 @@ cloud.set(..., encryption_key="")
 ```
 
 
-## Cloud Pro
+# Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml)
 You can use access_key for accessing pro:
 
 ```python
