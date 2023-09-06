@@ -51,8 +51,8 @@ class TestCloudPro(unittest.TestCase):
     def test_remote_api_active(self):
         self.remote.active(pmy_function)
         time.sleep(1)
-        self.assertEqual(self.remote.get("my_function")(), 123)
-        self.remote.delete("my_function")
+        self.assertEqual(self.remote.get("pmy_function")(), 123)
+        self.remote.delete("pmy_function")
 
 backup = sys.argv
 sys.argv = [sys.argv[0]]
