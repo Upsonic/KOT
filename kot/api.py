@@ -78,7 +78,10 @@ exception_url = "/controller/exception"
 access_key_database = KOT("access_key_database", folder=access_key_folder)
 access_key_database.set("access_keys", access_key_lists, cache_policy=access_key_lists_cache)
 def access_keys():
-    return access_key_database.get("access_keys")
+    a = access_key_database.get("access_keys")
+    if a == [""]:
+        a = []
+    return a
 
 
 
