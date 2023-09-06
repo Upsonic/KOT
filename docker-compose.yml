@@ -31,7 +31,7 @@ services:
             - '5001:5000'
         volumes:
             - 'KOT_Volume_Pro:/app/KOT'
-            - 'KOT_Volume_Access:/'
+            - 'KOT_Volume_Access:/app'
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
@@ -49,7 +49,7 @@ services:
             maximum_key_amount_user: 50
 
             access_key: True
-            access_key_folder: "/" # "/"
+            access_key_folder: "/app" # "/"
             access_key_lists: "" # "aa, 231"
             access_key_lists_cache: 60              
 
