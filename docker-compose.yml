@@ -8,23 +8,23 @@ services:
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
-            - folder = "" # "/"
-            - password  = "KOT"
-            - restricted = "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            - folder: "" # "/"
+            - password : "KOT"
+            - restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
 
-            - rate_limit  = "400 per hour, 40 per minute"
-            - key_lenght  = 100
-            - value_lenght  = 1000
-            - database_name_lenght  = 50
-            - maximum_database_amount = 200
-            - maximum_key_amount = 500
-            - maximum_database_amount_user = 5
-            - maximum_key_amount_user = 50
+            - rate_limit : "400 per hour, 40 per minute"
+            - key_lenght : 100
+            - value_lenght : 1000
+            - database_name_lenght : 50
+            - maximum_database_amount: 200
+            - maximum_key_amount: 500
+            - maximum_database_amount_user: 5
+            - maximum_key_amount_user: 50
 
-            - access_key = False
-            - access_key_folder = "" # "/"
-            - access_key_lists = "" # "aa, 231"
-            - access_key_lists_cache = 60        
+            - access_key: False
+            - access_key_folder: "" # "/"
+            - access_key_lists: "" # "aa, 231"
+            - access_key_lists_cache: 60        
 
     User_api_Pro:
         ports:
@@ -34,23 +34,23 @@ services:
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
-            - folder = "" # "/"
-            - password  = "KOT"
-            - restricted = "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            - folder: "" # "/"
+            - password : "KOT"
+            - restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
 
-            - rate_limit  = "400 per hour, 40 per minute"
-            - key_lenght  = 100
-            - value_lenght  = 1000
-            - database_name_lenght  = 50
-            - maximum_database_amount = 200
-            - maximum_key_amount = 500
-            - maximum_database_amount_user = 5
-            - maximum_key_amount_user = 50
+            - rate_limit : "400 per hour, 40 per minute"
+            - key_lenght : 100
+            - value_lenght : 1000
+            - database_name_lenght : 50
+            - maximum_database_amount: 200
+            - maximum_key_amount: 500
+            - maximum_database_amount_user: 5
+            - maximum_key_amount_user: 50
 
-            - access_key = True
-            - access_key_folder = "/" # "/"
-            - access_key_lists = "" # "aa, 231"
-            - access_key_lists_cache = 60              
+            - access_key: True
+            - access_key_folder: "/" # "/"
+            - access_key_lists: "" # "aa, 231"
+            - access_key_lists_cache: 60              
 
 
     Admin_api:
@@ -61,23 +61,23 @@ services:
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
-            - folder = "" # "/"
-            - password  = "KOT"
-            - restricted = "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            - folder: "" # "/"
+            - password : "KOT"
+            - restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
 
-            - rate_limit  = "400 per hour, 40 per minute"
-            - key_lenght  = 100
-            - value_lenght  = 1000
-            - database_name_lenght  = 50
-            - maximum_database_amount = 200
-            - maximum_key_amount = 500
-            - maximum_database_amount_user = 5
-            - maximum_key_amount_user = 50
+            - rate_limit : "400 per hour, 40 per minute"
+            - key_lenght : 100
+            - value_lenght : 1000
+            - database_name_lenght : 50
+            - maximum_database_amount: 200
+            - maximum_key_amount: 500
+            - maximum_database_amount_user: 5
+            - maximum_key_amount_user: 50
 
-            - access_key = False
-            - access_key_folder = "" # "/"
-            - access_key_lists = "" # "aa, 231"
-            - access_key_lists_cache = 60           
+            - access_key: False
+            - access_key_folder: "" # "/"
+            - access_key_lists: "" # "aa, 231"
+            - access_key_lists_cache: 60           
 
 
 
@@ -90,23 +90,23 @@ services:
         image: ghcr.io/kot-database/api:latest
         command: KOT api --host=0.0.0.0 --port=5000
         environment:
-            - folder = "/" # "/"
-            - password  = "KOT"
-            - restricted = "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
+            - folder: "/" # "/"
+            - password : "KOT"
+            - restricted: "get_all, database_list, database_delete, database_pop, database_pop_all, database_delete_all, debug, info, warning, error, exception"
 
-            - rate_limit  = "400 per hour, 40 per minute"
-            - key_lenght  = 100
-            - value_lenght  = 10000
-            - database_name_lenght  = 50
-            - maximum_database_amount = 200
-            - maximum_key_amount = 500
-            - maximum_database_amount_user = 5
-            - maximum_key_amount_user = 50
+            - rate_limit : "400 per hour, 40 per minute"
+            - key_lenght : 100
+            - value_lenght : 10000
+            - database_name_lenght : 50
+            - maximum_database_amount: 200
+            - maximum_key_amount: 500
+            - maximum_database_amount_user: 5
+            - maximum_key_amount_user: 50
 
-            - access_key = False
-            - access_key_folder = "" # "/"
-            - access_key_lists = "" # "aa, 231"
-            - access_key_lists_cache = 60     
+            - access_key: False
+            - access_key_folder: "" # "/"
+            - access_key_lists: "" # "aa, 231"
+            - access_key_lists_cache: 60     
 
 
 
