@@ -1100,17 +1100,17 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/exception", data)
 
     def _send_request(self, method, endpoint, data=None):
-        try:
-            response = self.requests.request(
+        response = self.requests.request(
                 method,
                 self.api_url + endpoint,
                 data=data,
                 auth=self.HTTPBasicAuth("", self.password),
-            )
+            )        
+        try:
             response.raise_for_status()
             return response.text
         except self.requests.exceptions.RequestException as e:  # pragma: no cover
-            print(f"Error: {e}")  # pragma: no cover
+            print("Error: ", response.text)
             return None  # pragma: no cover
 
     def set(self, key, value, encryption_key="a", compress=None):
