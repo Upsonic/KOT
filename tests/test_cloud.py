@@ -30,7 +30,7 @@ class TestCloud(unittest.TestCase):
         cls.remote = KOT_Cloud("cloud-workflow")
 
     def test_remote_api_set_get_deletestring(self):
-
+        self.assertEqual(1,2)
         
 
         the = time.time()
