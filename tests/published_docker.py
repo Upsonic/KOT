@@ -29,7 +29,7 @@ class TestPDocker(unittest.TestCase):
     def setUpClass(cls):
         os.chdir(os.path.join(os.path.dirname(__file__), "..",".."))
         #os.system("docker build -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile .")
-        os.system("docker run --env-file .env -d --name KOT_API -p 5000:5000 ghcr.io/kot-database/api:latest KOT api pass --host='0.0.0.0' --port=5000")
+        os.system("docker run --env-file .env.template -d --name KOT_API -p 5000:5000 ghcr.io/kot-database/api:latest KOT api pass --host='0.0.0.0' --port=5000")
         time.sleep(100)
 
         cls.remote = KOT_Remote("TestRemote", "http://localhost:5000", 'pass')
