@@ -1066,7 +1066,7 @@ class KOT_Remote:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass  # pragma: no cover
 
-    def __init__(self, database_name, api_url, password=None, access_key = None):
+    def __init__(self, database_name, api_url, password=None):
         import requests
         from requests.auth import HTTPBasicAuth
 
@@ -1075,8 +1075,6 @@ class KOT_Remote:
 
         self.api_url = api_url
         self.password = password
-
-        self.access_key = access_key
 
         self.database_name = database_name
 
@@ -1101,8 +1099,6 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/exception", data)
 
     def _send_request(self, method, endpoint, data=None):
-        if self.access_key != None:
-            data["access_key"] = self.access_key
         response = self.requests.request(
                 method,
                 self.api_url + endpoint,

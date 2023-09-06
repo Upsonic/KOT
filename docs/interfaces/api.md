@@ -25,14 +25,12 @@ KOT api --host localhost --port 5000
 Open `.env.template` and made your changes after that save as `.env`
 
 
-## Authorization no `access_key`
+## Authorization
 You must use the API with `Basic Auth`.
 
 - Authorization Type: Basic Auth
   - Username: ""
-  - Password: The password that you used for starting API.
-## Access Key
-You must give your `access_key` on your all requests.
+  - Password: The password or access_key.
 
 
 
