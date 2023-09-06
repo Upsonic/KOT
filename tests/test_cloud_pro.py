@@ -13,12 +13,14 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from kot import KOT, HASHES, KOT_Serial, KOT_Cloud_Pro
 import kot
 
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=".env")
 
-class test_object:
+class ptest_object:
     def exp(self):
         return {"test": "test"}
 
-def my_function():
+def pmy_function():
     return 123
 
 
@@ -27,7 +29,7 @@ class TestCloudPro(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.remote = KOT_Cloud_Pro(os.environ.get("CLOUD_TEST_DATABASE_NAME"), os.environ.get("CLOUD_PRO_ACCESS_KEY"))
+        cls.remote = KOT_Cloud_Pro(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"), os.environ.get("CLOUD_PRO_ACCESS_KEY"))
 
     def test_remote_api_set_get_deletestring(self):
 
@@ -48,7 +50,7 @@ class TestCloudPro(unittest.TestCase):
         self.assertNotEqual(self.remote.get("key"), value)
 
     def test_remote_api_active(self):
-        self.remote.active(my_function)
+        self.remote.active(pmy_function)
         time.sleep(1)
         self.assertEqual(self.remote.get("my_function")(), 123)
         self.remote.delete("my_function")
