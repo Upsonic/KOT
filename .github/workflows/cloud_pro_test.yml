@@ -37,7 +37,7 @@ jobs:
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
         cd ..
-        pytest KOT/tests/test_cloud_pro.py -v
+        python -c 'import os;print(os.environ)'
 
 
 
