@@ -11,7 +11,32 @@ on:
       - completed  
 
 jobs:
+
+
+  tagext:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.8'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Getting Tag
+        id: tag_extractor
+        run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
+
+    outputs:
+      tag: ${{ steps.tag_extractor.outputs.latest_tag }}              
+
+
+
+
   pypi:
+    needs: tagext
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -22,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-tags: true
+          fetch-depth: 0
       - name: Getting Tag
         id: tag_extractor
         run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
@@ -40,7 +65,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          TAG=${{ steps.tag_extractor.outputs.latest_tag }}       
+          TAG=${{ needs.tagext.outputs.tag }}        
           pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
 
 
@@ -52,6 +77,7 @@ jobs:
 
 
   pypi_docker:
+    needs: tagext
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -62,7 +88,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-tags: true
+          fetch-depth: 0
       - name: Getting Tag
         id: tag_extractor
         run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
@@ -102,7 +128,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-tags: true
+          fetch-depth: 0
       - name: Getting Tag
         id: tag_extractor
         run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
