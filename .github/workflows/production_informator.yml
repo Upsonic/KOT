@@ -2,7 +2,7 @@ name: Production Informator
 
 on:
   workflow_run:
-    workflows: ["Production"]
+    workflows: ["Production", "Production Custom"]
     types:
       - completed  
 
