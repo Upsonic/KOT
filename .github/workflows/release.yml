@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0
+        fetch-tags: true
     - name: Getting Tag
       id: tag_extractor
       run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
