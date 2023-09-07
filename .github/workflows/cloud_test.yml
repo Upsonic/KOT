@@ -88,7 +88,8 @@ jobs:
         pip install pytest
         pip install kot --no-cache --upgrade
     - name: Test with pytest
+      env:
+        CLOUD_TEST_DATABASE_NAME: '${{ secrets.CLOUD_TEST_DATABASE_NAME }}'
       run: |
         cd ..
-        CLOUD_TEST_DATABASE_NAME=${{ secrets.CLOUD_TEST_DATABASE_NAME }}        
         pytest KOT/tests/test_cloud.py -v
