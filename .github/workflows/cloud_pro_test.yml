@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
   workflow_run:
-    workflows: ["Production"]
+    workflows: ["Production", "Production Custom"]
     types:
       - completed  
 
