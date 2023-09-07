@@ -32,6 +32,9 @@ jobs:
         pip install pytest
         pip install kot --no-cache --upgrade
     - name: Test with pytest
+      env:
+        CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
+        CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
         cd ..
         pytest KOT/tests/test_cloud_pro.py -v
@@ -61,6 +64,9 @@ jobs:
         pip install pytest
         pip install kot --no-cache --upgrade
     - name: Test with pytest
+      env:
+        CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
+        CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
         cd ..
         pytest KOT/tests/test_cloud_pro.py -v
@@ -90,8 +96,8 @@ jobs:
         pip install kot --no-cache --upgrade
     - name: Test with pytest
       env:
-        CLOUD_PRO_ACCESS_KEY: '${{ secrets.CLOUD_PRO_ACCESS_KEY }}'
-        CLOUD_TEST_DATABASE_NAME: '${{ secrets.CLOUD_TEST_DATABASE_NAME }}'
+        CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
+        CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
         cd ..
         pytest KOT/tests/test_cloud_pro.py -v
