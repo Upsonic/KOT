@@ -59,9 +59,8 @@ jobs:
           pip install pytest
 
       - name: Install dependencies
-        run: |
-          TAG=${{ needs.tagext.outputs.tag }}        
-          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
+        run: |  
+          pip install kot==${{ needs.tagext.outputs.tag:1}} kot_api==${{ needs.tagext.outputs.tag:1}} kot_gui==${{ needs.tagext.outputs.tag:1}} kot_web==${{ needs.tagext.outputs.tag:1}} --no-cache --upgrade
 
 
       - name: Test with pytest
