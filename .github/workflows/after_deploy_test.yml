@@ -37,7 +37,7 @@ jobs:
 
     outputs:
       tag: ${{ steps.tag_extractor.outputs.latest_tag }}              
-      tag2: ${{ steps.tag_extractor_2.outputs.latest_tag_2 }}      
+      tag_2: ${{ steps.tag_extractor_2.outputs.latest_tag_2 }}      
 
 
 
