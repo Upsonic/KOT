@@ -1,0 +1,42 @@
+name: Production
+
+on:
+  workflow_dispatch:
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
+  cancel-in-progress: true
+jobs:
+
+  upload:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Getting Tag
+      id: tag_extractor
+      run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"        
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install .
+    - name: Test with pytest
+      env:
+        PRODUCTION_WEBHOOK: ${{ secrets.PRODUCTION_WEBHOOK }}
+        PRODUCTION_TAG: ${{ steps.tag_extractor.outputs.latest_tag }}    
+        PRODUCTION_ACCESS_KEYS: ${{ secrets.PRODUCTION_ACCESS_KEYS }}
+        PRODUCTION_SERVER: ${{ secrets.PRODUCTION_SERVER }}
+        PRODUCTION_SERVER_PASS: ${{ secrets.PRODUCTION_SERVER_PASS }}
+      run: |
+        pytest .github/workflows/production.py

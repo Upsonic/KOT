@@ -70,7 +70,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('equirements.txt') }}-${{ hashFiles('setups/api/requirements.txt') }}-${{ hashFiles('setups/web/requirements.txt') }}-${{ hashFiles('setups/gui/requirements.txt') }}
+        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setups/api/requirements.txt') }}-${{ hashFiles('setups/web/requirements.txt') }}-${{ hashFiles('setups/gui/requirements.txt') }}
 
     - name: Install dependencies
       run: |
@@ -105,7 +105,7 @@ jobs:
     - uses: actions/cache@v2
       with:
         path: ${{ env.pythonLocation }}
-        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('equirements.txt') }}-${{ hashFiles('setups/api/requirements.txt') }}-${{ hashFiles('setups/web/requirements.txt') }}-${{ hashFiles('setups/gui/requirements.txt') }}
+        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setups/api/requirements.txt') }}-${{ hashFiles('setups/web/requirements.txt') }}-${{ hashFiles('setups/gui/requirements.txt') }}
 
     - name: Install dependencies
       run: |
