@@ -29,8 +29,15 @@ jobs:
         id: tag_extractor
         run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
 
+      - name: Getting Tag
+        id: tag_extractor_2
+        run: 
+          TAG=${{ steps.tag_extractor.outputs.latest_tag }}   
+          echo "latest_tag_2=${TAG:1} " >> "$GITHUB_OUTPUT"
+
     outputs:
       tag: ${{ steps.tag_extractor.outputs.latest_tag }}              
+      tag2: ${{ steps.tag_extractor_2.outputs.latest_tag_2 }}      
 
 
 
@@ -59,8 +66,8 @@ jobs:
           pip install pytest
 
       - name: Install dependencies
-        run: |  
-          pip install kot==${{ needs.tagext.outputs.tag:1}} kot_api==${{ needs.tagext.outputs.tag:1}} kot_gui==${{ needs.tagext.outputs.tag:1}} kot_web==${{ needs.tagext.outputs.tag:1}} --no-cache --upgrade
+        run: |   
+          pip install kot==${{ needs.tagext.outputs.tag_2 }}  kot_api==${{ needs.tagext.outputs.tag_2 }}  kot_gui==${{ needs.tagext.outputs.tag_2 }}  kot_web==${{ needs.tagext.outputs.tag_2 }}  --no-cache --upgrade
 
 
       - name: Test with pytest
