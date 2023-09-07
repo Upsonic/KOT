@@ -100,7 +100,7 @@ jobs:
     needs: [pypi, docker]
     runs-on: ubuntu-latest
     steps:
-    - name: Sleep for 150 seconds
+    - name: Sleep for 300 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '150s'        
+        time: '300s'        
