@@ -14,7 +14,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
   cancel-in-progress: true
 jobs:
-  deploy-pypi:
+  pypi:
 
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -56,7 +56,7 @@ jobs:
         cd ..
 
 
-  deploy-docker:
+  docker:
 
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -97,6 +97,7 @@ jobs:
 
 
   sleep:
+    needs: [pypi, docker]
     runs-on: ubuntu-latest
     steps:
     - name: Sleep for 120 seconds
