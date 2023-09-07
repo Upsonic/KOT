@@ -13,7 +13,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from kot import KOT, HASHES, KOT_Serial, KOT_Cloud_Pro
 import kot
 
-
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="KOT/GITHUB_ENV")
 
 class ptest_object:
     def exp(self):
