@@ -39,4 +39,4 @@ jobs:
         PRODUCTION_SERVER: ${{ secrets.PRODUCTION_SERVER }}
         PRODUCTION_SERVER_PASS: ${{ secrets.PRODUCTION_SERVER_PASS }}
       run: |
-        pytest .github/workflows/production.py
+        python .github/workflows/production.py

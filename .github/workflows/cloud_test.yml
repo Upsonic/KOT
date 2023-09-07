@@ -5,6 +5,11 @@ on:
     - cron:  '*/15 * * * *'
   workflow_dispatch:
 
+  workflow_run:
+    workflows: ["Production"]
+    types:
+      - completed  
+
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
   cancel-in-progress: true
