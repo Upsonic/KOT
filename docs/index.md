@@ -24,7 +24,7 @@ KOT Cloud: the ultimate, free cloud database for all Python developers. Experien
 
 - "Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!"
 
-![KOT Cloud](https://github.com/KOT-database/assets/41792982/24fe141d-392b-4801-8f3c-541b3ad5a472)
+![KOT Cloud](https://github.com/KOT-database/KOT/assets/41792982/1c2a88f5-fcff-425e-919b-5663b356ec98)
 
 
 
