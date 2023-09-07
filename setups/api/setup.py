@@ -9,7 +9,7 @@ with open('requirements.txt') as fp:
 
 setup(
     name="kot_api",
-    version="0.38.15",
+    version="0.38.16",
     description="""This is API package for KOT""",
     url="https://github.com/KOT-database/KOT",
     author='Onur Atakan ULUSOY',
