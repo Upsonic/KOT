@@ -95,3 +95,11 @@ jobs:
         docker push ghcr.io/kot-database/web:latest
         docker push ghcr.io/kot-database/web:$VERSION
 
+
+  sleep:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Sleep for 120 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '120s'        
