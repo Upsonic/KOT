@@ -10,9 +10,6 @@ on:
     types:
       - completed  
 
-concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
-  cancel-in-progress: true
 jobs:
 
   ubuntu:
