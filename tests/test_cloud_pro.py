@@ -13,7 +13,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 from kot import KOT, HASHES, KOT_Serial, KOT_Cloud_Pro
 import kot
 
-
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="GITHUB_ENV")
 
 class ptest_object:
     def exp(self):
@@ -32,7 +33,6 @@ class TestCloudPro(unittest.TestCase):
 
     def test_remote_api_set_get_deletestring(self):
 
-        print(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"))
 
         the = time.time()
         value = f"Value{the}"
