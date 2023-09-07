@@ -37,7 +37,7 @@ jobs:
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
         cd ..
-        python -c 'import os;print(os.environ)'
+        python -c 'import os;print(os.environ.get("CLOUD_PRO_ACCESS_KEY"))'
 
 
 
