@@ -40,9 +40,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          TAG=${{ steps.tag_extractor.outputs.latest_tag }}
-          echo "VERSION=${TAG#v}" >> $GITHUB_ENV        
-          pip install kot==${VERSION} kot_api==${VERSION} kot_gui==${VERSION} kot_web==${VERSION} --no-cache --upgrade
+          TAG=${{ steps.tag_extractor.outputs.latest_tag }}       
+          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
 
 
       - name: Test with pytest
@@ -81,9 +80,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          TAG=${{ steps.tag_extractor.outputs.latest_tag }}
-          echo "VERSION=${TAG#v}" >> $GITHUB_ENV             
-          pip install kot==${VERSION} kot_api==${VERSION} kot_gui==${VERSION} kot_web==${VERSION} --no-cache --upgrade
+          TAG=${{ steps.tag_extractor.outputs.latest_tag }}        
+          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
 
 
       - name: Test with pytest
@@ -119,9 +117,8 @@ jobs:
           pip install pytest
       - name: Install dependencies
         run: |
-          TAG=${{ steps.tag_extractor.outputs.latest_tag }}
-          echo "VERSION=${TAG#v}" >> $GITHUB_ENV            
-          pip install kot==${VERSION} kot_api==${VERSION} kot_gui==${VERSION} kot_web==${VERSION} --no-cache --upgrade
+          TAG=${{ steps.tag_extractor.outputs.latest_tag }}         
+          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
 
       - name: Install docker
         run: |
