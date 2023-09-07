@@ -8,7 +8,7 @@ has_children: false
 
 The KOT database is a flexible, secure and scalable database that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the KOT database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
 
-[Website](hhttps://kotdatabase.dev/) | [Discord](https://discord.gg/uZ7NBjkx) | [Twtiiter](https://twitter.com/kot_database)
+[Website](https://kotdatabase.dev/) | [Discord](https://discord.gg/uZ7NBjkx) | [Twtiiter](https://twitter.com/kot_database)
 
 ## Installation
 You can install KOT by pip3:
