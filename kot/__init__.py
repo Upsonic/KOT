@@ -6,5 +6,5 @@ from .kot import KOT_Cloud
 from .kot import KOT_Cloud_Pro
 
 
-__version__ = '0.38.17'
+__version__ = '0.38.18'
 
