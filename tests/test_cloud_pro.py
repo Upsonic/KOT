@@ -32,7 +32,7 @@ class TestCloudPro(unittest.TestCase):
 
     def test_remote_api_set_get_deletestring(self):
 
-        
+        print(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"))
 
         the = time.time()
         value = f"Value{the}"
