@@ -40,7 +40,7 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.AFTER_DEPLOY_TEST_WEBHOOK_URL }}
-          content: "requested ${{ steps.tag_extractor.outputs.latest_tag }}"
+          content: "Requested ${{ steps.tag_extractor.outputs.latest_tag }}"
 
 
     outputs:
