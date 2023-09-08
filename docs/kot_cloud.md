@@ -75,9 +75,19 @@ cloud.set(..., encryption_key="")
 
 
 # Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml)
-You can use access_key for accessing pro:
+In Cloud Pro you can create databases with name, for this use:
+
+```console
+KOT cloud_pro_key <YOUR_DATABASE_NAME>
+```
+
+Its will give like this:
+
+> cloud-6xvX7p0jKlYpV6GpKjGR0xujXTfbpn-YOUR_DATABASE_NAME
+
+and now you can use your access key.
 
 ```python
 from kot import KOT_Cloud_Pro
-cloud = KOT_Cloud_Pro("YOUR_CLOUD_KEY", "YOUR_ACCESS_KEY")
+cloud = KOT_Cloud_Pro("YOUR_CLOUD_PRO_KEY", "YOUR_ACCESS_KEY")
 ```

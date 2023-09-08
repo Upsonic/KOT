@@ -51,6 +51,15 @@ class KOT:
         from cryptography.fernet import Fernet # pragma: no cover
         return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30] # pragma: no cover
 
+    @staticmethod
+    def cloud_pro_key(name:str):
+        if len(name) > 14:
+            print("Your name is long please short to 14 character")
+            return None
+        from cryptography.fernet import Fernet # pragma: no cover
+        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30]+"-"+name # pragma: no cover
+
+
     def __enter__(self):
         return self  # pragma: no cover
     
