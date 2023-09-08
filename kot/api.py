@@ -174,7 +174,7 @@ def check():
 
     if maximum_database_amount is not None:
         if request.form.get("database_name") is not None:
-            if len(database_name_caches) >= maximum_database_amount:
+            if len(database_name_caches) >= maximum_database_amount and request.form.get("database_name") not in database_name_caches:
                 return Response(
                     "You cant create more database (SYSTEM).\n"
                     "You do not have right to create more database (SYSTEM)", 
@@ -187,7 +187,7 @@ def check():
 
     if maximum_key_amount is not None:
         if request.form.get("key") is not None:
-            if len(key_name_caches) >= maximum_key_amount:
+            if len(key_name_caches) >= maximum_key_amount and request.form.get("key") not in key_name_caches:
                 return Response(
                     "You cant create more keys.\n"
                     "You do not have right to create more key", 
@@ -204,7 +204,7 @@ def check():
             user = request.remote_addr
             if user not in database_name_caches_user:
                 database_name_caches_user[user] = []
-            if len(database_name_caches_user[user]) >= maximum_database_amount_user:
+            if len(database_name_caches_user[user]) >= maximum_database_amount_user and request.form.get("database_name") not in database_name_caches_user[user]:
                 return Response(
                     "You cant create more database (USER).\n"
                     "You do not have right to create more database (USER)", 
@@ -221,7 +221,7 @@ def check():
             user = request.remote_addr
             if user not in key_name_caches_user:
                 key_name_caches_user[user] = []
-            if len(key_name_caches_user[user]) >= maximum_key_amount_user:
+            if len(key_name_caches_user[user]) >= maximum_key_amount_user and request.form.get("key") not in key_name_caches_user[user]:
                 return Response(
                     "You cant create more key (USER).\n"
                     "You do not have right to create more key (USER)", 
