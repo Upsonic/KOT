@@ -19,7 +19,7 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.PRODUCTION_WEBHOOK_URL }}
-          content: "success"           
+          content: "success <@&1148701924615520256>"           
 
 
 
