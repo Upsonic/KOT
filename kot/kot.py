@@ -1108,18 +1108,22 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/exception", data)
 
     def _send_request(self, method, endpoint, data=None):
-        response = self.requests.request(
-                method,
-                self.api_url + endpoint,
-                data=data,
-                auth=self.HTTPBasicAuth("", self.password),
-            )        
         try:
-            response.raise_for_status()
-            return response.text
-        except self.requests.exceptions.RequestException as e:  # pragma: no cover
-            print("Error: ", response.text)
-            return None  # pragma: no cover
+            response = self.requests.request(
+                    method,
+                    self.api_url + endpoint,
+                    data=data,
+                    auth=self.HTTPBasicAuth("", self.password),
+                )        
+            try:
+                response.raise_for_status()
+                return response.text
+            except self.requests.exceptions.RequestException as e:  # pragma: no cover
+                print("Error: ", response.text)
+                return None  # pragma: no cover
+        except self.requests.exceptions.ConnectionError:
+            print("Error: Remote is down")
+            return None
 
     def set(self, key, value, encryption_key="a", compress=None):
         compress = True if KOT.force_compress else compress
@@ -1144,19 +1148,21 @@ class KOT_Remote:
 
         data = {"database_name": self.database_name, "key": key}
         response = self._send_request("POST", "/controller/get", data)
-        
-        if not response == "null\n":
-            # Decrypt the received value
-            if encryption_key is not None:
-                db = KOT_Serial(self.database_name)
-                db.set(key, response)
-                response = db.get(key, encryption_key=encryption_key)
-                db.delete(key)
-            
-            
-            return response
-        else:
-            return None
+
+        if response is not None:
+
+            if not response == "null\n":
+                # Decrypt the received value
+                if encryption_key is not None:
+                    db = KOT_Serial(self.database_name)
+                    db.set(key, response)
+                    response = db.get(key, encryption_key=encryption_key)
+                    db.delete(key)
+                
+                
+                return response
+            else:
+                return None
 
 
     def active(self,value=None, encryption_key="a", compress=None):
