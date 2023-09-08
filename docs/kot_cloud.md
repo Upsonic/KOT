@@ -89,5 +89,24 @@ and now you can use your access key.
 
 ```python
 from kot import KOT_Cloud_Pro
+
 cloud = KOT_Cloud_Pro("YOUR_CLOUD_PRO_KEY", "YOUR_ACCESS_KEY")
+```
+
+
+# Cloud Dedicated
+When you got the dedicated cloud you will get admin and user password and dedicated key.
+
+For admin account (set and delete operations):
+```python
+from kot import KOT_Cloud_Dedicated
+
+cloud = KOT_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_ADMIN_PASSWORD", "YOUR_DEDICATED_KEY")
+```
+
+For user account (get operations):
+```python
+from kot import KOT_Cloud_Dedicated
+
+cloud = KOT_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_USER_PASSWORD", "YOUR_DEDICATED_KEY")
 ```
