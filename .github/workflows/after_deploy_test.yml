@@ -50,7 +50,7 @@ jobs:
       - name: Discord Webhook Action
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook-url: ${{ secrets.CLOUD_TEST_WEBHOOK_URL }}
+          webhook-url: ${{ secrets.AFTER_DEPLOY_TEST_WEBHOOK_URL }}
           content: "Requested <@&1148701924615520256> ${{ needs.tagext.outputs.tag }}"            
 
   pypi:
