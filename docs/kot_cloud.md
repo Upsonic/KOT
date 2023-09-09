@@ -71,7 +71,19 @@ You can give `encryption_key` to all functions, this will encrypt your things in
 
 cloud.set(..., encryption_key="")
 
+cloud.get(..., encryption_key="")
+
 ```
+
+or you can use global encryption
+
+```python
+from kot import KOT
+
+KOT.force_encrypt = ""
+```
+
+You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.kotdatabase.dev/features/encryption.html#fernet-key-generation)
 
 
 # Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml)
