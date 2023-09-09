@@ -15,9 +15,9 @@ jobs:
 
   requested:
     runs-on: ubuntu-latest
-    if: ${{  github.event_name == 'workflow_run' }}
     steps:
       - name: Discord Webhook Action
+        if: ${{  github.event_name == 'workflow_run' }}
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.CLOUD_TEST_WEBHOOK_URL }}
