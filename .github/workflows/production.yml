@@ -61,6 +61,12 @@ jobs:
     if: ${{ always() && (needs.upload.result == 'success') }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Getting Tag
+        id: tag_extractor
+        run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"    
 
       - name: Discord Webhook Action
         uses: tsickert/discord-webhook@v5.3.0
@@ -76,6 +82,12 @@ jobs:
     if: ${{ always() && (needs.upload.result == 'failure') }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Getting Tag
+        id: tag_extractor
+        run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"   
 
 
       - name: Discord Webhook Action

@@ -35,13 +35,6 @@ jobs:
           TAG=${{ steps.tag_extractor.outputs.latest_tag }}   
           echo "latest_tag_2=${TAG:1} " >> "$GITHUB_OUTPUT"
 
-      
-      - name: Discord Webhook Action
-        uses: tsickert/discord-webhook@v5.3.0
-        with:
-          webhook-url: ${{ secrets.AFTER_DEPLOY_TEST_WEBHOOK_URL }}
-          content: "Requested ${{ steps.tag_extractor.outputs.latest_tag }}"
-
 
     outputs:
       tag: ${{ steps.tag_extractor.outputs.latest_tag }}              
@@ -49,10 +42,19 @@ jobs:
 
 
     
-
+  requested:
+    needs: tagext
+    runs-on: ubuntu-latest
+    if: ${{  github.event_name == 'workflow_run' }}
+    steps:
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.CLOUD_TEST_WEBHOOK_URL }}
+          content: "Requested <@&1148701924615520256> ${{ needs.tagext.outputs.tag }}"            
 
   pypi:
-    needs: tagext
+    needs: [tagext, requested]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -76,7 +78,7 @@ jobs:
 
       - name: Install dependencies
         run: |   
-          pip install kot==${{ needs.tagext.outputs.tag }}   kot_api==${{ needs.tagext.outputs.tag_2 }}  kot_gui==${{ needs.tagext.outputs.tag_2 }}  kot_web==${{ needs.tagext.outputs.tag_2 }}  --no-cache --upgrade
+          pip install kot==${{ needs.tagext.outputs.tag_2 }}   kot_api==${{ needs.tagext.outputs.tag_2 }}  kot_gui==${{ needs.tagext.outputs.tag_2 }}  kot_web==${{ needs.tagext.outputs.tag_2 }}  --no-cache --upgrade
 
 
       - name: Test with pytest
@@ -87,7 +89,7 @@ jobs:
 
 
   pypi_docker:
-    needs: tagext
+    needs: [tagext, requested]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
