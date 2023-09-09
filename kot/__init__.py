@@ -8,6 +8,6 @@ from .kot import KOT_Cloud_Dedicated
 from .kot import KOT_Cloud_Dedicated_Prepare
 
 
-__version__ = '0.39.1'
+__version__ = '0.39.2'
 
 
