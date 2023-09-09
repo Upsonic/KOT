@@ -7,7 +7,7 @@ with open('requirements.txt') as fp:
     install_requires = fp.read()
 setup(
     name="kot",
-    version="0.38.24",
+    version="0.39.0",
     description="""Flexible, secure and scalable database and your python cloud.""",
     long_description="".join(open("README.md", encoding="utf-8").readlines()),
     long_description_content_type="text/markdown",
@@ -23,3 +23,4 @@ setup(
     python_requires=">= 3",
     zip_safe=False,
 )
+
