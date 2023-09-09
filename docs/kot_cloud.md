@@ -2,7 +2,7 @@
 layout: default
 title: KOT CLOUD
 nav_order: 23
-has_children: false
+has_children: True
 ---
 
 # KOT Cloud | [![Cloud Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_test.yml)
