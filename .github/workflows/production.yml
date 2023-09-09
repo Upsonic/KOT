@@ -39,7 +39,7 @@ jobs:
       uses: tsickert/discord-webhook@v5.3.0
       with:
         webhook-url: ${{ secrets.PRODUCTION_WEBHOOK_URL }}
-        content: "Requested ${{ steps.tag_extractor.outputs.latest_tag }}"      
+        content: "Requested ${{ steps.tag_extractor.outputs.latest_tag }} <@&1148701924615520256>"      
 
     - name: Test with pytest
       env:
