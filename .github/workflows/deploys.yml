@@ -41,7 +41,7 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DEPLOY_WEBHOOK_URL }}
-          content: "Requested ${{ steps.tag_extractor.outputs.latest_tag }}"
+          content: "Requested <@&1148701924615520256> ${{ steps.tag_extractor.outputs.latest_tag }}"
 
 
   pypi:
