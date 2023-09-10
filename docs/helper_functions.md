@@ -34,7 +34,7 @@ You can use this command for all libraries in the pypi:
 @requires("kot")
 @requires("kot_api")
 @requires("kot_gui")
-@requires("kot_web")
+@requires("waitress==2.1.2")
 @requires("pytest")
 @requires("naruno")
 @requires("ANY_LIBRARY")
@@ -82,6 +82,7 @@ cloud = KOT_Cloud("YOUR_CLOUD_KEY")
 @requires("kot")
 @requires("naruno")
 @requires("kot_api")
+@requires("waitress==2.1.2")
 def broken_kot_database_integration():
     from kot import KOT
     my_db = KOT("My_DB")
