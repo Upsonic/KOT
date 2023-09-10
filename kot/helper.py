@@ -18,8 +18,13 @@ def requires(name):
     def decorator(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
-            from pip._internal import main as pip
-            pip(['install', name])  
+            print("RUN")
+            
+            try:
+                exec(f"import {name}")
+            except:
+                from pip._internal import main as pip
+                pip(['install', name])  
             retval = function(*args, **kwargs)
             return retval
         return wrapper
