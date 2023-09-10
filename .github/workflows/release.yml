@@ -1,29 +1,39 @@
-name: Releases
+name: Release
 
 on:
-  workflow_run:
-    workflows: ["Bump"]
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      release_type:
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
-  contents: write      
-
+  contents: write
 jobs:
-  build:
+  run:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    environment: Release
+
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - name: Getting Tag
-      id: tag_extractor
-      run: echo "latest_tag=$(git describe --tags --abbrev=0)" >> "$GITHUB_OUTPUT"
-  
-    - uses: ncipollo/release-action@v1
-      with:
-        name: KOT ${{ steps.tag_extractor.outputs.latest_tag }}
-        generateReleaseNotes: true
-        tag: ${{ steps.tag_extractor.outputs.latest_tag }}
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+
+      - name: setup git config
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"          
+
+      - name: Run Version Bump Script
+        run: python bump.py ${{ github.event.inputs.release_type }}
+
+
