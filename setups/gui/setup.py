@@ -8,7 +8,7 @@ with open('requirements.txt') as fp:
 
 setup(
     name="kot_gui",
-    version="0.39.4",
+    version="0.40.0",
     description="""This is GUI package for KOT""",
     url="https://github.com/KOT-database/KOT",
     author='Onur Atakan ULUSOY',
