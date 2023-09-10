@@ -10,6 +10,6 @@ from .kot import KOT_Cloud_Dedicated_Prepare
 from .helper import no_exception
 from .helper import requires
 
-__version__ = '0.40.0'
+__version__ = '0.40.1'
 
 
