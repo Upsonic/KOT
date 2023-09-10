@@ -17,7 +17,7 @@ services:
 
             rate_limit : "200 per hour, 20 per minute"
             key_lenght : 100
-            value_lenght : 1000
+            value_lenght : 4000
             database_name_lenght : 50
             maximum_database_amount_user: 1
             maximum_key_amount_user: 25
@@ -41,7 +41,7 @@ services:
 
             rate_limit : "800 per hour, 80 per minute"
             key_lenght : 100
-            value_lenght : 2000
+            value_lenght : 8000
             database_name_lenght : 50
             maximum_database_amount_user: 25
             maximum_key_amount_user: 100         

@@ -13,7 +13,7 @@ services:
             restricted: "set,delete,get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 100
-            maximum_key_amount: 4000
+            maximum_key_amount: 12000
 
             rate_limit : "1600 per hour, 160 per minute"
             key_lenght : 2000
@@ -36,7 +36,7 @@ services:
             restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 100
-            maximum_key_amount: 4000
+            maximum_key_amount: 12000
 
             rate_limit : "1600 per hour, 160 per minute"
             key_lenght : 2000
