@@ -1218,10 +1218,10 @@ class KOT_Remote:
 
 
 def KOT_Cloud(database_name):
-    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5000', 'onuratakan') # pragma: no cover
+    return KOT_Remote(database_name, 'http://free.cloud.kotdatabase.dev:5000', 'onuratakan') # pragma: no cover
 
 def KOT_Cloud_Pro(database_name, access_key):
-    return KOT_Remote(database_name, 'http://scan.test_net.1.naruno.org:5001', access_key) # pragma: no cover
+    return KOT_Remote(database_name, 'http://pro.cloud.kotdatabase.dev:5001', access_key) # pragma: no cover
 
 def KOT_Cloud_Dedicated(database_name, password, dedicated_key):
     dedicated_key = dedicated_key.replace("dedicatedkey-", "")
