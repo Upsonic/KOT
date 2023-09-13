@@ -7,7 +7,7 @@ import shutil
 import copy
 from unittest.mock import patch
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "kot"))
 
 from kot import KOT, HASHES, KOT_Serial
 import kot
