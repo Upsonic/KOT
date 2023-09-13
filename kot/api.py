@@ -244,6 +244,8 @@ def set():
     cache_policy = request.form.get("cache_policy")
     if cache_policy is None:
         cache_policy = 0
+    else:
+        cache_policy = int(cache_policy)
 
 
     database = KOT_Serial(database_name, folder=folder)
