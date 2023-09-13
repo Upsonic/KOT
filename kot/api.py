@@ -241,9 +241,13 @@ def set():
     value = request.form.get("value")
     compress = request.form.get("compress")
     encryption_key = request.form.get("encryption_key")
+    cache_policy = request.form.get("cache_policy")
+    if cache_policy is None:
+        cache_policy = 0
+
 
     database = KOT_Serial(database_name, folder=folder)
-    database.set(key, value, compress=compress, encryption_key=encryption_key)
+    database.set(key, value, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy)
 
     return "Data set successfully"
 

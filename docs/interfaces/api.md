@@ -48,6 +48,7 @@ The API provides the following endpoints for interacting with the KOT key-value 
   - `value`: The value to set for the key.
   - `encryption_key`: (Optional) The encryption key for the value.
   - `compress`: (Optional) The compression option for the value.
+  - 'cache_policy': (Optional) The cache time (seconds)
 
 Sets the value for the given key in the specified database.
 

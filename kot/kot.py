@@ -568,9 +568,9 @@ class KOT:
             if cache_policy != 0:
                 the_dict["cache_time"] = time.time()
                 the_dict["cache_policy"] = cache_policy
-            else:
-                if key in self.cache and not dont_delete_cache:
-                    del self.cache[key]
+ 
+            if key in self.cache and not dont_delete_cache:
+                del self.cache[key]
 
             if compress:
                 self.set_compress(
@@ -1125,7 +1125,7 @@ class KOT_Remote:
             print("Error: Remote is down")
             return None
 
-    def set(self, key, value, encryption_key="a", compress=None):
+    def set(self, key, value, encryption_key="a", compress=None, cache_policy=0):
         compress = True if KOT.force_compress else compress
         encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
 
@@ -1140,6 +1140,7 @@ class KOT_Remote:
             "key": key,
             "value": value,
             "compress": compress,
+            "cache_policy": cache_policy,
         }
         return self._send_request("POST", "/controller/set", data)
 
