@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from kot import start_location, open_databases
+
 
 def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = True):
-
+    from kot import start_location, open_databases
 
     folder = start_location if not folder != "" else folder
 
