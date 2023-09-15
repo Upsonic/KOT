@@ -51,8 +51,8 @@ jobs:
       env:
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud.py -v
+        cd tests
+        pytest test_cloud.py -v
 
   macos:
     needs: ubuntu
@@ -80,8 +80,8 @@ jobs:
       env:
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud.py -v
+        cd tests
+        pytest test_cloud.py -v
 
 
 
@@ -111,8 +111,8 @@ jobs:
       env:
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud.py -v
+        cd tests
+        pytest test_cloud.py -v
 
 
 

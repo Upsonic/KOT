@@ -84,8 +84,8 @@ jobs:
 
       - name: Test with pytest
         run: |
-          cd ..
-          pytest KOT/tests/standards -v
+          cd tests
+          pytest standards -v
 
 
   pypi_docker:
@@ -125,8 +125,8 @@ jobs:
 
       - name: Test with pytest
         run: |
-          cd ..
-          pytest KOT/tests/test_docker.py -v
+          cd tests
+          pytest test_docker.py -v
 
 
   docker:

@@ -50,8 +50,8 @@ jobs:
         CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud_pro.py -v
+        cd tests
+        pytest test_cloud_pro.py -v
 
 
 
@@ -82,8 +82,8 @@ jobs:
         CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud_pro.py -v
+        cd tests
+        pytest test_cloud_pro.py -v
 
 
   windows:
@@ -113,8 +113,8 @@ jobs:
         CLOUD_PRO_ACCESS_KEY: ${{ secrets.CLOUD_PRO_ACCESS_KEY }}
         CLOUD_TEST_DATABASE_NAME: ${{ secrets.CLOUD_TEST_DATABASE_NAME }}
       run: |
-        cd ..
-        pytest KOT/tests/test_cloud_pro.py -v
+        cd tests
+        pytest test_cloud_pro.py -v
 
 
 
