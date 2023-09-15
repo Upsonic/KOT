@@ -19,6 +19,7 @@ load_dotenv(dotenv_path=".env")
 
 folder = os.environ.get("folder","")
 password = os.environ.get("password","KOT")
+threads = os.environ.get("threads",4)
 access_key = (os.environ.get("access_key","false").lower() == "true")
 access_key_folder = os.environ.get("access_key_folder","")
 access_key_lists = os.environ.get("access_key_lists","")
@@ -399,10 +400,11 @@ def exception():
 def API(host_data, port_data,):
     host = host_data if host_data is not None else host  # pragma: no cover
     port = port_data if port_data is not None else port  # pragma: no cover
+    global threads
 
     def starter():
         try:
-            serve(app, host=host, port=port)  # pragma: no cover
+            serve(app, host=host, port=port, threads=threads)  # pragma: no cover
         except:
             traceback.print_exc()
 

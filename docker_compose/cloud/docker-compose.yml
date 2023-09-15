@@ -10,6 +10,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
+            threads: 4
             restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 200
@@ -34,6 +35,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
+            threads: 4
             restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 2500
@@ -63,6 +65,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
+            threads: 4
     
 
             rate_limit : "400 per hour, 40 per minute"
@@ -92,6 +95,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
+            threads: 4
 
 
             rate_limit : "400 per hour, 40 per minute"
@@ -118,6 +122,7 @@ services:
         environment:
             folder: "" # "/"
             password : "KOT"
+            threads: 4
 
 
             rate_limit : "400 per hour, 40 per minute"

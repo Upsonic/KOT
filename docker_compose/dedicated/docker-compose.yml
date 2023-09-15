@@ -10,6 +10,7 @@ services:
         environment:
             folder: "" # "/"
             password : "USER_PASS"
+            threads: 4
             restricted: "set,delete,get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 100
@@ -33,6 +34,7 @@ services:
         environment:
             folder: "" # "/"
             password : "ADMIN_PASS"
+            threads: 4
             restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 100
