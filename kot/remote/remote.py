@@ -3,9 +3,8 @@
 
 import json
 import ast
-from kot import console, KOT
-from .serial import KOT_Serial
 
+from kot import console, KOT, KOT_Serial
 
 class KOT_Remote:
     def _log(self, message):

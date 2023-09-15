@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from kot import KOT
-from .remote import KOT_Remote
-
+from kot import KOT, KOT_Remote
 
 def KOT_Cloud(database_name):
     return KOT_Remote(
