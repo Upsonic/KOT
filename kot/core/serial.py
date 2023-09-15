@@ -1,16 +1,18 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import kot
+
 
 def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = True):
-    from kot import start_location, open_databases
+    
 
-    folder = start_location if not folder != "" else folder
+    folder = kot.core.kot.start_location if not folder != "" else folder
 
     name_hash = name + str(self_datas) + folder
 
-    if name_hash in open_databases:
-        return open_databases[name_hash]
+    if name_hash in kot.core.kot.open_databases:
+        return kot.core.kot.open_databases[name_hash]
     else:
         from kot import KOT
 
