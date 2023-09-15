@@ -34,7 +34,7 @@ time_2 = time.time()
 
 
 # KOT
-client_address_db = KOT("client_addresses")
+client_address_db = KOT("client_addresses", enable_fast = True)
 time_3 = time.time()
 big_list = {}
 for x in range(0, number):
