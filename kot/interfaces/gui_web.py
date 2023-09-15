@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import flet as ft
 
-from .kot import KOT_Serial
-from .kot import KOT
+from kot import KOT_Serial
+from kot import KOT
 
 folder = None
 host = None

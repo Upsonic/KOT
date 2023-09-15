@@ -3,7 +3,7 @@
 
 import json
 import ast
-from .kot import console, KOT
+from kot import console, KOT
 from .serial import KOT_Serial
 
 

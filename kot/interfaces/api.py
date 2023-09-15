@@ -8,8 +8,8 @@ from waitress import serve
 from flask import Flask, request, Response, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from .kot import KOT_Serial
-from .kot import KOT
+from kot import KOT_Serial
+from kot import KOT
 from dotenv import load_dotenv
 
 app = Flask(__name__)

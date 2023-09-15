@@ -51,12 +51,12 @@ class TestKOT(unittest.TestCase):
         # Call the database_delete method
 
         self.assertIn(
-            "test_db" + str(False) + kot.kot.start_location, kot.kot.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
         )
         KOT.database_delete("test_db")
 
         self.assertNotIn(
-            "test_db" + str(False) + kot.kot.start_location, kot.kot.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
         )
 
 

@@ -18,7 +18,7 @@ setup(
     packages=["kot"],
     install_requires=install_requires,
     entry_points={
-        "console_scripts": ["KOT=kot.kot:main"],
+        "console_scripts": ["KOT=kot.core.kot:main"],
     },
     python_requires=">= 3",
     zip_safe=False,

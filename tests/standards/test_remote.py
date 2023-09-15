@@ -13,13 +13,13 @@ import threading
 
 from kot import KOT, HASHES, KOT_Serial, KOT_Remote
 import kot
-from kot.api import app
+from kot.interfaces.api import app
 
 import kot
 
 
-kot.api.password = "pass"
-kot.api.folder = os.getcwd()
+kot.interfaces.api.password = "pass"
+kot.interfaces.api.folder = os.getcwd()
 
 
 def my_function():
@@ -125,7 +125,7 @@ class TestRemote(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/get'))
         self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name', 'key': 'key'})
 
-    @patch('kot.KOT_Remote._send_request')
+    @patch('kot.core.kot_Remote._send_request')
     def test_remote_get_all(self, mock_send_request):
         backup = copy.copy(KOT.force_encrypt)
         KOT.force_encrypt = None

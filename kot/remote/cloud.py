@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from .kot import KOT
+from kot import KOT
 from .remote import KOT_Remote
 
 

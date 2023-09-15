@@ -61,7 +61,7 @@ class KOT:
         self.name = name
         self.log = False if self_datas else log
         self._log(
-            f"[{self.name}] [bold white]KOT database[bold white] initializing...",
+            f"[{self.name}] [bold white]KOT database initializing...",
         )
 
         self.hashed_name = HASHES.get_hash(name)
@@ -93,7 +93,7 @@ class KOT:
         self.cache = {}
         self.initialize()
         self._log(
-            f"[{self.name}] [bold green]KOT database[bold green] active",
+            f"[{self.name}] [bold green]KOT database active",
         )
 
     def _log(self, message):
@@ -367,27 +367,27 @@ class KOT:
 
             GUI(folder, password)  # pragma: no cover
         except ModuleNotFoundError:
-            console.print(
-                "Warning: GUI module not found. Please install the 'kot_gui' package."
+            console.log(
+                "[bold red]Error: GUI module not found. Please install the 'kot_gui' package."
             )  # pragma: no cover
 
     @staticmethod
     def api(host, port, log: bool = True):  # pragma: no cover
         try:
-            from .api import API  # pragma: no cover
+            from .interfaces.gui_web import API  # pragma: no cover
 
             console.log(
-                f"[bold white] KOT API[bold white] initializing...",
+                f"[bold white] KOT API initializing...",
             )
             API(host, port)  # pragma: no cover
             if log:
                 console.log(
-                    f"[bold green] KOT API[bold green] started ({host}, {port})",
+                    f"[bold green] KOT API started ({host}, {port})",
                 )
 
         except ModuleNotFoundError:
-            console.print(
-                "Warning: API module not found. Please install the 'kot_api' package."
+            console.log(
+                "[bold red]Error: API module not found. Please install the 'kot_api' package."
             )  # pragma: no cover
 
     @staticmethod
@@ -395,12 +395,12 @@ class KOT:
         password, folder: str = "", host="localhost", port=5000
     ):  # pragma: no cover
         try:
-            from .gui import WEB  # pragma: no cover
+            from .interfaces.gui_web import WEB  # pragma: no cover
 
             WEB(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
-            console.print(
-                "Warning: WEB module not found. Please install the 'kot_web' package."
+            console.log(
+                "[bold red]Error: WEB module not found. Please install the 'kot_web' package."
             )  # pragma: no cover
 
     @staticmethod
