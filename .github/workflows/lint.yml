@@ -28,11 +28,11 @@ jobs:
           python-version: 3.8
 
       - name: Install Python dependencies
-        run: pip install black autopep8 mypy
+        run: pip install autopep8 mypy
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
-          black: true
+
           autopep8: true
           mypy: true
