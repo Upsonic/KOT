@@ -83,7 +83,7 @@ jobs:
         cd ..
     - name: Test with pytest
       run: |
-        pytest /tests/standards -v
+        pytest tests/standards -v
 
   docker:
     runs-on: ${{ matrix.os }}
