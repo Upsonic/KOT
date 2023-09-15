@@ -125,7 +125,7 @@ class TestRemote(unittest.TestCase):
         self.assertEqual(mock_send_request._mock_call_args[0],('POST', 'http://localhost:5000/controller/get'))
         self.assertEqual(mock_send_request._mock_call_args[1]["data"],{'database_name': 'database_name', 'key': 'key'})
 
-    @patch('kot.core.kot_Remote._send_request')
+    @patch('kot.remote.remote.KOT_Remote._send_request')
     def test_remote_get_all(self, mock_send_request):
         backup = copy.copy(KOT.force_encrypt)
         KOT.force_encrypt = None
