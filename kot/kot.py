@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import json
-from rich import print as rprint
+
+from rich.console import Console
+console = Console()
 import base64
 import contextlib
 import hashlib
@@ -25,7 +27,6 @@ import copy as cpv
 open_databases = {}
 start_location = os.getcwd()
 
-
 class HASHES:
     cache = {}
 
@@ -41,11 +42,64 @@ class HASHES:
         return result
 
 
+
+
 class KOT:
 
     force_compress = False
     force_encrypt = False
-    
+
+    def __init__(self, name, self_datas: bool = False, folder: str = "", enable_fast:bool=False, log:bool = True):
+        self.name = name
+        self.log = False if self_datas else log
+        self._log(f"[{self.name}] [bold white]KOT database[bold white] initializing...",)
+
+        
+        self.hashed_name = HASHES.get_hash(name)
+        global start_location
+        the_main_folder = start_location if not folder != "" else folder
+        self.the_main_folder = the_main_folder
+        self.location = os.path.join(the_main_folder, "KOT-" + self.hashed_name)
+
+        if enable_fast:
+            import pickle
+            self.engine = pickle
+        else:
+            import dill
+            self.engine = dill
+
+        if not self_datas:
+            self.open_files_db = KOT_Serial(
+                "KOT-open_files_db", self_datas=True, folder=folder
+            )
+            database_index = KOT_Serial(
+                "KOT-database-index", self_datas=True, folder=folder
+            )
+            database_index.set(self.name, self.location)
+
+        self.counter = 0
+
+        self.cache = {}
+        self.initialize()
+        self._log(f"[{self.name}] [bold green]KOT database[bold green] active",)
+
+
+    def _log(self, message):
+        if self.log:
+            console.log(message)
+
+    def initialize(self):
+        try:
+            os.makedirs(self.location)
+            self._log(f"[{self.name}] Database folder created")
+        except OSError:  # pragma: no cover
+            if not os.path.isdir(self.location):  # pragma: no cover
+                self._log(f"[{self.name}] Error on database folder creating")
+                raise  # pragma: no cover
+            self._log(f"[{self.name}] Connected to folder")
+        
+
+
     @staticmethod
     def cloud_key():
         from cryptography.fernet import Fernet # pragma: no cover
@@ -290,19 +344,22 @@ class KOT:
 
             GUI(folder, password)  # pragma: no cover
         except ModuleNotFoundError:
-            rprint(
+            console.print(
                 "Warning: GUI module not found. Please install the 'kot_gui' package."
             )  # pragma: no cover
 
     @staticmethod
     def api(
-        host=None, port=None,):  # pragma: no cover
+        host, port, log:bool=True):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
-
+            console.log(f"[bold white] KOT API[bold white] initializing...",)
             API(host, port)  # pragma: no cover
+            if log:
+                console.log(f"[bold green] KOT API[bold green] started ({host}, {port})",)
+              
         except ModuleNotFoundError:
-            rprint(
+            console.print(
                 "Warning: API module not found. Please install the 'kot_api' package."
             )  # pragma: no cover
 
@@ -315,7 +372,7 @@ class KOT:
 
             WEB(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
-            rprint(
+            console.print(
                 "Warning: WEB module not found. Please install the 'kot_web' package."
             )  # pragma: no cover
 
@@ -390,42 +447,7 @@ class KOT:
             return False
         return True
 
-    def __init__(self, name, self_datas: bool = False, folder: str = "", enable_fast:bool=False):
-        self.name = name
-        self.hashed_name = HASHES.get_hash(name)
-        global start_location
-        the_main_folder = start_location if not folder != "" else folder
-        self.the_main_folder = the_main_folder
-        self.location = os.path.join(the_main_folder, "KOT-" + self.hashed_name)
 
-        if enable_fast:
-            import pickle
-            self.engine = pickle
-        else:
-            import dill
-            self.engine = dill
-
-        if not self_datas:
-            self.open_files_db = KOT_Serial(
-                "KOT-open_files_db", self_datas=True, folder=folder
-            )
-            database_index = KOT_Serial(
-                "KOT-database-index", self_datas=True, folder=folder
-            )
-            database_index.set(self.name, self.location)
-
-        self.counter = 0
-
-        self.cache = {}
-
-        self.initialize()
-
-    def initialize(self):
-        try:
-            os.makedirs(self.location)
-        except OSError:  # pragma: no cover
-            if not os.path.isdir(self.location):  # pragma: no cover
-                raise  # pragma: no cover
 
     def clear_cache(self):
         self.cache = {}
@@ -985,7 +1007,7 @@ class KOT:
     def debug(self, message):
         @self.save_by_name_time_random
         def debug_writer():
-            rprint("[green]DEBUG:[/green]", message)
+            console.print("[green]DEBUG:[/green]", message)
             return message
 
         debug_writer()
@@ -993,7 +1015,7 @@ class KOT:
     def info(self, message):
         @self.save_by_name_time_random
         def info_writer():
-            rprint("[blue]INFO:[/blue]", message)
+            console.print("[blue]INFO:[/blue]", message)
             return message
 
         info_writer()
@@ -1001,7 +1023,7 @@ class KOT:
     def warning(self, message):
         @self.save_by_name_time_random
         def warning_writer():
-            rprint("[yellow]WARNING:[/yellow]", message)
+            console.print("[yellow]WARNING:[/yellow]", message)
             return message
 
         warning_writer()
@@ -1009,7 +1031,7 @@ class KOT:
     def error(self, message):
         @self.save_by_name_time_random
         def error_writer():
-            rprint("[red]ERROR:[/red]", message)
+            console.print("[red]ERROR:[/red]", message)
             return message
 
         error_writer()
@@ -1017,7 +1039,7 @@ class KOT:
     def exception(self, message):
         @self.save_by_name_time_random
         def exception_writer():
-            rprint("[magenta]EXCEPTION:[/magenta]", message)
+            console.print("[magenta]EXCEPTION:[/magenta]", message)
             return message
 
         exception_writer()
@@ -1043,7 +1065,7 @@ class KOT:
 
 
 
-def KOT_Serial(name, self_datas: bool = False, folder: str = ""):
+def KOT_Serial(name, self_datas: bool = False, folder: str = "", log:bool=True):
     global start_location
     folder = start_location if not folder != "" else folder
 
@@ -1053,7 +1075,7 @@ def KOT_Serial(name, self_datas: bool = False, folder: str = ""):
     if name_hash in open_databases:
         return open_databases[name_hash]
     else:
-        database = KOT(name, self_datas=self_datas, folder=folder)
+        database = KOT(name, self_datas=self_datas, folder=folder, log=log)
         open_databases[name_hash] = database
         return database
 
@@ -1068,6 +1090,8 @@ def main():  # pragma: no cover
 
 class KOT_Remote:
 
+    def _log(self, message):
+        console.log(message)
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -1076,6 +1100,9 @@ class KOT_Remote:
         pass  # pragma: no cover
 
     def __init__(self, database_name, api_url, password=None):
+        self.database_name = database_name
+        self._log(f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",)
+
         import requests
         from requests.auth import HTTPBasicAuth
 
@@ -1085,7 +1112,8 @@ class KOT_Remote:
         self.api_url = api_url
         self.password = password
 
-        self.database_name = database_name
+        
+        self._log(f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",)
 
     def debug(self, message):
         data = {"message": message}
@@ -1130,7 +1158,7 @@ class KOT_Remote:
         encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
 
         if encryption_key is not None:
-            db = KOT_Serial(self.database_name)
+            db = KOT_Serial(self.database_name, log=False)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
@@ -1155,7 +1183,7 @@ class KOT_Remote:
             if not response == "null\n":
                 # Decrypt the received value
                 if encryption_key is not None:
-                    db = KOT_Serial(self.database_name)
+                    db = KOT_Serial(self.database_name, log=False)
                     db.set(key, response)
                     response = db.get(key, encryption_key=encryption_key)
                     db.delete(key)
@@ -1187,7 +1215,7 @@ class KOT_Remote:
         datas = self._send_request("POST", "/controller/get_all", data)
 
         datas = json.loads(datas)
-        db = KOT_Serial(self.database_name)
+        db = KOT_Serial(self.database_name, log=False)
         for each in datas:
                 db.set(each, datas[each])
                 datas[each] = db.get(each, encryption_key=encryption_key)

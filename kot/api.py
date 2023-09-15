@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import threading
+import traceback
 from waitress import serve
 from flask import Flask, request, Response, jsonify
 from flask_limiter import Limiter
@@ -397,4 +399,18 @@ def exception():
 def API(host_data, port_data,):
     host = host_data if host_data is not None else host  # pragma: no cover
     port = port_data if port_data is not None else port  # pragma: no cover
-    serve(app, host=host, port=port)  # pragma: no cover
+
+    def starter():
+        try:
+            serve(app, host=host, port=port)  # pragma: no cover
+        except:
+            traceback.print_exc()
+
+    threading.Thread(target=starter).start() # pragma: no cover
+
+
+
+
+
+    
+
