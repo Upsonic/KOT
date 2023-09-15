@@ -17,5 +17,5 @@ def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = Tru
         from kot import KOT
 
         database = KOT(name, self_datas=self_datas, folder=folder, log=log)
-        open_databases[name_hash] = database
+        kot.core.kot.open_databases[name_hash] = database
         return database
