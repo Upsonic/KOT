@@ -1,44 +1,30 @@
 name: Lint
 
-on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 
 permissions:
-  contents: write
+    contents: write
 
 jobs:
-  run-linters:
-    name: Run linters
+  linter_name:
+    name: runner / black
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v1
+      - uses: actions/checkout@v2
+      - name: Check files using the black formatter
+        uses: rickstaa/action-black@v1
+        id: action_black
         with:
-          python-version: 3.8
-
-      - name: Install Python dependencies
-        run: pip install autopep8 mypy
-
-
-      - name: setup git config
-        run: |
-          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"     
-
-      - name: Run linters
-        uses: wearerequired/lint-action@v2
+          black_args: "kot/* --force-exclude kot/__init__.py"
+      - name: Create Pull Request
+        if: steps.action_black.outputs.is_formatted == 'true'
+        uses: peter-evans/create-pull-request@v3
         with:
-          autopep8: true
-          mypy: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Format Python code with psf/black push"
+          commit-message: ":art: Format Python code with psf/black"
+          body: |
+            There appear to be some python formatting errors in ${{ github.sha }}. This pull request
+            uses the [psf/black](https://github.com/psf/black) formatter to fix these issues.
+          base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
+          branch: actions/black
