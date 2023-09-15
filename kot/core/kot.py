@@ -363,7 +363,7 @@ class KOT:
     @staticmethod
     def gui(password, folder: str = ""):  # pragma: no cover
         try:
-            from .gui import GUI  # pragma: no cover
+            from kot.interfaces.gui_web import GUI  # pragma: no cover
 
             GUI(folder, password)  # pragma: no cover
         except ModuleNotFoundError:
@@ -374,7 +374,7 @@ class KOT:
     @staticmethod
     def api(host, port, log: bool = True):  # pragma: no cover
         try:
-            from .interfaces.gui_web import API  # pragma: no cover
+            from kot.interfaces.api import API  # pragma: no cover
 
             console.log(
                 f"[bold white] KOT API initializing...",
@@ -395,7 +395,7 @@ class KOT:
         password, folder: str = "", host="localhost", port=5000
     ):  # pragma: no cover
         try:
-            from .interfaces.gui_web import WEB  # pragma: no cover
+            from kot.interfaces.gui_web import WEB  # pragma: no cover
 
             WEB(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
