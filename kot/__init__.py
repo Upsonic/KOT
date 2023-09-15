@@ -1,5 +1,6 @@
 from .core.kot import KOT
 from .core.kot import console
+from .core.kot import start_location, open_databases
 from .core.kot import HASHES
 from .core.serial import KOT_Serial
 
