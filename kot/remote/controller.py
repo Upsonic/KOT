@@ -17,24 +17,30 @@ class KOT_Remote:
         pass  # pragma: no cover
 
     def __init__(self, database_name, api_url, password=None):
+        import requests
+        from requests.auth import HTTPBasicAuth
+        from kot import console, KOT, KOT_Serial
+
+        self.console = console
+        self.KOT = KOT
+        self.KOT_Serial = KOT_Serial
+
+        self.requests = requests
+        self.HTTPBasicAuth = HTTPBasicAuth
+
+
         self.database_name = database_name
         self._log(
             f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",
         )
 
-        import requests
-        from requests.auth import HTTPBasicAuth
-        from kot import console, KOT, KOT_Serial
 
-        self.requests = requests
-        self.HTTPBasicAuth = HTTPBasicAuth
+
 
         self.api_url = api_url
         self.password = password
 
-        self.console = console
-        self.KOT = KOT
-        self.KOT_Serial = KOT_Serial
+
 
         self._log(
             f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
