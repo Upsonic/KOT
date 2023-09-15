@@ -7,21 +7,21 @@ from .kot import console, KOT
 from .serial import KOT_Serial
 
 
-
 class KOT_Remote:
-
     def _log(self, message):
         console.log(message)
 
     def __enter__(self):
         return self  # pragma: no cover
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass  # pragma: no cover
 
     def __init__(self, database_name, api_url, password=None):
         self.database_name = database_name
-        self._log(f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",)
+        self._log(
+            f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",
+        )
 
         import requests
         from requests.auth import HTTPBasicAuth
@@ -32,8 +32,9 @@ class KOT_Remote:
         self.api_url = api_url
         self.password = password
 
-        
-        self._log(f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",)
+        self._log(
+            f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
+        )
 
     def debug(self, message):
         data = {"message": message}
@@ -58,11 +59,11 @@ class KOT_Remote:
     def _send_request(self, method, endpoint, data=None):
         try:
             response = self.requests.request(
-                    method,
-                    self.api_url + endpoint,
-                    data=data,
-                    auth=self.HTTPBasicAuth("", self.password),
-                )        
+                method,
+                self.api_url + endpoint,
+                data=data,
+                auth=self.HTTPBasicAuth("", self.password),
+            )
             try:
                 response.raise_for_status()
                 return response.text
@@ -75,14 +76,16 @@ class KOT_Remote:
 
     def set(self, key, value, encryption_key="a", compress=None, cache_policy=0):
         compress = True if KOT.force_compress else compress
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
 
         if encryption_key is not None:
             db = KOT_Serial(self.database_name, log=False)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
-        
+
         data = {
             "database_name": self.database_name,
             "key": key,
@@ -93,13 +96,14 @@ class KOT_Remote:
         return self._send_request("POST", "/controller/set", data)
 
     def get(self, key, encryption_key="a"):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
 
         data = {"database_name": self.database_name, "key": key}
         response = self._send_request("POST", "/controller/get", data)
 
         if response is not None:
-
             if not response == "null\n":
                 # Decrypt the received value
                 if encryption_key is not None:
@@ -107,29 +111,26 @@ class KOT_Remote:
                     db.set(key, response)
                     response = db.get(key, encryption_key=encryption_key)
                     db.delete(key)
-                
-                
+
                 return response
             else:
                 return None
 
-
-    def active(self,value=None, encryption_key="a", compress=None):
+    def active(self, value=None, encryption_key="a", compress=None):
         def decorate(value):
             key = value.__name__
             self.set(key, value, encryption_key=encryption_key, compress=compress)
+
         if value == None:
             return decorate
         else:
             decorate(value)
             return value
 
-
-
-
-
     def get_all(self, encryption_key="a"):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
 
         data = {"database_name": self.database_name}
         datas = self._send_request("POST", "/controller/get_all", data)
@@ -137,11 +138,10 @@ class KOT_Remote:
         datas = json.loads(datas)
         db = KOT_Serial(self.database_name, log=False)
         for each in datas:
-                db.set(each, datas[each])
-                datas[each] = db.get(each, encryption_key=encryption_key)
-                db.delete(each)            
+            db.set(each, datas[each])
+            datas[each] = db.get(each, encryption_key=encryption_key)
+            db.delete(each)
         return datas
-
 
     def delete(self, key):
         data = {"database_name": self.database_name, "key": key}
@@ -163,4 +163,3 @@ class KOT_Remote:
 
     def database_delete_all(self):
         return self._send_request("GET", "/database/delete_all")
-

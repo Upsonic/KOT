@@ -17,36 +17,51 @@ app = Flask(__name__)
 
 load_dotenv(dotenv_path=".env")
 
-folder = os.environ.get("folder","")
-password = os.environ.get("password","KOT")
-threads = os.environ.get("threads",4)
-access_key = (os.environ.get("access_key","false").lower() == "true")
-access_key_folder = os.environ.get("access_key_folder","")
-access_key_lists = os.environ.get("access_key_lists","")
-access_key_lists_cache = int(os.environ.get("access_key_lists_cache",0))
-restricted = os.environ.get("restricted","")
+folder = os.environ.get("folder", "")
+password = os.environ.get("password", "KOT")
+threads = os.environ.get("threads", 4)
+access_key = os.environ.get("access_key", "false").lower() == "true"
+access_key_folder = os.environ.get("access_key_folder", "")
+access_key_lists = os.environ.get("access_key_lists", "")
+access_key_lists_cache = int(os.environ.get("access_key_lists_cache", 0))
+restricted = os.environ.get("restricted", "")
 restricted = restricted.split(",")
 
-    
 
-
-rate_limit = os.environ.get("rate_limit","")
+rate_limit = os.environ.get("rate_limit", "")
 rate_limit = rate_limit.split(",")
-key_lenght = (os.environ.get("key_lenght",None))
+key_lenght = os.environ.get("key_lenght", None)
 key_lenght = int(key_lenght) if key_lenght is not None else key_lenght
-value_lenght = (os.environ.get("value_lenght",None))
+value_lenght = os.environ.get("value_lenght", None)
 value_lenght = int(value_lenght) if value_lenght is not None else value_lenght
-database_name_lenght = (os.environ.get("database_name_lenght",None))
-database_name_lenght = int(database_name_lenght) if database_name_lenght is not None else database_name_lenght
-maximum_database_amount = (os.environ.get("maximum_database_amount",None))
-maximum_database_amount = int(maximum_database_amount) if maximum_database_amount is not None else maximum_database_amount
-maximum_key_amount = (os.environ.get("maximum_key_amount",None))
-maximum_key_amount = int(maximum_key_amount) if maximum_key_amount is not None else maximum_key_amount
-maximum_database_amount_user = (os.environ.get("maximum_database_amount_user",None))
-maximum_database_amount_user = int(maximum_database_amount_user) if maximum_database_amount_user is not None else maximum_database_amount_user
-maximum_key_amount_user = (os.environ.get("maximum_key_amount_user",None))
-maximum_key_amount_user = int(maximum_key_amount_user) if maximum_key_amount_user is not None else maximum_key_amount_user
-
+database_name_lenght = os.environ.get("database_name_lenght", None)
+database_name_lenght = (
+    int(database_name_lenght)
+    if database_name_lenght is not None
+    else database_name_lenght
+)
+maximum_database_amount = os.environ.get("maximum_database_amount", None)
+maximum_database_amount = (
+    int(maximum_database_amount)
+    if maximum_database_amount is not None
+    else maximum_database_amount
+)
+maximum_key_amount = os.environ.get("maximum_key_amount", None)
+maximum_key_amount = (
+    int(maximum_key_amount) if maximum_key_amount is not None else maximum_key_amount
+)
+maximum_database_amount_user = os.environ.get("maximum_database_amount_user", None)
+maximum_database_amount_user = (
+    int(maximum_database_amount_user)
+    if maximum_database_amount_user is not None
+    else maximum_database_amount_user
+)
+maximum_key_amount_user = os.environ.get("maximum_key_amount_user", None)
+maximum_key_amount_user = (
+    int(maximum_key_amount_user)
+    if maximum_key_amount_user is not None
+    else maximum_key_amount_user
+)
 
 
 database_name_caches = []
@@ -76,15 +91,17 @@ exception_url = "/controller/exception"
 
 
 access_key_database = KOT("access_key_database", folder=access_key_folder)
-access_key_database.set("access_keys", access_key_lists, cache_policy=access_key_lists_cache)
+access_key_database.set(
+    "access_keys", access_key_lists, cache_policy=access_key_lists_cache
+)
+
+
 def access_keys():
     a = access_key_database.get("access_keys")
     a = a.split(",")
     if a == [""]:
         a = []
     return a
-
-
 
 
 @app.before_request
@@ -103,86 +120,84 @@ def check():
     global key_name_caches_user
     global access_key
 
-
-
     auth = request.authorization
     if not auth:
         return Response(
-                    "Could not verify your access level for that URL. Make basic auth.\n"
-                    "You have to login with proper credentials",
-                    401,
-                    {"WWW-Authenticate": 'Basic realm="Login Required"'},
-                )
+            "Could not verify your access level for that URL. Make basic auth.\n"
+            "You have to login with proper credentials",
+            401,
+            {"WWW-Authenticate": 'Basic realm="Login Required"'},
+        )
     if not access_key:
-        if (auth.username != "" or auth.password != password):
-                return Response(
-                    "Could not verify your access level for that URL. Use password.\n"
-                    "You have to login with proper credentials",
-                    401,
-                    {"WWW-Authenticate": 'Basic realm="Login Required"'},
-                )
+        if auth.username != "" or auth.password != password:
+            return Response(
+                "Could not verify your access level for that URL. Use password.\n"
+                "You have to login with proper credentials",
+                401,
+                {"WWW-Authenticate": 'Basic realm="Login Required"'},
+            )
     else:
-        if (auth.password not in access_keys()):
-                return Response(
-                    "Could not verify your access level for that URL. Use access key.\n"
-                    "You have to login with proper credentials",
-                    401,
-                    {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
-                )
-   
-
-
-    for restrict in restricted:
-
-            if restrict == request.endpoint:
-                return Response(
-                "Access to this URL is restricted.\n"
-                "You do not have the necessary permissions", 
-                403,  # Change status code to 403 Forbidden
-                {"WWW-Authenticate": 'Basic realm="Access Required"'}
+        if auth.password not in access_keys():
+            return Response(
+                "Could not verify your access level for that URL. Use access key.\n"
+                "You have to login with proper credentials",
+                401,
+                {"WWW-Authenticate": 'Basic realm="Access Key Required"'},
             )
 
+    for restrict in restricted:
+        if restrict == request.endpoint:
+            return Response(
+                "Access to this URL is restricted.\n"
+                "You do not have the necessary permissions",
+                403,  # Change status code to 403 Forbidden
+                {"WWW-Authenticate": 'Basic realm="Access Required"'},
+            )
 
     if key_lenght is not None:
         if request.form.get("key") is not None:
             if len(request.form.get("key")) > key_lenght:
                 return Response(
-                    "Key lenght is restricted.\n"
-                    "You do not have the true key lenght", 
+                    "Key lenght is restricted.\n" "You do not have the true key lenght",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="True Key Lenght Required"'}
-                )            
+                    {"WWW-Authenticate": 'Basic realm="True Key Lenght Required"'},
+                )
 
     if value_lenght is not None:
         if request.form.get("value") is not None:
             if len(request.form.get("value")) > value_lenght:
                 return Response(
                     "Value lenght is restricted.\n"
-                    "You do not have the true value lenght", 
+                    "You do not have the true value lenght",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="True Value Lenght Required"'}
-                )            
-
+                    {"WWW-Authenticate": 'Basic realm="True Value Lenght Required"'},
+                )
 
     if database_name_lenght is not None:
         if request.form.get("database_name") is not None:
             if len(request.form.get("database_name")) > database_name_lenght:
                 return Response(
                     "Database name lenght is restricted.\n"
-                    "You do not have the true database name lenght", 
+                    "You do not have the true database name lenght",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="True Database Name Lenght Required"'}
-                ) 
-
+                    {
+                        "WWW-Authenticate": 'Basic realm="True Database Name Lenght Required"'
+                    },
+                )
 
     if maximum_database_amount is not None:
         if request.form.get("database_name") is not None:
-            if len(database_name_caches) >= maximum_database_amount and request.form.get("database_name") not in database_name_caches:
+            if (
+                len(database_name_caches) >= maximum_database_amount
+                and request.form.get("database_name") not in database_name_caches
+            ):
                 return Response(
                     "You cant create more database (SYSTEM).\n"
-                    "You do not have right to create more database (SYSTEM)", 
+                    "You do not have right to create more database (SYSTEM)",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="Reached Different Database Limit (SYSTEM)"'}
+                    {
+                        "WWW-Authenticate": 'Basic realm="Reached Different Database Limit (SYSTEM)"'
+                    },
                 )
             else:
                 if request.form.get("database_name") not in database_name_caches:
@@ -190,50 +205,75 @@ def check():
 
     if maximum_key_amount is not None:
         if request.form.get("key") is not None:
-            if len(key_name_caches) >= maximum_key_amount and request.form.get("key") not in key_name_caches:
+            if (
+                len(key_name_caches) >= maximum_key_amount
+                and request.form.get("key") not in key_name_caches
+            ):
                 return Response(
                     "You cant create more keys.\n"
-                    "You do not have right to create more key", 
+                    "You do not have right to create more key",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="Reached Different Key Limit"'}
+                    {"WWW-Authenticate": 'Basic realm="Reached Different Key Limit"'},
                 )
             else:
                 if request.form.get("key") not in key_name_caches:
                     key_name_caches.append(request.form.get("key"))
-
 
     if maximum_database_amount_user is not None:
         if request.form.get("database_name") is not None:
             user = request.remote_addr
             if user not in database_name_caches_user:
                 database_name_caches_user[user] = []
-            if len(database_name_caches_user[user]) >= maximum_database_amount_user and request.form.get("database_name") not in database_name_caches_user[user]:
+            if (
+                len(database_name_caches_user[user]) >= maximum_database_amount_user
+                and request.form.get("database_name")
+                not in database_name_caches_user[user]
+            ):
                 return Response(
                     "You cant create more database (USER).\n"
-                    "You do not have right to create more database (USER)", 
+                    "You do not have right to create more database (USER)",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="Reached Different Database Limit (USER)"'}
+                    {
+                        "WWW-Authenticate": 'Basic realm="Reached Different Database Limit (USER)"'
+                    },
                 )
             else:
-                if request.form.get("database_name") not in database_name_caches_user[user]:
-                    database_name_caches_user[user].append(request.form.get("database_name")) if request.form.get("database_name") not in database_name_caches_user[user] else None
-
+                if (
+                    request.form.get("database_name")
+                    not in database_name_caches_user[user]
+                ):
+                    database_name_caches_user[user].append(
+                        request.form.get("database_name")
+                    ) if request.form.get(
+                        "database_name"
+                    ) not in database_name_caches_user[
+                        user
+                    ] else None
 
     if maximum_key_amount_user is not None:
         if request.form.get("key") is not None:
             user = request.remote_addr
             if user not in key_name_caches_user:
                 key_name_caches_user[user] = []
-            if len(key_name_caches_user[user]) >= maximum_key_amount_user and request.form.get("key") not in key_name_caches_user[user]:
+            if (
+                len(key_name_caches_user[user]) >= maximum_key_amount_user
+                and request.form.get("key") not in key_name_caches_user[user]
+            ):
                 return Response(
                     "You cant create more key (USER).\n"
-                    "You do not have right to create more key (USER)", 
+                    "You do not have right to create more key (USER)",
                     403,  # Change status code to 403 Forbidden
-                    {"WWW-Authenticate": 'Basic realm="Reached Different Key Limit (USER)"'}
+                    {
+                        "WWW-Authenticate": 'Basic realm="Reached Different Key Limit (USER)"'
+                    },
                 )
             else:
                 if request.form.get("key") not in key_name_caches_user[user]:
-                    key_name_caches_user[user].append(request.form.get("key")) if request.form.get("key") not in key_name_caches_user[user] else None
+                    key_name_caches_user[user].append(
+                        request.form.get("key")
+                    ) if request.form.get("key") not in key_name_caches_user[
+                        user
+                    ] else None
 
 
 @app.route(set_url, methods=["POST"])
@@ -250,9 +290,14 @@ def set():
     else:
         cache_policy = int(cache_policy)
 
-
     database = KOT_Serial(database_name, folder=folder)
-    database.set(key, value, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy)
+    database.set(
+        key,
+        value,
+        compress=compress,
+        encryption_key=encryption_key,
+        cache_policy=cache_policy,
+    )
 
     return "Data set successfully"
 
@@ -394,10 +439,10 @@ def exception():
     return "Exception message logged successfully"
 
 
-
-
-
-def API(host_data, port_data,):
+def API(
+    host_data,
+    port_data,
+):
     host = host_data if host_data is not None else host  # pragma: no cover
     port = port_data if port_data is not None else port  # pragma: no cover
     global threads
@@ -408,11 +453,4 @@ def API(host_data, port_data,):
         except:
             traceback.print_exc()
 
-    threading.Thread(target=starter).start() # pragma: no cover
-
-
-
-
-
-    
-
+    threading.Thread(target=starter).start()  # pragma: no cover

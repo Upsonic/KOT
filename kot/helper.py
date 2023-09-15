@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
 
+
 def no_exception(func):
     @wraps(func)
     def runner(*args, **kwargs):
@@ -10,6 +11,7 @@ def no_exception(func):
             return result
         except Exception as e:
             print(f"Exception occurred in function: {e}")
+
     return runner
 
 
@@ -19,13 +21,16 @@ def requires(name):
         @wraps(function)
         def wrapper(*args, **kwargs):
             print("RUN")
-            
+
             try:
                 exec(f"import {name}")
             except:
                 from pip._internal import main as pip
-                pip(['install', name])  
+
+                pip(["install", name])
             retval = function(*args, **kwargs)
             return retval
+
         return wrapper
+
     return decorator

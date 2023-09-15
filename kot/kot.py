@@ -3,6 +3,7 @@
 import json
 
 from rich.console import Console
+
 console = Console()
 import base64
 import contextlib
@@ -29,6 +30,7 @@ from .serial import KOT_Serial
 open_databases = {}
 start_location = os.getcwd()
 
+
 class HASHES:
     cache = {}
 
@@ -44,19 +46,24 @@ class HASHES:
         return result
 
 
-
-
 class KOT:
-
     force_compress = False
     force_encrypt = False
 
-    def __init__(self, name, self_datas: bool = False, folder: str = "", enable_fast:bool=False, log:bool = True):
+    def __init__(
+        self,
+        name,
+        self_datas: bool = False,
+        folder: str = "",
+        enable_fast: bool = False,
+        log: bool = True,
+    ):
         self.name = name
         self.log = False if self_datas else log
-        self._log(f"[{self.name}] [bold white]KOT database[bold white] initializing...",)
+        self._log(
+            f"[{self.name}] [bold white]KOT database[bold white] initializing...",
+        )
 
-        
         self.hashed_name = HASHES.get_hash(name)
         global start_location
         the_main_folder = start_location if not folder != "" else folder
@@ -65,9 +72,11 @@ class KOT:
 
         if enable_fast:
             import pickle
+
             self.engine = pickle
         else:
             import dill
+
             self.engine = dill
 
         if not self_datas:
@@ -83,8 +92,9 @@ class KOT:
 
         self.cache = {}
         self.initialize()
-        self._log(f"[{self.name}] [bold green]KOT database[bold green] active",)
-
+        self._log(
+            f"[{self.name}] [bold green]KOT database[bold green] active",
+        )
 
     def _log(self, message):
         if self.log:
@@ -99,26 +109,37 @@ class KOT:
                 self._log(f"[{self.name}] Error on database folder creating")
                 raise  # pragma: no cover
             self._log(f"[{self.name}] Connected to folder")
-        
-
 
     @staticmethod
     def cloud_key():
-        from cryptography.fernet import Fernet # pragma: no cover
-        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30] # pragma: no cover
+        from cryptography.fernet import Fernet  # pragma: no cover
+
+        return (
+            "cloud-"
+            + (((Fernet.generate_key()).decode()).replace("-", "").replace("_", ""))[
+                :30
+            ]
+        )  # pragma: no cover
 
     @staticmethod
-    def cloud_pro_key(name:str):
+    def cloud_pro_key(name: str):
         if len(name) > 14:
             print("Your name is long please short to 14 character")
             return None
-        from cryptography.fernet import Fernet # pragma: no cover
-        return "cloud-"+(((Fernet.generate_key()).decode()).replace("-","").replace("_",""))[:30]+"-"+name # pragma: no cover
+        from cryptography.fernet import Fernet  # pragma: no cover
 
+        return (
+            "cloud-"
+            + (((Fernet.generate_key()).decode()).replace("-", "").replace("_", ""))[
+                :30
+            ]
+            + "-"
+            + name
+        )  # pragma: no cover
 
     def __enter__(self):
         return self  # pragma: no cover
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass  # pragma: no cover
 
@@ -351,15 +372,19 @@ class KOT:
             )  # pragma: no cover
 
     @staticmethod
-    def api(
-        host, port, log:bool=True):  # pragma: no cover
+    def api(host, port, log: bool = True):  # pragma: no cover
         try:
             from .api import API  # pragma: no cover
-            console.log(f"[bold white] KOT API[bold white] initializing...",)
+
+            console.log(
+                f"[bold white] KOT API[bold white] initializing...",
+            )
             API(host, port)  # pragma: no cover
             if log:
-                console.log(f"[bold green] KOT API[bold green] started ({host}, {port})",)
-              
+                console.log(
+                    f"[bold green] KOT API[bold green] started ({host}, {port})",
+                )
+
         except ModuleNotFoundError:
             console.print(
                 "Warning: API module not found. Please install the 'kot_api' package."
@@ -449,8 +474,6 @@ class KOT:
             return False
         return True
 
-
-
     def clear_cache(self):
         self.cache = {}
         for each_file in self.open_files_db.dict():
@@ -460,6 +483,7 @@ class KOT:
 
     def encrypt(self, key, message):
         from cryptography.fernet import Fernet
+
         # Generate a Fernet key from the user-defined key
         fernet_key = base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest())
         # Initialize a Fernet object with the generated key
@@ -470,6 +494,7 @@ class KOT:
 
     def decrypt(self, key, message):
         from cryptography.fernet import Fernet
+
         # Initialize a Fernet object with the user-defined key
         fernet = Fernet(base64.urlsafe_b64encode(hashlib.sha256(key.encode()).digest()))
         # Decrypt the message using the decrypt method of the Fernet object
@@ -527,7 +552,9 @@ class KOT:
         short_cut: bool = False,
     ) -> bool:
         compress = True if KOT.force_compress else compress
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
         self.counter += 1
 
         meta = {"type": "value", "file": None, "direct_file": True}
@@ -592,7 +619,7 @@ class KOT:
             if cache_policy != 0:
                 the_dict["cache_time"] = time.time()
                 the_dict["cache_policy"] = cache_policy
- 
+
             if key in self.cache and not dont_delete_cache:
                 del self.cache[key]
 
@@ -721,7 +748,9 @@ class KOT:
         raw_dict: bool = False,
         get_shotcut: bool = False,
     ):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
         if key in self.cache and not no_cache:
             cache_control = False
             currently = time.time()
@@ -886,7 +915,9 @@ class KOT:
         return True
 
     def dict(self, encryption_key: str = None, no_data: bool = False):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        encryption_key = (
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+        )
         result = {}
         for key in os.listdir(self.location):
             if not "." in key:
@@ -1046,18 +1077,29 @@ class KOT:
 
         exception_writer()
 
-    def active(self, _function=None,
+    def active(
+        self,
+        _function=None,
         custom_key_location: str = "",
         encryption_key: str = None,
         no_cache: bool = False,
         raw_dict: bool = False,
-        get_shotcut: bool = False,compress=None, cache_policy: int = 0, dont_delete_cache: bool = False,):
-
-
+        get_shotcut: bool = False,
+        compress=None,
+        cache_policy: int = 0,
+        dont_delete_cache: bool = False,
+    ):
         def decorate(_function):
-
             key = _function.__name__
-            self.set(key, _function, compress=compress, encryption_key=encryption_key, cache_policy=cache_policy, dont_delete_cache=dont_delete_cache, custom_key_location=custom_key_location)
+            self.set(
+                key,
+                _function,
+                compress=compress,
+                encryption_key=encryption_key,
+                cache_policy=cache_policy,
+                dont_delete_cache=dont_delete_cache,
+                custom_key_location=custom_key_location,
+            )
 
         if _function == None:
             return decorate
@@ -1066,10 +1108,7 @@ class KOT:
             return _function
 
 
-
 def main():  # pragma: no cover
     import fire  # pragma: no cover
 
     fire.Fire(KOT)  # pragma: no cover
-
-

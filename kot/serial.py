@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-
-def KOT_Serial(name, self_datas: bool = False, folder: str = "", log:bool=True):
+def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = True):
     from .kot import start_location, open_databases
+
     global start_location
     folder = start_location if not folder != "" else folder
 
@@ -15,6 +15,7 @@ def KOT_Serial(name, self_datas: bool = False, folder: str = "", log:bool=True):
         return open_databases[name_hash]
     else:
         from .kot import KOT
+
         database = KOT(name, self_datas=self_datas, folder=folder, log=log)
         open_databases[name_hash] = database
         return database
