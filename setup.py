@@ -15,7 +15,7 @@ setup(
     author="Onur Atakan ULUSOY",
     author_email="atadogan06@gmail.com",
     license="MIT",
-    packages=["kot"],
+    packages=["kot", "kot.core", "kot.interfaces", "kot.remote"],
     install_requires=install_requires,
     entry_points={
         "console_scripts": ["KOT=kot.core.kot:main"],
