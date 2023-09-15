@@ -18,10 +18,12 @@ from shutil import move
 from shutil import rmtree
 from shutil import unpack_archive
 import random
-import ast
+
 
 import copy as cpv
 
+
+from .serial import KOT_Serial
 
 
 open_databases = {}
@@ -1065,206 +1067,9 @@ class KOT:
 
 
 
-def KOT_Serial(name, self_datas: bool = False, folder: str = "", log:bool=True):
-    global start_location
-    folder = start_location if not folder != "" else folder
-
-    global open_databases
-    name_hash = name + str(self_datas) + folder
-
-    if name_hash in open_databases:
-        return open_databases[name_hash]
-    else:
-        database = KOT(name, self_datas=self_datas, folder=folder, log=log)
-        open_databases[name_hash] = database
-        return database
-
-
 def main():  # pragma: no cover
     import fire  # pragma: no cover
 
     fire.Fire(KOT)  # pragma: no cover
 
 
-
-
-class KOT_Remote:
-
-    def _log(self, message):
-        console.log(message)
-
-    def __enter__(self):
-        return self  # pragma: no cover
-    
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass  # pragma: no cover
-
-    def __init__(self, database_name, api_url, password=None):
-        self.database_name = database_name
-        self._log(f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",)
-
-        import requests
-        from requests.auth import HTTPBasicAuth
-
-        self.requests = requests
-        self.HTTPBasicAuth = HTTPBasicAuth
-
-        self.api_url = api_url
-        self.password = password
-
-        
-        self._log(f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",)
-
-    def debug(self, message):
-        data = {"message": message}
-        return self._send_request("POST", "/controller/debug", data)
-
-    def info(self, message):
-        data = {"message": message}
-        return self._send_request("POST", "/controller/info", data)
-
-    def warning(self, message):
-        data = {"message": message}
-        return self._send_request("POST", "/controller/warning", data)
-
-    def error(self, message):
-        data = {"message": message}
-        return self._send_request("POST", "/controller/error", data)
-
-    def exception(self, message):
-        data = {"message": message}
-        return self._send_request("POST", "/controller/exception", data)
-
-    def _send_request(self, method, endpoint, data=None):
-        try:
-            response = self.requests.request(
-                    method,
-                    self.api_url + endpoint,
-                    data=data,
-                    auth=self.HTTPBasicAuth("", self.password),
-                )        
-            try:
-                response.raise_for_status()
-                return response.text
-            except self.requests.exceptions.RequestException as e:  # pragma: no cover
-                print("Error: ", response.text)
-                return None  # pragma: no cover
-        except self.requests.exceptions.ConnectionError:
-            print("Error: Remote is down")
-            return None
-
-    def set(self, key, value, encryption_key="a", compress=None, cache_policy=0):
-        compress = True if KOT.force_compress else compress
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
-
-        if encryption_key is not None:
-            db = KOT_Serial(self.database_name, log=False)
-            db.set(key, value, encryption_key=encryption_key)
-            value = db.get(key)
-            db.delete(key)
-        
-        data = {
-            "database_name": self.database_name,
-            "key": key,
-            "value": value,
-            "compress": compress,
-            "cache_policy": cache_policy,
-        }
-        return self._send_request("POST", "/controller/set", data)
-
-    def get(self, key, encryption_key="a"):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
-
-        data = {"database_name": self.database_name, "key": key}
-        response = self._send_request("POST", "/controller/get", data)
-
-        if response is not None:
-
-            if not response == "null\n":
-                # Decrypt the received value
-                if encryption_key is not None:
-                    db = KOT_Serial(self.database_name, log=False)
-                    db.set(key, response)
-                    response = db.get(key, encryption_key=encryption_key)
-                    db.delete(key)
-                
-                
-                return response
-            else:
-                return None
-
-
-    def active(self,value=None, encryption_key="a", compress=None):
-        def decorate(value):
-            key = value.__name__
-            self.set(key, value, encryption_key=encryption_key, compress=compress)
-        if value == None:
-            return decorate
-        else:
-            decorate(value)
-            return value
-
-
-
-
-
-    def get_all(self, encryption_key="a"):
-        encryption_key = KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
-
-        data = {"database_name": self.database_name}
-        datas = self._send_request("POST", "/controller/get_all", data)
-
-        datas = json.loads(datas)
-        db = KOT_Serial(self.database_name, log=False)
-        for each in datas:
-                db.set(each, datas[each])
-                datas[each] = db.get(each, encryption_key=encryption_key)
-                db.delete(each)            
-        return datas
-
-
-    def delete(self, key):
-        data = {"database_name": self.database_name, "key": key}
-        return self._send_request("POST", "/controller/delete", data)
-
-    def database_list(self):
-        return ast.literal_eval(self._send_request("GET", "/database/list"))
-
-    def database_pop(self, database_name):
-        data = {"database_name": database_name}
-        return self._send_request("POST", "/database/pop", data)
-
-    def database_pop_all(self):
-        return self._send_request("GET", "/database/pop_all")
-
-    def database_delete(self, database_name):
-        data = {"database_name": database_name}
-        return self._send_request("POST", "/database/delete", data)
-
-    def database_delete_all(self):
-        return self._send_request("GET", "/database/delete_all")
-
-
-
-def KOT_Cloud(database_name):
-    return KOT_Remote(database_name, 'http://free.cloud.kotdatabase.dev:5000', 'onuratakan') # pragma: no cover
-
-def KOT_Cloud_Pro(database_name, access_key):
-    return KOT_Remote(database_name, 'http://pro.cloud.kotdatabase.dev:5001', access_key) # pragma: no cover
-
-def KOT_Cloud_Dedicated(database_name, password, dedicated_key):
-    dedicated_key = dedicated_key.replace("dedicatedkey-", "")
-    dedicated_key = dedicated_key.encode()
-    resolver = KOT("dedicate_resolver")
-    resolver.set(dedicated_key.decode(), dedicated_key)
-    host = resolver.get(dedicated_key.decode(), encryption_key="dedicatedkey")
-    return KOT_Remote(database_name, host, password) # pragma: no cover
-
-
-def KOT_Cloud_Dedicated_Prepare(host):
-    resolver = KOT("dedicate_resolver")
-    resolver.set(host, host, encryption_key="dedicatedkey")
-    host = resolver.get(host)
-    host = host.decode()
-    host = "dedicatedkey-" + host
-    return host  

@@ -8,7 +8,7 @@ import copy
 from unittest.mock import patch
 import threading
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "kot"))
+
 
 from kot import KOT, HASHES, KOT_Serial, KOT_Remote
 import kot

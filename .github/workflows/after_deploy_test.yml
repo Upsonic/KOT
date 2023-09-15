@@ -85,8 +85,7 @@ jobs:
       - name: Test with pytest
         run: |
           cd ..
-          pytest KOT/tests/test_kot.py -v
-          pytest KOT/tests/test_remote.py -v
+          pytest KOT/tests/test_kot.py KOT/tests/test_remote.py KOT/tests/test_serial.py -v
 
 
   pypi_docker:

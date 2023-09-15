@@ -7,7 +7,7 @@ import shutil
 import copy
 from unittest.mock import patch
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "kot"))
+
 
 from kot import KOT, HASHES, KOT_Serial
 import kot
@@ -633,20 +633,7 @@ class TestKOT(unittest.TestCase):
             self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), big_string
         )
 
-    def test_database_delete_open_databases_pop_KOT_Serial(self):
-        # Create a test database
-        test_db = KOT_Serial("test_db")
 
-        # Call the database_delete method
-
-        self.assertIn(
-            "test_db" + str(False) + kot.kot.start_location, kot.kot.open_databases
-        )
-        KOT.database_delete("test_db")
-
-        self.assertNotIn(
-            "test_db" + str(False) + kot.kot.start_location, kot.kot.open_databases
-        )
 
     def test_execute_non_string_query(self):
         with self.assertRaises(TypeError):
