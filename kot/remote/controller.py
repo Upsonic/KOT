@@ -4,11 +4,11 @@
 import json
 import ast
 
-from kot import console, KOT, KOT_Serial
+
 
 class KOT_Remote:
     def _log(self, message):
-        console.log(message)
+        self.console.log(message)
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -24,12 +24,17 @@ class KOT_Remote:
 
         import requests
         from requests.auth import HTTPBasicAuth
+        from kot import console, KOT, KOT_Serial
 
         self.requests = requests
         self.HTTPBasicAuth = HTTPBasicAuth
 
         self.api_url = api_url
         self.password = password
+
+        self.console = console
+        self.KOT = KOT
+        self.KOT_Serial = KOT_Serial
 
         self._log(
             f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
@@ -74,13 +79,13 @@ class KOT_Remote:
             return None
 
     def set(self, key, value, encryption_key="a", compress=None, cache_policy=0):
-        compress = True if KOT.force_compress else compress
+        compress = True if self.KOT.force_compress else compress
         encryption_key = (
-            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
         )
 
         if encryption_key is not None:
-            db = KOT_Serial(self.database_name, log=False)
+            db = self.KOT_Serial(self.database_name, log=False)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
@@ -96,7 +101,7 @@ class KOT_Remote:
 
     def get(self, key, encryption_key="a"):
         encryption_key = (
-            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
         )
 
         data = {"database_name": self.database_name, "key": key}
@@ -106,7 +111,7 @@ class KOT_Remote:
             if not response == "null\n":
                 # Decrypt the received value
                 if encryption_key is not None:
-                    db = KOT_Serial(self.database_name, log=False)
+                    db = self.KOT_Serial(self.database_name, log=False)
                     db.set(key, response)
                     response = db.get(key, encryption_key=encryption_key)
                     db.delete(key)
@@ -128,14 +133,14 @@ class KOT_Remote:
 
     def get_all(self, encryption_key="a"):
         encryption_key = (
-            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
+            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
         )
 
         data = {"database_name": self.database_name}
         datas = self._send_request("POST", "/controller/get_all", data)
 
         datas = json.loads(datas)
-        db = KOT_Serial(self.database_name, log=False)
+        db = self.KOT_Serial(self.database_name, log=False)
         for each in datas:
             db.set(each, datas[each])
             datas[each] = db.get(each, encryption_key=encryption_key)
