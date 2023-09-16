@@ -16,6 +16,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
+    if: contains('["onuratakan"]', github.actor)
 
     steps:
       - name: Checkout Repository
