@@ -277,7 +277,6 @@ def check():
 
 
 @app.route(set_url, methods=["POST"])
-@limiter.exempt
 def set():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -303,7 +302,6 @@ def set():
 
 
 @app.route(get_url, methods=["POST"])
-@limiter.exempt
 def get():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -316,7 +314,6 @@ def get():
 
 
 @app.route(get_all_url, methods=["POST"])
-@limiter.exempt
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
@@ -327,7 +324,6 @@ def get_all():
 
 
 @app.route(delete_url, methods=["POST"])
-@limiter.exempt
 def delete():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
@@ -346,7 +342,6 @@ def database_list():
 
 
 @app.route(database_pop_url, methods=["POST"])
-@limiter.exempt
 def database_pop():
     database_name = request.form.get("database_name")
 
@@ -356,7 +351,6 @@ def database_pop():
 
 
 @app.route(database_pop_all_url, methods=["GET"])
-@limiter.exempt
 def database_pop_all():
     KOT.database_pop_all(folder=folder)
 
@@ -364,7 +358,6 @@ def database_pop_all():
 
 
 @app.route(database_rename_url, methods=["POST"])
-@limiter.exempt
 def database_rename():
     database_name = request.form.get("database_name")
     new_name = request.form.get("new_database_name")
@@ -375,7 +368,6 @@ def database_rename():
 
 
 @app.route(database_delete_url, methods=["POST"])
-@limiter.exempt
 def database_delete():
     database_name = request.form.get("database_name")
 
@@ -385,7 +377,6 @@ def database_delete():
 
 
 @app.route(database_delete_all_url, methods=["GET"])
-@limiter.exempt
 def database_delete_all():
     database_name = request.form.get("database_name")
 
@@ -395,7 +386,6 @@ def database_delete_all():
 
 
 @app.route(debug_url, methods=["POST"])
-@limiter.exempt
 def debug():
     message = request.form.get("message")
     database = KOT_Serial("debug", folder=folder)
@@ -404,7 +394,6 @@ def debug():
 
 
 @app.route(info_url, methods=["POST"])
-@limiter.exempt
 def info():
     message = request.form.get("message")
     database = KOT_Serial("info", folder=folder)
@@ -413,7 +402,6 @@ def info():
 
 
 @app.route(warning_url, methods=["POST"])
-@limiter.exempt
 def warning():
     message = request.form.get("message")
     database = KOT_Serial("warning", folder=folder)
@@ -422,7 +410,6 @@ def warning():
 
 
 @app.route(error_url, methods=["POST"])
-@limiter.exempt
 def error():
     message = request.form.get("message")
     database = KOT_Serial("error", folder=folder)
@@ -431,7 +418,6 @@ def error():
 
 
 @app.route(exception_url, methods=["POST"])
-@limiter.exempt
 def exception():
     message = request.form.get("message")
     database = KOT_Serial("exception", folder=folder)
