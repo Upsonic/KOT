@@ -51,8 +51,8 @@ cursor.execute(f"SELECT * FROM Customer WHERE customer_id = {find_number}")
 time_6 = time.time()
 
 # KOT
-the_list = client_address_db.get("users")
 time_7 = time.time()
+the_list = client_address_db.get("users")
 time_8 = time.time()
 
 
