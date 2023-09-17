@@ -62,28 +62,6 @@ cloud.get("price")
 
 
 
-## Encryption
-You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to KOT cloud.
-
-```python
-@cloud.active(encryption_key="")
-...
-
-cloud.set(..., encryption_key="")
-
-cloud.get(..., encryption_key="")
-
-```
-
-or you can use global encryption
-
-```python
-from kot import KOT
-
-KOT.force_encrypt = ""
-```
-
-You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.kotdatabase.dev/features/encryption.html#fernet-key-generation)
 
 
 # Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/KOT-database/KOT/actions/workflows/cloud_pro_test.yml)
@@ -122,3 +100,27 @@ from kot import KOT_Cloud_Dedicated
 
 cloud = KOT_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_USER_PASSWORD", "YOUR_DEDICATED_KEY")
 ```
+
+
+# Encryption
+You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to KOT cloud.
+
+```python
+@cloud.active(encryption_key="")
+...
+
+cloud.set(..., encryption_key="")
+
+cloud.get(..., encryption_key="")
+
+```
+
+or you can use global encryption
+
+```python
+from kot import KOT
+
+KOT.force_encrypt = ""
+```
+
+You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.kotdatabase.dev/features/encryption.html#fernet-key-generation)
