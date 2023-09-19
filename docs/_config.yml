@@ -12,11 +12,17 @@ aux_links:
 
 # External navigation links
 nav_external_links:
+  - title: KOT Update
+    url: https://github.com/KOT-database/KOT-Update
+  - title: KOT Auth
+    url: https://github.com/KOT-database/KOT-Auth
+  - title: KOT Secret
+    url: https://github.com/KOT-database/KOT-Secret
   - title: Website
     url: https://kotdatabase.dev/
   - title: "Discord"
     url: https://discord.gg/QtnKf532Er   
-  - title: "@kot_database"
+  - title: "Twitter"
     url: https://twitter.com/kot_database
 
 # Makes Aux links open in a new tab. Default is false
