@@ -16,14 +16,15 @@ def no_exception(func):
 
 
 @no_exception
-def requires(name):
+def requires(name, custom_import=None):
     def decorator(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
             print("RUN")
 
             try:
-                exec(f"import {name}")
+                import_name = name if custom_import is None else custom_import
+                exec(f"import {import_name}")
             except:
                 from pip._internal import main as pip
 
