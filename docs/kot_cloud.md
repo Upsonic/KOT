@@ -118,9 +118,7 @@ cloud.get(..., encryption_key="")
 or you can use global encryption
 
 ```python
-from kot import KOT
-
-KOT.force_encrypt = ""
+cloud.force_encrypt = ""
 ```
 
 You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.kotdatabase.dev/features/encryption.html#fernet-key-generation)

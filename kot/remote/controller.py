@@ -21,6 +21,11 @@ class KOT_Remote:
         from requests.auth import HTTPBasicAuth
         from kot import console, KOT, KOT_Serial
 
+
+        self.force_compress = False
+        self.force_encrypt = False
+
+
         self.console = console
         self.KOT = KOT
         self.KOT_Serial = KOT_Serial
@@ -85,9 +90,9 @@ class KOT_Remote:
             return None
 
     def set(self, key, value, encryption_key="a", compress=None, cache_policy=0):
-        compress = True if self.KOT.force_compress else compress
+        compress = True if self.force_compress else compress
         encryption_key = (
-            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
+            self.force_encrypt if self.force_encrypt != False else encryption_key
         )
 
         if encryption_key is not None:
@@ -107,7 +112,7 @@ class KOT_Remote:
 
     def get(self, key, encryption_key="a"):
         encryption_key = (
-            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
+            self.force_encrypt if self.force_encrypt != False else encryption_key
         )
 
         data = {"database_name": self.database_name, "key": key}
@@ -139,7 +144,7 @@ class KOT_Remote:
 
     def get_all(self, encryption_key="a"):
         encryption_key = (
-            self.KOT.force_encrypt if self.KOT.force_encrypt != False else encryption_key
+            self.force_encrypt if self.force_encrypt != False else encryption_key
         )
 
         data = {"database_name": self.database_name}
