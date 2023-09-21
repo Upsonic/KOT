@@ -20,7 +20,6 @@ def requires(name, custom_import=None):
     def decorator(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
-            print("RUN")
 
             try:
                 import_name = name if custom_import is None else custom_import
