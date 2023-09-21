@@ -12,6 +12,6 @@ from .remote import KOT_Cloud_Dedicated_Prepare
 from .remote import no_exception
 from .remote import requires
 
-__version__ = '0.43.0'
+__version__ = '0.43.1'
 
 
