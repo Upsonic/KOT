@@ -14,9 +14,9 @@ aux_links:
 nav_external_links:
   - title: KOT Update
     url: https://github.com/KOT-database/KOT-Update
-  - title: KOT Auth
+  - title: KOT AUTH
     url: https://github.com/KOT-database/KOT-Auth
-  - title: KOT Secret
+  - title: KOT SECRET
     url: https://github.com/KOT-database/KOT-Secret
   - title: Website
     url: https://kotdatabase.dev/
