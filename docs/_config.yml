@@ -12,7 +12,7 @@ aux_links:
 
 # External navigation links
 nav_external_links:
-  - title: KOT Update
+  - title: KOT UPDATE
     url: https://github.com/KOT-database/KOT-Update
   - title: KOT AUTH
     url: https://github.com/KOT-database/KOT-Auth
