@@ -154,7 +154,7 @@ services:
             - '4006:5000'
         volumes:
             - 'KOT_Volume_Pro:/app/KOT'
-        image: ghcr.io/kot-database/web:${SERVICE_TAG:-latest}
+        image: ghcr.io/kot-database/web:latest
         deploy:
           resources:
             limits:
