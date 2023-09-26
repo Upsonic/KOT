@@ -104,6 +104,15 @@ def access_keys():
     return a
 
 
+informations = {
+    "restricted": restricted,
+    "key_lenght": key_lenght,
+    "value_lenght": value_lenght,
+    "database_name_lenght": database_name_lenght,
+    "rate_limit": rate_limit,
+}
+
+
 @app.before_request
 def check():
     global password
@@ -274,6 +283,11 @@ def check():
                     ) if request.form.get("key") not in key_name_caches_user[
                         user
                     ] else None
+
+
+@app.route("/informations", methods=["GET"])
+def _informations():
+    return jsonify(informations)
 
 
 @app.route(set_url, methods=["POST"])

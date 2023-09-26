@@ -45,11 +45,16 @@ class KOT_Remote:
         self.api_url = api_url
         self.password = password
 
+        self.informations = self._informations()
+
 
 
         self._log(
             f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
         )
+
+    def _informations(self):
+        return self._send_request("GET", "/informations", make_json=True)
 
     def debug(self, message):
         data = {"message": message}
@@ -71,7 +76,7 @@ class KOT_Remote:
         data = {"message": message}
         return self._send_request("POST", "/controller/exception", data)
 
-    def _send_request(self, method, endpoint, data=None):
+    def _send_request(self, method, endpoint, data=None, make_json=False):
         try:
             response = self.requests.request(
                 method,
@@ -81,7 +86,7 @@ class KOT_Remote:
             )
             try:
                 response.raise_for_status()
-                return response.text
+                return response.text if not make_json else json.loads(response.text)
             except self.requests.exceptions.RequestException as e:  # pragma: no cover
                 print("Error: ", response.text)
                 return None  # pragma: no cover
