@@ -149,6 +149,19 @@ services:
         image: ghcr.io/kot-database/web:latest
         command: KOT web KOT --host=0.0.0.0 --port=5000
 
+    Admin_pro_web:
+        ports:
+            - '4006:5000'
+        volumes:
+            - 'KOT_Volume_Pro:/app/KOT'
+        image: ghcr.io/kot-database/web:${SERVICE_TAG:-latest}
+        deploy:
+          resources:
+            limits:
+              cpus: '0.50'
+              memory: 500M          
+        command: KOT web KOT --host=0.0.0.0 --port=5000
+
 
 volumes:
   KOT_Volume:
