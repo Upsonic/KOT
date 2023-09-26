@@ -21,7 +21,8 @@ try:
   password = os.environ.get("PRODUCTION_SERVER_PASS")
   cloud = KOT_Remote("access_key_database", server, password)
   
-  cloud.set("access_keys", access_keys, encryption_key=None)
+  if cloud.set("access_keys", access_keys, encryption_key=None) == None:
+    raise Exception()
 except:
   raise Exception("EXCEPTON")
 
