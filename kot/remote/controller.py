@@ -45,9 +45,10 @@ class KOT_Remote:
         self.api_url = api_url
         self.password = password
 
-        self.informations = self._informations()
-
-
+        try:
+            self.informations = self._informations()
+        except TypeError:
+            self.informations = None
 
         self._log(
             f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
