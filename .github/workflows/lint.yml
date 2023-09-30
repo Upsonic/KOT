@@ -5,10 +5,14 @@ on:
     paths:
       - '.github/workflows/lint.yml'
       - 'kot/**'
+      - 'setups/**'
+      - 'tests/**'
   pull_request:
     paths:
       - '.github/workflows/lint.yml'
       - 'kot/**'
+      - 'setups/**'
+      - 'tests/**'
 
 
 permissions:

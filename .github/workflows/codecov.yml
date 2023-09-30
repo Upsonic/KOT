@@ -5,12 +5,14 @@ on:
     paths:
       - '.github/workflows/codecov.yml'
       - 'kot/**'
+      - 'setups/**'
       - 'tests/**'
       - '.coveragerc'
   pull_request:
     paths:
       - '.github/workflows/codecov.yml'
       - 'kot/**'
+      - 'setups/**'
       - 'tests/**'
       - '.coveragerc'
   workflow_dispatch:

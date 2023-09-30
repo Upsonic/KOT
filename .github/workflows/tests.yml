@@ -5,11 +5,13 @@ on:
     paths:
       - '.github/workflows/tests.yml'
       - 'kot/**'
+      - 'setups/**'
       - 'tests/**'
   pull_request:
     paths:
       - '.github/workflows/tests.yml'
       - 'kot/**'
+      - 'setups/**'
       - 'tests/**'
   release:
     types: [published]   
