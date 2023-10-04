@@ -44,6 +44,14 @@ class HASHES:
             raise ValueError("Hash type must be sha256")
         HASHES.cache[string] = result
         return result
+    
+    @staticmethod
+    def serialize(string:str, enable_hashing:bool=False):
+        if enable_hashing:
+            return HASHES.get_hash(string)
+        string = string.replace(".", ",")
+        return string
+        
 
 
 class KOT:
@@ -56,15 +64,17 @@ class KOT:
         self_datas: bool = False,
         folder: str = "",
         enable_fast: bool = False,
+        enable_hashing: bool = False,
         log: bool = True,
     ):
+        self.enable_hashing = enable_hashing
         self.name = name
         self.log = False if self_datas else log
         self._log(
             f"[{self.name}] [bold white]KOT database initializing...",
         )
 
-        self.hashed_name = HASHES.get_hash(name)
+        self.hashed_name = HASHES.serialize(name, enable_hashing=self.enable_hashing)
         global start_location
         the_main_folder = start_location if not folder != "" else folder
         self.the_main_folder = the_main_folder
@@ -705,7 +715,7 @@ class KOT:
                 os.remove(indicator)
 
     def indicator_generator(self, key, custom_key_location):
-        standart_key_location = os.path.join(self.location, HASHES.get_hash(key))
+        standart_key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
         key_location = (
             standart_key_location if custom_key_location == "" else custom_key_location
         )
@@ -880,7 +890,7 @@ class KOT:
         try:
             if key in self.cache:
                 del self.cache[key]
-            key_location = os.path.join(self.location, HASHES.get_hash(key))
+            key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
             key_location_compress_indicator = os.path.join(
                 self.location, key_location + ".co"
             )
@@ -948,7 +958,7 @@ class KOT:
     def size(self, key: str) -> int:
         total_size = 0
         try:
-            key_location = os.path.join(self.location, HASHES.get_hash(key))
+            key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
 
             key_location_compress_indicator = os.path.join(
                 self.location, key_location + ".co"

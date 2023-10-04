@@ -344,7 +344,7 @@ class TestKOT(unittest.TestCase):
         self.KOT.set("key1", "value1aaaa", dont_delete_cache=True)
         self.KOT.clear_cache()
         self.assertEqual(self.KOT.get("key1"), "value1aaaa")
-        self.assertEqual(os.path.exists(file_path), False)
+        self.assertEqual(os.path.exists(file_path), True)
 
     def test_backup_restore(self):
         self.KOT.set("key1", self.test_vales)

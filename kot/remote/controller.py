@@ -16,7 +16,7 @@ class KOT_Remote:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass  # pragma: no cover
 
-    def __init__(self, database_name, api_url, password=None):
+    def __init__(self, database_name, api_url, password=None, enable_hashing:bool=False):
         import requests
         from requests.auth import HTTPBasicAuth
         from kot import console, KOT, KOT_Serial
@@ -24,6 +24,7 @@ class KOT_Remote:
 
         self.force_compress = False
         self.force_encrypt = False
+        self.enable_hashing = enable_hashing
 
 
         self.console = console
@@ -102,7 +103,7 @@ class KOT_Remote:
         )
 
         if encryption_key is not None:
-            db = self.KOT_Serial(self.database_name, log=False)
+            db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
@@ -128,7 +129,7 @@ class KOT_Remote:
             if not response == "null\n":
                 # Decrypt the received value
                 if encryption_key is not None:
-                    db = self.KOT_Serial(self.database_name, log=False)
+                    db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
                     db.set(key, response)
                     response = db.get(key, encryption_key=encryption_key)
                     db.delete(key)
@@ -157,7 +158,7 @@ class KOT_Remote:
         datas = self._send_request("POST", "/controller/get_all", data)
 
         datas = json.loads(datas)
-        db = self.KOT_Serial(self.database_name, log=False)
+        db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
         for each in datas:
             db.set(each, datas[each])
             datas[each] = db.get(each, encryption_key=encryption_key)
