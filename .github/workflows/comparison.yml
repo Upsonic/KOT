@@ -42,13 +42,13 @@ jobs:
         sudo apt-get install redis-server
     - name: Comparison Sqlite
       run: |
-        python3 comparison_sqlite.py
+        python3 tests/comparison_sqlite.py
 
     - name: Comparison Redis
       run: |
-        python3 comparison_redis.py
+        python3 tests/comparison_redis.py
 
     - name: Comparison Redis Key Focused
       run: |
-        python3 comparison_redis_key_focused.py
+        python3 tests/comparison_redis_key_focused.py
 
