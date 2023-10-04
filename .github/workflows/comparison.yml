@@ -3,9 +3,7 @@ name: Comparison
 on:  
   workflow_dispatch:
 
-concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
-  cancel-in-progress: true
+
 jobs:
 
 
