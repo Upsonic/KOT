@@ -14,7 +14,7 @@ jobs:
     environment: UNIT Tests  
     strategy:
       matrix:
-        os: [other-label]
+        os: [self-hosted]
     env:
       PYTHON: '3.8'
     steps:
