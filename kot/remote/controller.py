@@ -90,7 +90,7 @@ class KOT_Remote:
                 response.raise_for_status()
                 return response.text if not make_json else json.loads(response.text)
             except self.requests.exceptions.RequestException as e:  # pragma: no cover
-                print("Error: ", response.text)
+                print(f"Error on '{self.api_url + endpoint}': ", response.text)
                 return None  # pragma: no cover
         except self.requests.exceptions.ConnectionError:
             print("Error: Remote is down")
