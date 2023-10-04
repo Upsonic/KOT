@@ -10,8 +10,11 @@ jobs:
 
 
   run:
-    runs-on: self-hosted
+    runs-on: ${{ matrix.os }}
     environment: UNIT Tests  
+    strategy:
+      matrix:
+        os: [other-label]
     env:
       PYTHON: '3.8'
     steps:
