@@ -37,7 +37,7 @@ jobs:
         cd ..
         cd ..
         pip3 install redis
-        sudo apt-get install redis-server
+        sudo apt-get install redis-server -y
     - name: Comparison Sqlite
       run: |
         python3 tests/comparison_sqlite.py
