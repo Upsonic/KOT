@@ -10,13 +10,9 @@ jobs:
 
 
   run:
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
     environment: UNIT Tests  
-    strategy:
-      matrix:
-        os: [self-hosted]
     env:
-      OS: ${{ matrix.os }}
       PYTHON: '3.8'
     steps:
     - uses: actions/checkout@v2
