@@ -1,0 +1,54 @@
+name: Comparison
+
+on:  
+  workflow_dispatch:
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event }}
+  cancel-in-progress: true
+jobs:
+
+
+  run:
+    runs-on: ${{ matrix.os }}
+    environment: UNIT Tests  
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: '3.8'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - uses: actions/cache@v2
+      with:
+        path: ${{ env.pythonLocation }}
+        key: ${{ runner.os }}-${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setups/api/requirements.txt') }}-${{ hashFiles('setups/web/requirements.txt') }}-${{ hashFiles('setups/gui/requirements.txt') }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install .
+        cd setups/api
+        pip install .
+        cd ..
+        cd ..
+        apt-get install redis-server
+    - name: Comparison Sqlite
+      run: |
+        python3 comparison_sqlite.py
+
+    - name: Comparison Redis
+      run: |
+        python3 comparison_redis.py
+
+    - name: Comparison Redis Key Focused
+      run: |
+        python3 comparison_redis_key_focused.py
+
