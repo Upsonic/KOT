@@ -1,4 +1,6 @@
 KOT-*/
+.vscode
+
 test_backup
 *.KOT
 *.zip

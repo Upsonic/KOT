@@ -16,7 +16,7 @@ services:
             folder: "" # "/"
             password : "KOT"
             threads: 4
-            restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
+            restricted: "database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 200
             maximum_key_amount: 5000
@@ -46,7 +46,7 @@ services:
             folder: "" # "/"
             password : "KOT"
             threads: 4
-            restricted: "get_all,database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
+            restricted: "database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
             maximum_database_amount: 2500
             maximum_key_amount: 10000
