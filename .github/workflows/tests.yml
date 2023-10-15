@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - '.github/workflows/tests.yml'
-      - 'kot/**'
+      - 'upsonic/**'
       - 'setups/**'
       - 'tests/**'
   pull_request:
     paths:
       - '.github/workflows/tests.yml'
-      - 'kot/**'
+      - 'upsonic/**'
       - 'setups/**'
       - 'tests/**'
   release:

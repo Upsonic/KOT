@@ -1,29 +1,29 @@
 remote_theme: pmarsceill/just-the-docs
 
-title: KOT Documents
+title: Upsonic Documents
 color_scheme: light
 
 #ga_tracking: G-TQEMVVVM85
 
 # Aux links for the upper right navigation
 aux_links:
-  "KOT on GitHub":
-    - "//github.com/KOT-database/KOT"
+  "Upsonic on GitHub":
+    - "//github.com/Upsonic/Upsonic"
 
 # External navigation links
 nav_external_links:
-  - title: KOT UPDATE
-    url: https://github.com/KOT-database/KOT-Update
-  - title: KOT AUTH
-    url: https://github.com/KOT-database/KOT-Auth
-  - title: KOT SECRET
-    url: https://github.com/KOT-database/KOT-Secret
+  - title: Upsonic UPDATE
+    url: https://github.com/Upsonic/Upsonic-Update
+  - title: Upsonic AUTH
+    url: https://github.com/Upsonic/Upsonic-Auth
+  - title: Upsonic SECRET
+    url: https://github.com/Upsonic/Upsonic-Secret
   - title: Website
-    url: https://kotdatabase.dev/
+    url: https://upsonicdatabase.dev/
   - title: "Discord"
     url: https://discord.gg/QtnKf532Er   
   - title: "Twitter"
-    url: https://twitter.com/kot_database
+    url: https://twitter.com/upsonic_database
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -41,7 +41,7 @@ last_edit_time_format: "%b %e %Y at %I:%M %p" # uses ruby's time format: https:/
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub."
-gh_edit_repository: "https://github.com/KOT-database/KOT" # the github URL for your repo
+gh_edit_repository: "https://github.com/Upsonic/Upsonic" # the github URL for your repo
 gh_edit_branch: "master" # the branch that your docs is served from
 gh_edit_source: docs # the source that your files originate from
 gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately

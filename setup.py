@@ -6,19 +6,19 @@ from setuptools import setup
 with open('requirements.txt') as fp:
     install_requires = fp.read()
 setup(
-    name="kot",
+    name="upsonic",
     version="0.43.2",
-    description="""Flexible, secure and scalable database and your python cloud.""",
+    description="""magic cloud layer""",
     long_description="".join(open("README.md", encoding="utf-8").readlines()),
     long_description_content_type="text/markdown",
-    url="https://github.com/KOT-database/KOT",
-    author="Onur Atakan ULUSOY",
-    author_email="atadogan06@gmail.com",
+    url="https://github.com/Upsonic/Upsonic",
+    author="Upsonic",
+    author_email="onur.atakan.ulusoy@upsonic.co",
     license="MIT",
-    packages=["kot", "kot.core", "kot.interfaces", "kot.remote"],
+    packages=["upsonic", "upsonic.core", "upsonic.interfaces", "upsonic.remote"],
     install_requires=install_requires,
     entry_points={
-        "console_scripts": ["KOT=kot.core.kot:main"],
+        "console_scripts": ["upsonic=upsonic.core.upsonic:main"],
     },
     python_requires=">= 3",
     zip_safe=False,

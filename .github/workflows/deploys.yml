@@ -126,11 +126,11 @@ jobs:
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         cd .. 
 
-        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile --push .
-        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/api:$VERSION -f KOT/docker/local/api/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/upsonic-database/api:latest -f Upsonic/docker/local/api/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/upsonic-database/api:$VERSION -f Upsonic/docker/local/api/Dockerfile --push .
 
-        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/web:latest -f KOT/docker/local/web/Dockerfile --push .
-        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/web:$VERSION -f KOT/docker/local/web/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/upsonic-database/web:latest -f Upsonic/docker/local/web/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/upsonic-database/web:$VERSION -f Upsonic/docker/local/web/Dockerfile --push .
 
 
 

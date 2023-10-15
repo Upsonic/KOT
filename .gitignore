@@ -1,8 +1,8 @@
-KOT-*/
+Upsonic-*/
 .vscode
 
 test_backup
-*.KOT
+*.Upsonic
 *.zip
 test_file.txt
 *.db

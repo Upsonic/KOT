@@ -6,7 +6,7 @@ import ast
 
 
 
-class KOT_Remote:
+class Upsonic_Remote:
     def _log(self, message):
         self.console.log(message)
 
@@ -19,7 +19,7 @@ class KOT_Remote:
     def __init__(self, database_name, api_url, password=None, enable_hashing:bool=False):
         import requests
         from requests.auth import HTTPBasicAuth
-        from kot import console, KOT, KOT_Serial
+        from upsonic import console, Upsonic, Upsonic_Serial
 
 
         self.force_compress = False
@@ -28,8 +28,8 @@ class KOT_Remote:
 
 
         self.console = console
-        self.KOT = KOT
-        self.KOT_Serial = KOT_Serial
+        self.Upsonic = Upsonic
+        self.Upsonic_Serial = Upsonic_Serial
 
         self.requests = requests
         self.HTTPBasicAuth = HTTPBasicAuth
@@ -37,7 +37,7 @@ class KOT_Remote:
 
         self.database_name = database_name
         self._log(
-            f"[{self.database_name[:5]}*] [bold white]KOT Cloud[bold white] initializing...",
+            f"[{self.database_name[:5]}*] [bold white]Upsonic Cloud[bold white] initializing...",
         )
 
 
@@ -52,7 +52,7 @@ class KOT_Remote:
             self.informations = None
 
         self._log(
-            f"[{self.database_name[:5]}*] [bold green]KOT Cloud[bold green] active",
+            f"[{self.database_name[:5]}*] [bold green]Upsonic Cloud[bold green] active",
         )
 
     def _informations(self):
@@ -103,7 +103,7 @@ class KOT_Remote:
         )
 
         if encryption_key is not None:
-            db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
+            db = self.Upsonic_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
             db.set(key, value, encryption_key=encryption_key)
             value = db.get(key)
             db.delete(key)
@@ -129,7 +129,7 @@ class KOT_Remote:
             if not response == "null\n":
                 # Decrypt the received value
                 if encryption_key is not None:
-                    db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
+                    db = self.Upsonic_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
                     db.set(key, response)
                     response = db.get(key, encryption_key=encryption_key)
                     db.delete(key)
@@ -158,7 +158,7 @@ class KOT_Remote:
         datas = self._send_request("POST", "/controller/get_all", data)
 
         datas = json.loads(datas)
-        db = self.KOT_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
+        db = self.Upsonic_Serial(self.database_name, log=False, enable_hashing=self.enable_hashing)
         for each in datas:
             db.set(each, datas[each])
             datas[each] = db.get(each, encryption_key=encryption_key)

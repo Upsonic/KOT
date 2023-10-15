@@ -1,6 +1,6 @@
 FROM python:3.8-alpine
 
-LABEL org.opencontainers.image.source https://github.com/KOT-database/KOT
+LABEL org.opencontainers.image.source https://github.com/Upsonic/Upsonic
 
 RUN mkdir /app
 
@@ -11,16 +11,16 @@ RUN apk update && apk add python3-dev \
 
 WORKDIR /app/
 
-COPY KOT KOT
+COPY Upsonic Upsonic
 
-WORKDIR /app/KOT/setups/web
+WORKDIR /app/Upsonic/setups/web
 
 RUN pip install .
 
-WORKDIR /app/KOT
+WORKDIR /app/Upsonic
 
 RUN pip install .
 
 EXPOSE 5000
 
-CMD [ "KOT", "web", "dockerpass", "--host='0.0.0.0'","--port=5003"]
+CMD [ "upsonic", "web", "dockerpass", "--host='0.0.0.0'","--port=5003"]

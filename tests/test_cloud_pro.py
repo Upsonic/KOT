@@ -10,8 +10,8 @@ import threading
 
 
 
-from kot import KOT, HASHES, KOT_Serial, KOT_Cloud_Pro
-import kot
+from upsonic import Upsonic, HASHES, Upsonic_Serial, Upsonic_Cloud_Pro
+import upsonic
 
 
 class ptest_object:
@@ -27,7 +27,7 @@ class TestCloudPro(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.remote = KOT_Cloud_Pro(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"), os.environ.get("CLOUD_PRO_ACCESS_KEY"))
+        cls.remote = Upsonic_Cloud_Pro(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"), os.environ.get("CLOUD_PRO_ACCESS_KEY"))
 
     def test_remote_api_set_get_deletestring(self):
 

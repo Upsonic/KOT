@@ -79,7 +79,7 @@ jobs:
 
       - name: Install dependencies
         run: |   
-          pip install kot==${{ needs.tagext.outputs.tag_2 }}   kot_api==${{ needs.tagext.outputs.tag_2 }}  kot_gui==${{ needs.tagext.outputs.tag_2 }}  kot_web==${{ needs.tagext.outputs.tag_2 }}  --no-cache --upgrade
+          pip install upsonic==${{ needs.tagext.outputs.tag_2 }}   upsonic_api==${{ needs.tagext.outputs.tag_2 }}  upsonic_gui==${{ needs.tagext.outputs.tag_2 }}  upsonic_web==${{ needs.tagext.outputs.tag_2 }}  --no-cache --upgrade
 
 
       - name: Test with pytest
@@ -120,7 +120,7 @@ jobs:
       - name: Install dependencies
         run: |
           TAG=${{ steps.tag_extractor.outputs.latest_tag }}        
-          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
+          pip install upsonic==${TAG:1} upsonic_api==${TAG:1} upsonic_gui==${TAG:1} upsonic_web==${TAG:1} --no-cache --upgrade
 
 
       - name: Test with pytest
@@ -159,11 +159,11 @@ jobs:
       - name: Install dependencies
         run: |
           TAG=${{ steps.tag_extractor.outputs.latest_tag }}         
-          pip install kot==${TAG:1} kot_api==${TAG:1} kot_gui==${TAG:1} kot_web==${TAG:1} --no-cache --upgrade
+          pip install upsonic==${TAG:1} upsonic_api==${TAG:1} upsonic_gui==${TAG:1} upsonic_web==${TAG:1} --no-cache --upgrade
 
       - name: Install docker
         run: |
-          docker pull ghcr.io/kot-database/api:${{ steps.tag_extractor.outputs.latest_tag }}
+          docker pull ghcr.io/upsonic-database/api:${{ steps.tag_extractor.outputs.latest_tag }}
       - name: Test with pytest
         run: |
           pytest tests/published_docker.py -v

@@ -4,17 +4,17 @@ services:
         ports:
             - '5000:5000'
         volumes:
-            - 'KOT_Volume:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
+            - 'Upsonic_Volume:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M           
-        command: KOT api --host=0.0.0.0 --port=5000
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
-            password : "KOT"
+            password : "Upsonic"
             threads: 4
             restricted: "database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
@@ -33,18 +33,18 @@ services:
         ports:
             - '5001:5000'
         volumes:
-            - 'KOT_Volume_Pro:/app/KOT'
-            - 'KOT_Volume_Access:/app'
-        image: ghcr.io/kot-database/api:latest
+            - 'Upsonic_Volume_Pro:/app/Upsonic'
+            - 'Upsonic_Volume_Access:/app'
+        image: ghcr.io/upsonic-database/api:latest
         deploy:
           resources:
             limits:
               cpus: '1'
               memory: 500M             
-        command: KOT api --host=0.0.0.0 --port=5000
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
-            password : "KOT"
+            password : "Upsonic"
             threads: 4
             restricted: "database_list,database_delete,database_pop,database_pop_all,database_delete_all,debug,info,warning,error,exception"
 
@@ -60,7 +60,7 @@ services:
 
             access_key: True
             access_key_folder: "/app" # "/"
-            access_key_lists: "KOT" # "aa, 231"
+            access_key_lists: "Upsonic" # "aa, 231"
             access_key_lists_cache: 60              
 
 
@@ -69,17 +69,17 @@ services:
         ports:
             - '4999:5000'
         volumes:
-            - 'KOT_Volume:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
+            - 'Upsonic_Volume:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M             
-        command: KOT api --host=0.0.0.0 --port=5000
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
-            password : "KOT"
+            password : "Upsonic"
             threads: 4
     
 
@@ -104,17 +104,17 @@ services:
         ports:
             - '4998:5000'
         volumes:
-            - 'KOT_Volume_Pro:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
+            - 'Upsonic_Volume_Pro:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M             
-        command: KOT api --host=0.0.0.0 --port=5000
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
-            password : "KOT"
+            password : "Upsonic"
             threads: 4
 
 
@@ -136,17 +136,17 @@ services:
         ports:
             - '4997:5000'
         volumes:
-            - 'KOT_Volume_Access:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
+            - 'Upsonic_Volume_Access:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M             
-        command: KOT api --host=0.0.0.0 --port=5000
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
-            password : "KOT"
+            password : "Upsonic"
             threads: 4
 
 
@@ -170,30 +170,30 @@ services:
         ports:
             - '4007:5000'
         volumes:
-            - 'KOT_Volume:/app/KOT'
-        image: ghcr.io/kot-database/web:latest
+            - 'Upsonic_Volume:/app/Upsonic'
+        image: ghcr.io/upsonic-database/web:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M             
-        command: KOT web KOT --host=0.0.0.0 --port=5000
+        command: upsonic web Upsonic --host=0.0.0.0 --port=5000
 
     Admin_pro_web:
         ports:
             - '4006:5000'
         volumes:
-            - 'KOT_Volume_Pro:/app/KOT'
-        image: ghcr.io/kot-database/web:latest
+            - 'Upsonic_Volume_Pro:/app/Upsonic'
+        image: ghcr.io/upsonic-database/web:latest
         deploy:
           resources:
             limits:
               cpus: '0.50'
               memory: 500M          
-        command: KOT web KOT --host=0.0.0.0 --port=5000
+        command: upsonic web Upsonic --host=0.0.0.0 --port=5000
 
 
 volumes:
-  KOT_Volume:
-  KOT_Volume_Pro:
-  KOT_Volume_Access:
+  Upsonic_Volume:
+  Upsonic_Volume_Pro:
+  Upsonic_Volume_Access:

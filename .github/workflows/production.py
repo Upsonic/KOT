@@ -1,7 +1,7 @@
 import os
 import requests
 import time
-from kot import KOT_Remote
+from upsonic import Upsonic_Remote
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=".env")
@@ -19,7 +19,7 @@ try:
   
   server = os.environ.get("PRODUCTION_SERVER")
   password = os.environ.get("PRODUCTION_SERVER_PASS")
-  cloud = KOT_Remote("access_key_database", server, password)
+  cloud = Upsonic_Remote("access_key_database", server, password)
   
   if cloud.set("access_keys", access_keys, encryption_key=None) == None:
     raise Exception()

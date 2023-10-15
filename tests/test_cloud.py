@@ -10,8 +10,8 @@ import threading
 
 
 
-from kot import KOT, HASHES, KOT_Serial, KOT_Cloud
-import kot
+from upsonic import Upsonic, HASHES, Upsonic_Serial, Upsonic_Cloud
+import upsonic
 
 
 class test_object:
@@ -27,7 +27,7 @@ class TestCloud(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.remote = KOT_Cloud(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"))
+        cls.remote = Upsonic_Cloud(os.environ.get("CLOUD_TEST_DATABASE_NAME","cloud-workflow"))
 
     def test_remote_api_set_get_deletestring(self):
 

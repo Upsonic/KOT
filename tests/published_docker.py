@@ -10,8 +10,8 @@ import threading
 
 
 
-from kot import KOT, HASHES, KOT_Serial, KOT_Remote
-import kot
+from upsonic import Upsonic, HASHES, Upsonic_Serial, Upsonic_Remote
+import upsonic
 
 
 
@@ -28,17 +28,17 @@ class TestPDocker(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         os.chdir(os.path.join(os.path.dirname(__file__), "..",".."))
-        #os.system("docker build -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile .")
-        os.system("docker run -d --name KOT_API -p 5000:5000 ghcr.io/kot-database/api:latest KOT api pass --host='0.0.0.0' --port=5000")
+        #os.system("docker build -t ghcr.io/upsonic-database/api:latest -f Upsonic/docker/local/api/Dockerfile .")
+        os.system("docker run -d --name Upsonic_API -p 5000:5000 ghcr.io/upsonic-database/api:latest Upsonic api pass --host='0.0.0.0' --port=5000")
         time.sleep(100)
 
-        cls.remote = KOT_Remote("TestRemote", "http://localhost:5000", 'KOT')
+        cls.remote = Upsonic_Remote("TestRemote", "http://localhost:5000", 'Upsonic')
 
 
     @classmethod
     def tearDownClass(cls):
-        os.system("docker container stop KOT_API")
-        os.system("docker container rm KOT_API")
+        os.system("docker container stop Upsonic_API")
+        os.system("docker container rm Upsonic_API")
 
         os.chdir(os.path.join(os.path.dirname(__file__), ".."))
 

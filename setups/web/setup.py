@@ -7,10 +7,10 @@ with open('requirements.txt') as fp:
     install_requires = fp.read()
 
 setup(
-    name="kot_web",
+    name="upsonic_web",
     version="0.43.2",
-    description="""This is WEB package for KOT""",
-    url="https://github.com/KOT-database/KOT",
+    description="""This is WEB package for Upsonic""",
+    url="https://github.com/Upsonic/Upsonic",
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',

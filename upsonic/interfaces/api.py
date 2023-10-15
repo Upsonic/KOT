@@ -8,8 +8,8 @@ from waitress import serve
 from flask import Flask, request, Response, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from kot import KOT_Serial
-from kot import KOT
+from upsonic import Upsonic_Serial
+from upsonic import Upsonic
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ app = Flask(__name__)
 load_dotenv(dotenv_path=".env")
 
 folder = os.environ.get("folder", "")
-password = os.environ.get("password", "KOT")
+password = os.environ.get("password", "Upsonic")
 threads = os.environ.get("threads", 4)
 access_key = os.environ.get("access_key", "false").lower() == "true"
 access_key_folder = os.environ.get("access_key_folder", "")
@@ -90,7 +90,7 @@ error_url = "/controller/error"
 exception_url = "/controller/exception"
 
 
-access_key_database = KOT("access_key_database", folder=access_key_folder)
+access_key_database = Upsonic("access_key_database", folder=access_key_folder)
 access_key_database.set(
     "access_keys", access_key_lists, cache_policy=access_key_lists_cache
 )
@@ -303,7 +303,7 @@ def set():
     else:
         cache_policy = int(cache_policy)
 
-    database = KOT_Serial(database_name, folder=folder)
+    database = Upsonic_Serial(database_name, folder=folder)
     database.set(
         key,
         value,
@@ -321,7 +321,7 @@ def get():
     key = request.form.get("key")
     encryption_key = request.form.get("encryption_key")
 
-    database = KOT_Serial(database_name, folder=folder)
+    database = Upsonic_Serial(database_name, folder=folder)
     data = database.get(key, encryption_key=encryption_key)
 
     return jsonify(data)
@@ -331,7 +331,7 @@ def get():
 def get_all():
     database_name = request.form.get("database_name")
     encryption_key = request.form.get("encryption_key")
-    database = KOT_Serial(database_name, folder=folder)
+    database = Upsonic_Serial(database_name, folder=folder)
     datas = database.get_all(encryption_key=encryption_key)
 
     return jsonify(datas)
@@ -342,7 +342,7 @@ def delete():
     database_name = request.form.get("database_name")
     key = request.form.get("key")
 
-    database = KOT_Serial(database_name, folder=folder)
+    database = Upsonic_Serial(database_name, folder=folder)
     database.delete(key)
 
     return "Data deleted successfully"
@@ -350,7 +350,7 @@ def delete():
 
 @app.route(database_list_url)
 def database_list():
-    databases = KOT.database_list(folder=folder)
+    databases = Upsonic.database_list(folder=folder)
 
     return jsonify(databases)
 
@@ -359,14 +359,14 @@ def database_list():
 def database_pop():
     database_name = request.form.get("database_name")
 
-    KOT.database_pop(database_name, folder=folder)
+    Upsonic.database_pop(database_name, folder=folder)
 
     return "Database popped successfully"
 
 
 @app.route(database_pop_all_url, methods=["GET"])
 def database_pop_all():
-    KOT.database_pop_all(folder=folder)
+    Upsonic.database_pop_all(folder=folder)
 
     return "All database popped successfully"
 
@@ -376,7 +376,7 @@ def database_rename():
     database_name = request.form.get("database_name")
     new_name = request.form.get("new_database_name")
 
-    KOT.database_rename(database_name, new_name, folder=folder)
+    Upsonic.database_rename(database_name, new_name, folder=folder)
 
     return "Database renamed successfully"
 
@@ -385,7 +385,7 @@ def database_rename():
 def database_delete():
     database_name = request.form.get("database_name")
 
-    KOT.database_delete(database_name, folder=folder)
+    Upsonic.database_delete(database_name, folder=folder)
 
     return "Database deleted successfully"
 
@@ -394,7 +394,7 @@ def database_delete():
 def database_delete_all():
     database_name = request.form.get("database_name")
 
-    KOT.database_delete_all(folder=folder)
+    Upsonic.database_delete_all(folder=folder)
 
     return "All database deleted successfully"
 
@@ -402,7 +402,7 @@ def database_delete_all():
 @app.route(debug_url, methods=["POST"])
 def debug():
     message = request.form.get("message")
-    database = KOT_Serial("debug", folder=folder)
+    database = Upsonic_Serial("debug", folder=folder)
     database.debug(message)
     return "Debug message logged successfully"
 
@@ -410,7 +410,7 @@ def debug():
 @app.route(info_url, methods=["POST"])
 def info():
     message = request.form.get("message")
-    database = KOT_Serial("info", folder=folder)
+    database = Upsonic_Serial("info", folder=folder)
     database.info(message)
     return "Info message logged successfully"
 
@@ -418,7 +418,7 @@ def info():
 @app.route(warning_url, methods=["POST"])
 def warning():
     message = request.form.get("message")
-    database = KOT_Serial("warning", folder=folder)
+    database = Upsonic_Serial("warning", folder=folder)
     database.warning(message)
     return "Warning message logged successfully"
 
@@ -426,7 +426,7 @@ def warning():
 @app.route(error_url, methods=["POST"])
 def error():
     message = request.form.get("message")
-    database = KOT_Serial("error", folder=folder)
+    database = Upsonic_Serial("error", folder=folder)
     database.error(message)
     return "Error message logged successfully"
 
@@ -434,7 +434,7 @@ def error():
 @app.route(exception_url, methods=["POST"])
 def exception():
     message = request.form.get("message")
-    database = KOT_Serial("exception", folder=folder)
+    database = Upsonic_Serial("exception", folder=folder)
     database.exception(message)
     return "Exception message logged successfully"
 

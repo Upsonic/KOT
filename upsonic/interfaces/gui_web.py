@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import flet as ft
 
-from kot import KOT_Serial
-from kot import KOT
+from upsonic import Upsonic_Serial
+from upsonic import Upsonic
 
 folder = None
 host = None
@@ -16,7 +16,7 @@ def database_list(page: ft.Page):
     global folder
 
     def delete_key(database, key):
-        KOT_Serial(database, folder=folder).delete(key)
+        Upsonic_Serial(database, folder=folder).delete(key)
         page.show_snack_bar(ft.SnackBar(ft.Text("Key deleted"), open=True))
         get_all(database)
 
@@ -27,7 +27,7 @@ def database_list(page: ft.Page):
                 the_value = float(the_value)
             except:
                 pass
-            KOT_Serial(database, folder=folder).set(text_field.value, the_value)
+            Upsonic_Serial(database, folder=folder).set(text_field.value, the_value)
             page.show_snack_bar(ft.SnackBar(ft.Text("Key created"), open=True))
             get_all(database)
             text_field.value = ""
@@ -43,7 +43,7 @@ def database_list(page: ft.Page):
         page.add(text_field_2)
 
     def get_all(database):
-        database_list_data = KOT_Serial(database, folder=folder).get_all()
+        database_list_data = Upsonic_Serial(database, folder=folder).get_all()
         my_table_2.rows = [
             ft.DataRow(
                 cells=[
@@ -73,7 +73,7 @@ def database_list(page: ft.Page):
 
     def rename_database(old_name):
         def rename_database_submit(e):
-            KOT.database_rename(old_name, text_field.value, folder=folder)
+            Upsonic.database_rename(old_name, text_field.value, folder=folder)
             page.show_snack_bar(ft.SnackBar(ft.Text("Database renamed"), open=True))
             fab_pressed(None)
             get_all(text_field.value)
@@ -87,7 +87,7 @@ def database_list(page: ft.Page):
 
     def create_new_db():
         def create_new_db_submit(e):
-            KOT_Serial(text_field.value, folder=folder)
+            Upsonic_Serial(text_field.value, folder=folder)
             page.show_snack_bar(ft.SnackBar(ft.Text("Database created"), open=True))
             fab_pressed(None)
             get_all(text_field.value)
@@ -100,35 +100,35 @@ def database_list(page: ft.Page):
         page.add(text_field)
 
     def delete_database(database):
-        KOT.database_delete(database, folder=folder)
+        Upsonic.database_delete(database, folder=folder)
         page.show_snack_bar(ft.SnackBar(ft.Text("Database deleted"), open=True))
         fab_pressed(None)
         my_table_2.rows = []
         page.update()
 
     def pop_database(database):
-        KOT.database_pop(database, folder=folder)
+        Upsonic.database_pop(database, folder=folder)
         page.show_snack_bar(ft.SnackBar(ft.Text("Database popped"), open=True))
         fab_pressed(None)
         my_table_2.rows = []
         page.update()
 
     def delete_database_all():
-        KOT.database_delete_all(folder=folder)
+        Upsonic.database_delete_all(folder=folder)
         page.show_snack_bar(ft.SnackBar(ft.Text("All databases deleted"), open=True))
         fab_pressed(None)
         my_table_2.rows = []
         page.update()
 
     def pop_database_all():
-        KOT.database_pop_all(folder=folder)
+        Upsonic.database_pop_all(folder=folder)
         page.show_snack_bar(ft.SnackBar(ft.Text("All databases popped"), open=True))
         fab_pressed(None)
         my_table_2.rows = []
         page.update()
 
     def fab_pressed(e):
-        database_list_data = KOT.database_list(folder)
+        database_list_data = Upsonic.database_list(folder)
         my_table.rows = [
             ft.DataRow(
                 cells=[
@@ -215,7 +215,7 @@ def database_list(page: ft.Page):
     page.add(ft.Text("Press the + button to refresh the list."))
 
     def execute(e):
-        result = KOT.execute(query.value)
+        result = Upsonic.execute(query.value)
         page.show_snack_bar(ft.SnackBar(ft.Text(str(result)), open=True))
         fab_pressed(None)
 
@@ -255,7 +255,7 @@ def GUI(folder_data, password_data):
     global password
     folder = folder_data
     password = password_data
-    ft.app(name="KOT", target=login)
+    ft.app(name="Upsonic", target=login)
 
 
 def WEB(folder_data, password_data, host_data, port_data):
@@ -267,4 +267,4 @@ def WEB(folder_data, password_data, host_data, port_data):
     host = host_data
     port = port_data
     password = password_data
-    ft.app(name="KOT", target=login, view=ft.AppView.WEB_BROWSER, host=host, port=port)
+    ft.app(name="Upsonic", target=login, view=ft.AppView.WEB_BROWSER, host=host, port=port)

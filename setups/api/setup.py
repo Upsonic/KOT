@@ -8,10 +8,10 @@ with open('requirements.txt') as fp:
 
 
 setup(
-    name="kot_api",
+    name="upsonic_api",
     version="0.43.2",
-    description="""This is API package for KOT""",
-    url="https://github.com/KOT-database/KOT",
+    description="""This is API package for Upsonic""",
+    url="https://github.com/Upsonic/Upsonic",
     author='Onur Atakan ULUSOY',
     author_email='atadogan06@gmail.com',
     license='MIT',

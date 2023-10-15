@@ -4,9 +4,9 @@ services:
         ports:
             - '5000:5000'
         volumes:
-            - 'KOT_Volume:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
-        command: KOT api --host=0.0.0.0 --port=5000
+            - 'Upsonic_Volume:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
             password : "USER_PASS"
@@ -28,9 +28,9 @@ services:
         ports:
             - '5001:5000'
         volumes:
-            - 'KOT_Volume:/app/KOT'
-        image: ghcr.io/kot-database/api:latest
-        command: KOT api --host=0.0.0.0 --port=5000
+            - 'Upsonic_Volume:/app/Upsonic'
+        image: ghcr.io/upsonic-database/api:latest
+        command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
             password : "ADMIN_PASS"
@@ -49,4 +49,4 @@ services:
 
 
 volumes:
-  KOT_Volume:
+  Upsonic_Volume:

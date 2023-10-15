@@ -3,7 +3,7 @@
 import time
 
 import redis
-from kot import KOT
+from upsonic import Upsonic
 
 
 number = 100
@@ -25,8 +25,8 @@ r.set("users", str(big_list))
 time_2 = time.time()
 
 
-# KOT
-client_address_db = KOT("client_addressesa", enable_fast = True)
+# Upsonic
+client_address_db = Upsonic("client_addressesa", enable_fast = True)
 time_3 = time.time()
 big_list = {}
 for x in range(0, number):
@@ -42,7 +42,7 @@ time_5 = time.time()
 r.get("users")
 time_6 = time.time()
 
-# KOT
+# Upsonic
 time_7 = time.time()
 the_list = client_address_db.get("users")
 time_8 = time.time()
@@ -56,7 +56,7 @@ for x in range(0, edit_account_number):
 r.set("users", str(the_list))
 time_10 = time.time()
 
-# KOT
+# Upsonic
 time_11 = time.time()
 for x in range(0, edit_account_number):
     the_list[str(x)] = [data_2,data_2]
@@ -74,15 +74,15 @@ time_12 = time.time()
 
 print("WRITE")
 print("REDIS:   ", time_2 - time_1)
-print("KOT:     ", time_4 - time_3)
+print("Upsonic:     ", time_4 - time_3)
 
 print("\nREAD")
 print("REDIS:   ", time_6 - time_5)
-print("KOT:     ", time_8 - time_7)
+print("Upsonic:     ", time_8 - time_7)
 
 print("\nUPDATE")
 print("REDIS:   ", time_10 - time_9)
-print("KOT:     ", time_12 - time_11)
+print("Upsonic:     ", time_12 - time_11)
 
 
 

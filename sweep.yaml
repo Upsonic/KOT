@@ -7,11 +7,10 @@ branch: 'master'
 gha_enabled: True
 # This is the description of your project. It will be used by sweep when creating PRs. You can tell Sweep what's unique about your project, what frameworks you use, or anything else you want.
 # Here's an example: sweepai/sweep is a python project. The main api endpoints are in sweepai/api.py. Write code that adheres to PEP8.
-description: 'KOT: Multithreaded Simultaneous Writing Key-Value DB. This project is a Python-based key-value database that supports multithreaded simultaneous writing. It provides efficient storage and retrieval of key-value pairs, making it suitable for various applications. The API endpoints can be found in the kot/api.py file. The GUI endpoints can be found in the kot/gui.py. The tests can be found in the tests/. The docs can be found in the docs/. Make sure to write code that adheres to PEP8 guidelines.'
+description: 'Multithreaded Simultaneous Writing Key-Value DB. This project is a Python-based key-value database that supports multithreaded simultaneous writing. It provides efficient storage and retrieval of key-value pairs, making it suitable for various applications. The API endpoints can be found in the upsonic/api.py file. The GUI endpoints can be found in the upsonic/gui.py. The tests can be found in the tests/. The docs can be found in the docs/. Make sure to write code that adheres to PEP8 guidelines.'
 
 
 docs: 
-  kot: ["https://docs.kotdatabase.dev/", "It's project official document"]
   flet: ["https://flet.dev/docs/", "It's our web and gui system"]
   fire: ["https://github.com/google/python-fire/blob/master/docs/guide.md", "It's our cli system"]
   waitress: ["https://docs.pylonsproject.org/projects/waitress/en/latest/", "It's for our API serving"]
