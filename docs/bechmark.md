@@ -6,7 +6,7 @@ has_children: false
 ---
 
 # SET GET DELETE BENCHMARK
-In here we will learn how to make benchmark for Upsonic database set, get and delete function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic set, get and delete function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
 from upsonic import Upsonic
@@ -24,7 +24,7 @@ Output:
 
 
 # Set Benchmark
-In here we will learn how to make benchmark for Upsonic database set function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic set function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
 from upsonic import Upsonic
@@ -40,7 +40,7 @@ Output:
 ```
 
 # Get Benchmark
-In here we will learn how to make benchmark for Upsonic database get function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic get function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
 from upsonic import Upsonic
@@ -56,7 +56,7 @@ Output:
 ```
 
 # Delete Benchmark
-In here we will learn how to make benchmark for Upsonic database delete function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic delete function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
 from upsonic import Upsonic

@@ -71,7 +71,7 @@ class Upsonic:
         self.name = name
         self.log = False if self_datas else log
         self._log(
-            f"[{self.name}] [bold white]Upsonic database initializing...",
+            f"[{self.name}] [bold white]Upsonic initializing...",
         )
 
         self.hashed_name = HASHES.serialize(name, enable_hashing=self.enable_hashing)
@@ -103,7 +103,7 @@ class Upsonic:
         self.cache = {}
         self.initialize()
         self._log(
-            f"[{self.name}] [bold green]Upsonic database active",
+            f"[{self.name}] [bold green]Upsonic active",
         )
 
     def _log(self, message):

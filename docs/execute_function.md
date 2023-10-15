@@ -8,7 +8,7 @@ has_children: false
 
 # Execute Function
 
-The `Upsonic.execute` function allows users to execute queries in the Upsonic database. It takes two parameters:
+The `Upsonic.execute` function allows users to execute queries in the Upsonic. It takes two parameters:
 
 - `query`: A string representing the query.
 - `value`: An optional value to be stored in the database.

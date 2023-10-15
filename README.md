@@ -1,6 +1,6 @@
-# Upsonic database | [![Tests](https://github.com/Upsonic/Upsonic/actions/workflows/tests.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/Upsonic/Upsonic/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/Upsonic/Upsonic) | [![After Deploy Test Every 15 Minute](https://github.com/Upsonic/Upsonic/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/after_deploy_test.yml)
+# Upsonic | [![Tests](https://github.com/Upsonic/Upsonic/actions/workflows/tests.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/tests.yml) | [![codecov](https://codecov.io/gh/Upsonic/Upsonic/branch/master/graph/badge.svg?token=Q38EWFNSIJ)](https://codecov.io/gh/Upsonic/Upsonic) | [![After Deploy Test Every 15 Minute](https://github.com/Upsonic/Upsonic/actions/workflows/after_deploy_test.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/after_deploy_test.yml)
 
-The Upsonic database is a Flexible, secure and scalable database and your python cloud that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the Upsonic database is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
+The Upsonic is a Flexible, secure and scalable database and your python cloud that supports multiple data formats. It comes with built-in features for compressing and encrypting data, and is compatible with all operating systems. With easy-to-use commands, the Upsonic is an excellent choice for developers seeking an efficient and reliable storage solution for their data.
 
 [Website](https://upsonic.co/) | [Discord](https://discord.gg/QtnKf532Er) | [Twitter](https://twitter.com/upsonic)
 
@@ -102,16 +102,16 @@ db.get("Key") #Instant, no waiting and no searching
 - **Compressing**: Compress data to minimize storage space while enabling faster data retrieval and processing.
 - **Encryption**: Keep sensitive information secure and private with the included encryption feature.
 - **Scalability**: Offers stable processing times of set, get, and delete commands, regardless of the dataset's size.
-- **Fault Tolerance**: By the design of the Upsonic database, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
-- **Memory Friendly**: The Upsonic database is designed to use as little memory as possible. It only loads the data you want to access into memory.
+- **Fault Tolerance**: By the design of the Upsonic, it is fully fault-tolerant because each datas are designed to be independent of each other on the disk.
+- **Memory Friendly**: The Upsonic is designed to use as little memory as possible. It only loads the data you want to access into memory.
 - **Cross-Platform Compatibility**: Compatible with all operating systems, making it easier to integrate into any project.
-- **Docker Avaibility**: You can use Upsonic database API as an container on Docker platform. It's good for more stable, safe and durable uses.
+- **Docker Avaibility**: You can use Upsonic API as an container on Docker platform. It's good for more stable, safe and durable uses.
 - **Transactional and Asynchronous Operations**: Perform multiple operations in a single transaction or perform operations asynchronously for improved performance.
 
 
 ```mermaid
 graph TD;
-    A[Upsonic Database];
+    A[Upsonic];
 
     A --> O[API];
     A --> P[CLI];

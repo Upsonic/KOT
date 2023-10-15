@@ -5,7 +5,7 @@ nav_order: 11
 has_children: false
 ---
 ## Decorator Functions
-This is an fast method for implementing Upsonic database to your function in one line.
+This is an fast method for implementing Upsonic to your function in one line.
 
 
 ## Saving of an Function 
