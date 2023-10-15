@@ -109,21 +109,29 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
 
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        platforms: linux/amd64,linux/arm64
+
+
     - name: Build and Publish Docker Images
       env:
         VERSION: ${{ steps.tag_extractor.outputs.latest_tag }}
       run: |
         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ghcr.io -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
         cd .. 
-        docker build -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile .
-        docker build -t ghcr.io/kot-database/api:$VERSION -f KOT/docker/local/api/Dockerfile .  
-        docker push ghcr.io/kot-database/api:latest
-        docker push ghcr.io/kot-database/api:$VERSION
 
-        docker build -t ghcr.io/kot-database/web:latest -f KOT/docker/local/web/Dockerfile .
-        docker build -t ghcr.io/kot-database/web:$VERSION -f KOT/docker/local/web/Dockerfile .  
-        docker push ghcr.io/kot-database/web:latest
-        docker push ghcr.io/kot-database/web:$VERSION
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/api:latest -f KOT/docker/local/api/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/api:$VERSION -f KOT/docker/local/api/Dockerfile --push .
+
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/web:latest -f KOT/docker/local/web/Dockerfile --push .
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/kot-database/web:$VERSION -f KOT/docker/local/web/Dockerfile --push .
+
 
 
   sleep:
