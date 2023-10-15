@@ -8,15 +8,15 @@ parent: EXAMPLE APPLICATIONS
 
 # Game Development
 
-KOT can be used for game development by storing the game data efficiently. This allows for quick and easy access to the data, which can then be used for game mechanics, player progression, etc.
+Upsonic can be used for game development by storing the game data efficiently. This allows for quick and easy access to the data, which can then be used for game mechanics, player progression, etc.
 
-Here is an example of how to use KOT for game development:
+Here is an example of how to use Upsonic for game development:
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-# Create a new instance of the KOT class to represent the game data:
-game_data = KOT("game_data")
+# Create a new instance of the Upsonic class to represent the game data:
+game_data = Upsonic("game_data")
 
 # Assume we have some game data:
 player_data = {"player_id": "player_1", "level": 1, "experience": 0, "inventory": []}

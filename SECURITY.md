@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-Use `info@kotdatabase.dev`
+Use `info@upsonic.co`

@@ -11,9 +11,9 @@ In this section we will learn how to get all data from database and delete all d
 
 ## Get All Data
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-my_location_db = KOT("locations_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
 
 # Set data
 my_location_db.set("Onur", "Sivas")
@@ -32,9 +32,9 @@ Output:
 ## Delete All Data
 ```python
 
-from kot import KOT
+from upsonic import Upsonic
 
-my_location_db = KOT("locations_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
 
 # Set data
 my_location_db.set("Onur", "Sivas")
@@ -58,9 +58,9 @@ The `bulk_set` function allows you to insert multiple key-value pairs into the d
 
 Example:
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-db = KOT("My_Database")
+db = Upsonic("My_Database")
 
 kv_pairs = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
 db.bulk_set(kv_pairs)
@@ -71,9 +71,9 @@ The `bulk_get` function allows you to retrieve multiple keys from the database i
 
 Example:
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-db = KOT("My_Database")
+db = Upsonic("My_Database")
 
 keys = ["key1", "key2", "key3"]
 values = db.bulk_get(keys)
@@ -84,9 +84,9 @@ The `bulk_delete` function allows you to delete multiple keys from the database 
 
 Example:
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-db = KOT("My_Database")
+db = Upsonic("My_Database")
 
 keys = ["key1", "key2", "key3"]
 db.bulk_delete(keys)

@@ -27,8 +27,8 @@ class TestDocker(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         os.chdir(os.path.join(os.path.dirname(__file__), "..",".."))
-        os.system("docker build -t ghcr.io/upsonic-database/api:latest -f Upsonic/docker/local/api/Dockerfile .")
-        os.system("docker run -d --name Upsonic_API -p 5000:5000 ghcr.io/upsonic-database/api:latest Upsonic api --host='0.0.0.0' --port=5000")
+        os.system("docker build -t ghcr.io/upsonic/api:latest -f Upsonic/docker/local/api/Dockerfile .")
+        os.system("docker run -d --name Upsonic_API -p 5000:5000 ghcr.io/upsonic/api:latest Upsonic api --host='0.0.0.0' --port=5000")
         time.sleep(100)
 
         cls.remote = Upsonic_Remote("TestRemote", "http://localhost:5000", 'Upsonic')

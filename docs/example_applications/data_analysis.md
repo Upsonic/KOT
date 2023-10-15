@@ -8,15 +8,15 @@ parent: EXAMPLE APPLICATIONS
 
 # Data Analysis
 
-KOT can be used for data analysis by storing and retrieving data efficiently. This allows for quick and easy access to the data, which can then be analyzed using various data analysis techniques.
+Upsonic can be used for data analysis by storing and retrieving data efficiently. This allows for quick and easy access to the data, which can then be analyzed using various data analysis techniques.
 
-Here is an example of how to use KOT for data analysis:
+Here is an example of how to use Upsonic for data analysis:
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-# Create a new instance of the KOT class to represent the data:
-data = KOT("data_analysis")
+# Create a new instance of the Upsonic class to represent the data:
+data = Upsonic("data_analysis")
 
 # Add some data to the database:
 data.set("data1", [1, 2, 3, 4, 5])

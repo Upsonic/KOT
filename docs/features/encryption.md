@@ -11,10 +11,10 @@ Now we learned how to apply compressing in `set` function. Now we will learn how
 
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Create a database
-my_address_db = KOT("addresses_of_team_members")
+my_address_db = Upsonic("addresses_of_team_members")
 
 # Set data with encryption
 my_address_db.set("Onur", "Turkey, Sivas, ....", encryption_key="my_encryption_key")
@@ -35,14 +35,14 @@ In the encryption and decryption process, a Fernet key is generated. This is don
 Here is an example of how to generate a Fernet key:
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 from cryptography.fernet import Fernet
 
 # Generate a Fernet key
 fernet_key = Fernet.generate_key()
 
 # Create a database
-my_address_db = KOT("addresses_of_team_members")
+my_address_db = Upsonic("addresses_of_team_members")
 
 # Set data with encryption
 my_address_db.set("Onur", "Turkey, Sivas, ....", encryption_key=fernet_key)
@@ -56,9 +56,9 @@ print("Your Fernet key (SO Secret):", fernet_key)
 # Settng Global Encryption
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
-KOT.force_encrypt = "My_Global_Enc_Key"
+Upsonic.force_encrypt = "My_Global_Enc_Key"
 
 
 #Your operations

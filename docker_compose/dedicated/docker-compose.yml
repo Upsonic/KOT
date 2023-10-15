@@ -5,7 +5,7 @@ services:
             - '5000:5000'
         volumes:
             - 'Upsonic_Volume:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"
@@ -29,7 +29,7 @@ services:
             - '5001:5000'
         volumes:
             - 'Upsonic_Volume:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         command: upsonic api --host=0.0.0.0 --port=5000
         environment:
             folder: "" # "/"

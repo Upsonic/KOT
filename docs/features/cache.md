@@ -11,11 +11,11 @@ In here we will learn how to use and clean cache. Let's use cache.
 
 ## Use Cache
 ```python
-from kot import KOT
+from upsonic import Upsonic
 import time
 
 # Create a database
-my_location_db = KOT("locations_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
 
 # Set data with compressing
 my_location_db.set("Onur", "Sivas", cache_policy = 60) # 60 Seconds cache activated
@@ -39,10 +39,10 @@ Hafik
 Cleaning Cache is so important for encrypted data. Because if you don't clean cache, your data will be stay in cache. Let's clean cache.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Create a database
-my_location_db = KOT("locations_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
 
 my_location_db.clear_cache()
 ```

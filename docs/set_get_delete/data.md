@@ -10,11 +10,11 @@ parent: SET GET DELETE
 Previously section we created a database. Now we will learn how to set and get data from database. Let's set a data to database.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Create a database
-my_location_db = KOT("locations_of_team_members")
-my_image_db = KOT("images_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
+my_image_db = Upsonic("images_of_team_members")
 
 # Set data
 my_location_db.set("Onur", "Sivas")

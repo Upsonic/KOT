@@ -163,7 +163,7 @@ jobs:
 
       - name: Install docker
         run: |
-          docker pull ghcr.io/upsonic-database/api:${{ steps.tag_extractor.outputs.latest_tag }}
+          docker pull ghcr.io/upsonic/api:${{ steps.tag_extractor.outputs.latest_tag }}
       - name: Test with pytest
         run: |
           pytest tests/published_docker.py -v

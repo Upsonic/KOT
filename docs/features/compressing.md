@@ -10,10 +10,10 @@ parent: FEATURES
 We learned how to set and get data from database. Now we will learn to use compressing feature in `set` function. Let's set a data to database with compressing.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Create a database
-my_activity_db = KOT("activity_of_team_members")
+my_activity_db = Upsonic("activity_of_team_members")
 
 # Set data with compressing
 my_activity_db.set("Onur", "LONG TEXT", compress=True)
@@ -31,10 +31,10 @@ LONG TEXT
 # Settng Global Compressing
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 
-KOT.force_compress = True
+Upsonic.force_compress = True
 
 
 #Your operations

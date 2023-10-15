@@ -23,7 +23,7 @@ nav_external_links:
   - title: "Discord"
     url: https://discord.gg/QtnKf532Er   
   - title: "Twitter"
-    url: https://twitter.com/upsonic_database
+    url: https://twitter.com/upsonic
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false

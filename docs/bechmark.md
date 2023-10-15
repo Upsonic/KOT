@@ -6,13 +6,13 @@ has_children: false
 ---
 
 # SET GET DELETE BENCHMARK
-In here we will learn how to make benchmark for KOT database set, get and delete function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic database set, get and delete function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Benchmark for set, get and delete functions together
-print(KOT.benchmark(number=10000))
+print(Upsonic.benchmark(number=10000))
 ```
 
 Output:
@@ -24,13 +24,13 @@ Output:
 
 
 # Set Benchmark
-In here we will learn how to make benchmark for KOT database set function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic database set function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Benchmark for set function
-print(KOT.benchmark_set(number=10000))
+print(Upsonic.benchmark_set(number=10000))
 ```
 
 Output:
@@ -40,13 +40,13 @@ Output:
 ```
 
 # Get Benchmark
-In here we will learn how to make benchmark for KOT database get function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic database get function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Benchmark for get function
-print(KOT.benchmark_get(number=10000))
+print(Upsonic.benchmark_get(number=10000))
 ```
 
 Output:
@@ -56,13 +56,13 @@ Output:
 ```
 
 # Delete Benchmark
-In here we will learn how to make benchmark for KOT database delete function. Also you can use `compress` and `encryption_key` as parameters.
+In here we will learn how to make benchmark for Upsonic database delete function. Also you can use `compress` and `encryption_key` as parameters.
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Benchmark for delete function
-print(KOT.benchmark_delete(number=10000))
+print(Upsonic.benchmark_delete(number=10000))
 ```
 
 Output:

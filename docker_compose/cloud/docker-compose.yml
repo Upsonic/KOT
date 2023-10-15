@@ -5,7 +5,7 @@ services:
             - '5000:5000'
         volumes:
             - 'Upsonic_Volume:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         deploy:
           resources:
             limits:
@@ -35,7 +35,7 @@ services:
         volumes:
             - 'Upsonic_Volume_Pro:/app/Upsonic'
             - 'Upsonic_Volume_Access:/app'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         deploy:
           resources:
             limits:
@@ -70,7 +70,7 @@ services:
             - '4999:5000'
         volumes:
             - 'Upsonic_Volume:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         deploy:
           resources:
             limits:
@@ -105,7 +105,7 @@ services:
             - '4998:5000'
         volumes:
             - 'Upsonic_Volume_Pro:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         deploy:
           resources:
             limits:
@@ -137,7 +137,7 @@ services:
             - '4997:5000'
         volumes:
             - 'Upsonic_Volume_Access:/app/Upsonic'
-        image: ghcr.io/upsonic-database/api:latest
+        image: ghcr.io/upsonic/api:latest
         deploy:
           resources:
             limits:
@@ -171,7 +171,7 @@ services:
             - '4007:5000'
         volumes:
             - 'Upsonic_Volume:/app/Upsonic'
-        image: ghcr.io/upsonic-database/web:latest
+        image: ghcr.io/upsonic/web:latest
         deploy:
           resources:
             limits:
@@ -184,7 +184,7 @@ services:
             - '4006:5000'
         volumes:
             - 'Upsonic_Volume_Pro:/app/Upsonic'
-        image: ghcr.io/upsonic-database/web:latest
+        image: ghcr.io/upsonic/web:latest
         deploy:
           resources:
             limits:

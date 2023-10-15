@@ -12,10 +12,10 @@ In here we will learn how to sizes of datas in database. Let's get size of a dat
 
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 
 # Create a database and set data
-my_location_db = KOT("locations_of_team_members")
+my_location_db = Upsonic("locations_of_team_members")
 my_location_db.set("Onur", "Sivas")
 
 

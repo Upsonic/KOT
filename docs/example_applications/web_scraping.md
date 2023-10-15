@@ -8,17 +8,17 @@ parent: EXAMPLE APPLICATIONS
 
 # Web Scraping
 
-KOT can be used for web scraping by storing the scraped data efficiently. This allows for quick and easy access to the data, which can then be processed or analyzed as needed.
+Upsonic can be used for web scraping by storing the scraped data efficiently. This allows for quick and easy access to the data, which can then be processed or analyzed as needed.
 
-Here is an example of how to use KOT for web scraping:
+Here is an example of how to use Upsonic for web scraping:
 
 ```python
-from kot import KOT
+from upsonic import Upsonic
 import requests
 from bs4 import BeautifulSoup
 
-# Create a new instance of the KOT class to represent the scraped data:
-scraped_data = KOT("web_scraping")
+# Create a new instance of the Upsonic class to represent the scraped data:
+scraped_data = Upsonic("web_scraping")
 
 # Scrape data from a website:
 response = requests.get("https://example.com")
