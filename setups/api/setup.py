@@ -9,7 +9,7 @@ with open('requirements.txt') as fp:
 
 setup(
     name="upsonic_api",
-    version="0.43.2",
+    version="0.0.0",
     description="""This is API package for Upsonic""",
     url="https://github.com/Upsonic/Upsonic",
     author='Onur Atakan ULUSOY',

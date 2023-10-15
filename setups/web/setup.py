@@ -8,7 +8,7 @@ with open('requirements.txt') as fp:
 
 setup(
     name="upsonic_web",
-    version="0.43.2",
+    version="0.0.0",
     description="""This is WEB package for Upsonic""",
     url="https://github.com/Upsonic/Upsonic",
     author='Onur Atakan ULUSOY',
