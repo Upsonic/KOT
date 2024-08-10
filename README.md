@@ -54,14 +54,6 @@ db.get("Key") #Instant, no waiting and no searching
 
 ```
 
-## Interfaces
-- [CLI](https://KOT.github.io/KOT/interfaces/cli.html)
-- [GUI](https://KOT.github.io/KOT/interfaces/gui.html)
-- [WEB](https://KOT.github.io/KOT/interfaces/web.html)
-- [API](https://KOT.github.io/KOT/interfaces/api.html)
-
-
-
 ## Features
 
 - **Flexibility**: Save data in any format, including objects and files, providing great flexibility and adaptability to different use cases and data structures.
