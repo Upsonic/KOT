@@ -346,48 +346,8 @@ class KOT:
         )
         return database_index.dict()
 
-    @staticmethod
-    def gui(password, folder: str = ""):  # pragma: no cover
-        try:
-            from kot.interfaces.gui_web import GUI  # pragma: no cover
 
-            GUI(folder, password)  # pragma: no cover
-        except ModuleNotFoundError:
-            console.log(
-                "[bold red]Error: GUI module not found. Please install the 'kot_gui' package."
-            )  # pragma: no cover
 
-    @staticmethod
-    def api(host, port, log: bool = True):  # pragma: no cover
-        try:
-            from kot.interfaces.api import API  # pragma: no cover
-
-            console.log(
-                f"[bold white] KOT API initializing...",
-            )
-            API(host, port)  # pragma: no cover
-            if log:
-                console.log(
-                    f"[bold green] KOT API started ({host}, {port})",
-                )
-
-        except ModuleNotFoundError:
-            console.log(
-                "[bold red]Error: API module not found. Please install the 'kot_api' package."
-            )  # pragma: no cover
-
-    @staticmethod
-    def web(
-        password, folder: str = "", host="localhost", port=5000
-    ):  # pragma: no cover
-        try:
-            from kot.interfaces.gui_web import WEB  # pragma: no cover
-
-            WEB(folder, password, host, port)  # pragma: no cover
-        except ModuleNotFoundError:
-            console.log(
-                "[bold red]Error: WEB module not found. Please install the 'kot_web' package."
-            )  # pragma: no cover
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
