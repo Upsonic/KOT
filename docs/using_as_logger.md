@@ -7,7 +7,7 @@ has_children: false
 
 # Using as Logger
 
-This document provides documentation for the debug, info, warning, error, and exception functions of the Upsonic class.
+This document provides documentation for the debug, info, warning, error, and exception functions of the KOT class.
 
 These functions takes a single parameter:
 
@@ -16,14 +16,14 @@ These functions takes a single parameter:
 Example usage:
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 
 #If you want you can set the global encrypton and compress for logs 
-#Upsonic.force_encrypt = "My_Global_Enc_Key"
-#Upsonic.force_compress = True
+#KOT.force_encrypt = "My_Global_Enc_Key"
+#KOT.force_compress = True
 
 # Creating a database
-logger = Upsonic("logs")
+logger = KOT("logs")
 
 logger.debug("This is a log message")
 logger.info("This is a log message")
@@ -40,5 +40,5 @@ logger.exception("This is a log message")
 ## Getting logs
 
 ```console
-Upsonic --name logs get_all
+KOT --name logs get_all
 ```

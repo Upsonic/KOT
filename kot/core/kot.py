@@ -24,7 +24,7 @@ import random
 import copy as cpv
 
 
-from .serial import Upsonic_Serial
+from .serial import KOT_Serial
 
 
 open_databases = {}
@@ -54,7 +54,7 @@ class HASHES:
         
 
 
-class Upsonic:
+class KOT:
     force_compress = False
     force_encrypt = False
 
@@ -71,14 +71,14 @@ class Upsonic:
         self.name = name
         self.log = False if self_datas else log
         self._log(
-            f"[{self.name}] [bold white]Upsonic initializing...",
+            f"[{self.name}] [bold white]KOT initializing...",
         )
 
         self.hashed_name = HASHES.serialize(name, enable_hashing=self.enable_hashing)
         global start_location
         the_main_folder = start_location if not folder != "" else folder
         self.the_main_folder = the_main_folder
-        self.location = os.path.join(the_main_folder, "Upsonic-" + self.hashed_name)
+        self.location = os.path.join(the_main_folder, "KOT-" + self.hashed_name)
 
         if enable_fast:
             import pickle
@@ -90,11 +90,11 @@ class Upsonic:
             self.engine = dill
 
         if not self_datas:
-            self.open_files_db = Upsonic_Serial(
-                "Upsonic-open_files_db", self_datas=True, folder=folder
+            self.open_files_db = KOT_Serial(
+                "KOT-open_files_db", self_datas=True, folder=folder
             )
-            database_index = Upsonic_Serial(
-                "Upsonic-index", self_datas=True, folder=folder
+            database_index = KOT_Serial(
+                "KOT-index", self_datas=True, folder=folder
             )
             database_index.set(self.name, self.location)
 
@@ -103,7 +103,7 @@ class Upsonic:
         self.cache = {}
         self.initialize()
         self._log(
-            f"[{self.name}] [bold green]Upsonic active",
+            f"[{self.name}] [bold green]KOT active",
         )
 
     def _log(self, message):
@@ -120,32 +120,8 @@ class Upsonic:
                 raise  # pragma: no cover
             self._log(f"[{self.name}] Connected to folder")
 
-    @staticmethod
-    def cloud_key():
-        from cryptography.fernet import Fernet  # pragma: no cover
 
-        return (
-            "cloud-"
-            + (((Fernet.generate_key()).decode()).replace("-", "").replace("_", ""))[
-                :30
-            ]
-        )  # pragma: no cover
 
-    @staticmethod
-    def cloud_pro_key(name: str):
-        if len(name) > 14:
-            print("Your name is long please short to 14 character")
-            return None
-        from cryptography.fernet import Fernet  # pragma: no cover
-
-        return (
-            "cloud-"
-            + (((Fernet.generate_key()).decode()).replace("-", "").replace("_", ""))[
-                :30
-            ]
-            + "-"
-            + name
-        )  # pragma: no cover
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -183,7 +159,7 @@ class Upsonic:
         value = None
 
         # Parse the SQL query
-        command, database_name, key, value, encryption_key, compress = Upsonic.parse_query(
+        command, database_name, key, value, encryption_key, compress = KOT.parse_query(
             query
         )
 
@@ -191,27 +167,27 @@ class Upsonic:
             value = custom_value
 
         if command == "SET":
-            result = Upsonic_Serial(database_name, folder=folder).set(
+            result = KOT_Serial(database_name, folder=folder).set(
                 key, value, encryption_key=encryption_key, compress=compress
             )
         elif command == "GET":
-            result = Upsonic_Serial(database_name, folder=folder).get(
+            result = KOT_Serial(database_name, folder=folder).get(
                 key, encryption_key=value
             )
         elif command == "DELETE":
-            result = Upsonic_Serial(database_name, folder=folder).delete(key)
+            result = KOT_Serial(database_name, folder=folder).delete(key)
         elif command == "DATABASE_DELETE":
-            result = Upsonic.database_delete(database_name, folder=folder)
+            result = KOT.database_delete(database_name, folder=folder)
         elif command == "DATABASE_DELETE_ALL":
-            result = Upsonic.database_delete_all(folder=folder)
+            result = KOT.database_delete_all(folder=folder)
         elif command == "DATABASE_POP":
-            result = Upsonic.database_pop(database_name, folder=folder)
+            result = KOT.database_pop(database_name, folder=folder)
         elif command == "DATABASE_POP_ALL":
-            result = Upsonic.database_pop_all(folder=folder)
+            result = KOT.database_pop_all(folder=folder)
         elif command == "DATABASE_LIST":
-            result = Upsonic.database_list(folder=folder)
+            result = KOT.database_list(folder=folder)
         elif command == "GET_ALL":
-            result = Upsonic_Serial(database_name, folder=folder).get_all()
+            result = KOT_Serial(database_name, folder=folder).get_all()
         else:
             raise ValueError(f"Unsupported command: {command}")
 
@@ -271,12 +247,12 @@ class Upsonic:
     def benchmark_set(
         number: int = 10000, compress: bool = False, encryption_key: str = None
     ) -> float:  # pragma: no cover
-        compress = True if Upsonic.force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
 
-        my_db = Upsonic_Serial("Upsonic-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         start = time.time()  # pragma: no cover
         for i in range(number):  # pragma: no cover
             my_db.set(
@@ -296,11 +272,11 @@ class Upsonic:
         encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float:  # pragma: no cover
-        compress = True if Upsonic.force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
-        my_db = Upsonic_Serial("Upsonic-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
             for i in range(number):  # pragma: no cover
                 my_db.set(
@@ -323,11 +299,11 @@ class Upsonic:
         encryption_key: str = None,
         dont_generate: bool = False,
     ) -> float:  # pragma: no cover
-        compress = True if Upsonic.force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
-        my_db = Upsonic_Serial("Upsonic-benchmark", self_datas=True)  # pragma: no cover
+        my_db = KOT_Serial("KOT-benchmark", self_datas=True)  # pragma: no cover
         if not dont_generate:  # pragma: no cover
             for i in range(number):  # pragma: no cover
                 my_db.set(
@@ -347,57 +323,57 @@ class Upsonic:
     def benchmark(
         number: int = 10000, compress: bool = False, encryption_key: str = None
     ) -> float:  # pragma: no cover
-        compress = True if Upsonic.force_compress else compress  # pragma: no cover
+        compress = True if KOT.force_compress else compress  # pragma: no cover
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )  # pragma: no cover
         total_time = 0  # pragma: no cover
-        total_time += Upsonic.benchmark_set(
+        total_time += KOT.benchmark_set(
             number, compress, encryption_key
         )  # pragma: no cover
-        total_time += Upsonic.benchmark_get(
+        total_time += KOT.benchmark_get(
             number, compress, encryption_key, dont_generate=True
         )  # pragma: no cover
-        total_time += Upsonic.benchmark_delete(
+        total_time += KOT.benchmark_delete(
             number, compress, encryption_key, dont_generate=True
         )  # pragma: no cover
         return total_time  # pragma: no cover
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
-        database_index = Upsonic_Serial(
-            "Upsonic-index", self_datas=True, folder=folder
+        database_index = KOT_Serial(
+            "KOT-index", self_datas=True, folder=folder
         )
         return database_index.dict()
 
     @staticmethod
     def gui(password, folder: str = ""):  # pragma: no cover
         try:
-            from upsonic.interfaces.gui_web import GUI  # pragma: no cover
+            from kot.interfaces.gui_web import GUI  # pragma: no cover
 
             GUI(folder, password)  # pragma: no cover
         except ModuleNotFoundError:
             console.log(
-                "[bold red]Error: GUI module not found. Please install the 'upsonic_gui' package."
+                "[bold red]Error: GUI module not found. Please install the 'kot_gui' package."
             )  # pragma: no cover
 
     @staticmethod
     def api(host, port, log: bool = True):  # pragma: no cover
         try:
-            from upsonic.interfaces.api import API  # pragma: no cover
+            from kot.interfaces.api import API  # pragma: no cover
 
             console.log(
-                f"[bold white] Upsonic API initializing...",
+                f"[bold white] KOT API initializing...",
             )
             API(host, port)  # pragma: no cover
             if log:
                 console.log(
-                    f"[bold green] Upsonic API started ({host}, {port})",
+                    f"[bold green] KOT API started ({host}, {port})",
                 )
 
         except ModuleNotFoundError:
             console.log(
-                "[bold red]Error: API module not found. Please install the 'upsonic_api' package."
+                "[bold red]Error: API module not found. Please install the 'kot_api' package."
             )  # pragma: no cover
 
     @staticmethod
@@ -405,21 +381,21 @@ class Upsonic:
         password, folder: str = "", host="localhost", port=5000
     ):  # pragma: no cover
         try:
-            from upsonic.interfaces.gui_web import WEB  # pragma: no cover
+            from kot.interfaces.gui_web import WEB  # pragma: no cover
 
             WEB(folder, password, host, port)  # pragma: no cover
         except ModuleNotFoundError:
             console.log(
-                "[bold red]Error: WEB module not found. Please install the 'upsonic_web' package."
+                "[bold red]Error: WEB module not found. Please install the 'kot_web' package."
             )  # pragma: no cover
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
-        database_index = Upsonic_Serial(
-            "Upsonic-index", self_datas=True, folder=folder
+        database_index = KOT_Serial(
+            "KOT-index", self_datas=True, folder=folder
         )
 
-        the_db = Upsonic(name, folder=folder, self_datas=True)
+        the_db = KOT(name, folder=folder, self_datas=True)
         for each_key in the_db.get_all():
             the_db.delete(each_key)
         rmtree(database_index.get(name))
@@ -433,22 +409,22 @@ class Upsonic:
 
     @staticmethod
     def database_delete_all(folder: str = ""):
-        database_index = Upsonic_Serial(
-            "Upsonic-index", self_datas=True, folder=folder
+        database_index = KOT_Serial(
+            "KOT-index", self_datas=True, folder=folder
         )
 
         for each_database in database_index.dict():
             try:
-                Upsonic.database_delete(each_database, folder=folder)
+                KOT.database_delete(each_database, folder=folder)
             except:  # pragma: no cover
                 return False  # pragma: no cover
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
-        database_index = Upsonic_Serial(
-            "Upsonic-index", self_datas=True, folder=folder
+        database_index = KOT_Serial(
+            "KOT-index", self_datas=True, folder=folder
         )
-        the_db = Upsonic(name, folder=folder, self_datas=True)
+        the_db = KOT(name, folder=folder, self_datas=True)
         for each_key in the_db.get_all():
             the_db.delete(each_key)
 
@@ -456,13 +432,13 @@ class Upsonic:
 
     @staticmethod
     def database_pop_all(folder: str = ""):
-        database_index = Upsonic_Serial(
-            "Upsonic-index", self_datas=True, folder=folder
+        database_index = KOT_Serial(
+            "KOT-index", self_datas=True, folder=folder
         )
 
         for each_database in database_index.dict():
             try:
-                Upsonic.database_pop(each_database, folder=folder)
+                KOT.database_pop(each_database, folder=folder)
             except:  # pragma: no cover
                 return False  # pragma: no cover
 
@@ -470,13 +446,13 @@ class Upsonic:
     def database_rename(
         name: str, new_name: str, force: bool = False, folder: str = ""
     ) -> bool:
-        if new_name in Upsonic.database_list() and not force:
+        if new_name in KOT.database_list() and not force:
             return False
         try:
-            first_db = Upsonic(name, folder=folder)
+            first_db = KOT(name, folder=folder)
             location = first_db.backup(".")
-            Upsonic.database_delete(name)
-            second_db = Upsonic(new_name, folder=folder)
+            KOT.database_delete(name)
+            second_db = KOT(new_name, folder=folder)
             second_db.restore(location)
             os.remove(location)
         except:  # pragma: no cover
@@ -561,9 +537,9 @@ class Upsonic:
         custom_key_location: str = "",
         short_cut: bool = False,
     ) -> bool:
-        compress = True if Upsonic.force_compress else compress
+        compress = True if KOT.force_compress else compress
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )
         self.counter += 1
 
@@ -759,7 +735,7 @@ class Upsonic:
         get_shotcut: bool = False,
     ):
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )
         if key in self.cache and not no_cache:
             cache_control = False
@@ -926,7 +902,7 @@ class Upsonic:
 
     def dict(self, encryption_key: str = None, no_data: bool = False):
         encryption_key = (
-            Upsonic.force_encrypt if Upsonic.force_encrypt != False else encryption_key
+            KOT.force_encrypt if KOT.force_encrypt != False else encryption_key
         )
         result = {}
         for key in os.listdir(self.location):
@@ -985,15 +961,15 @@ class Upsonic:
         name = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         location = os.path.join(backup_location, name)
         make_archive(location, "zip", self.location)
-        move(location + ".zip", location + ".Upsonic")
-        return location + ".Upsonic"
+        move(location + ".zip", location + ".KOT")
+        return location + ".KOT"
 
     def restore(self, backup_location: str) -> bool:
         try:
-            move(backup_location, backup_location.replace(".Upsonic", ".zip"))
-            backup_location = backup_location.replace(".Upsonic", ".zip")
+            move(backup_location, backup_location.replace(".KOT", ".zip"))
+            backup_location = backup_location.replace(".KOT", ".zip")
             unpack_archive(backup_location, self.location)
-            move(backup_location, backup_location.replace(".zip", ".Upsonic"))
+            move(backup_location, backup_location.replace(".zip", ".KOT"))
             return True
         except:  # pragma: no cover
             traceback.print_exc()  # pragma: no cover
@@ -1121,4 +1097,4 @@ class Upsonic:
 def main():  # pragma: no cover
     import fire  # pragma: no cover
 
-    fire.Fire(Upsonic)  # pragma: no cover
+    fire.Fire(KOT)  # pragma: no cover

@@ -8,15 +8,15 @@ parent: EXAMPLE APPLICATIONS
 
 # Price Tracker
 
-## 1. Importing Upsonic
+## 1. Importing KOT
 ```python 
-from upsonic import Upsonic
+from kot import KOT
 ```
 
-## 2. Create a new instance of the `Upsonic` class to represent the price tracker:
+## 2. Create a new instance of the `KOT` class to represent the price tracker:
 
 ```python
-price_db = Upsonic("price_tracker")
+price_db = KOT("price_tracker")
 ```
 
 ## 3. Add a price record to the database using the `set` method:
@@ -59,10 +59,10 @@ This will output the retrieved price record.
 
 ## Specifiying Database Location
 
-To specify the location of the database file for the price tracker, you can pass a `folder` argument to the `Upsonic` class. Here's an example:
+To specify the location of the database file for the price tracker, you can pass a `folder` argument to the `KOT` class. Here's an example:
 
 ```python
-price_db = Upsonic("price_tracker", folder="data")
+price_db = KOT("price_tracker", folder="data")
 ```
 
 This will create a `customer_database` in the `data` folder.
@@ -70,14 +70,14 @@ This will create a `customer_database` in the `data` folder.
 
 ## Backup and Restore
 
-To create a backup of the customer database, you can use the `backup` method of the `Upsonic` class. Here's an example:
+To create a backup of the customer database, you can use the `backup` method of the `KOT` class. Here's an example:
 
 ```python
 backup_location = price_db.backup(".")
 print("Backup created at:", backup_location)
 ```
 
-To restore the customer database from a backup, you can use the `restore` method of the `Upsonic` class. Here's an example:
+To restore the customer database from a backup, you can use the `restore` method of the `KOT` class. Here's an example:
 
 ```python
 price_db.restore(backup_location)

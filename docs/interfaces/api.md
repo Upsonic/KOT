@@ -10,14 +10,14 @@ parent: INTERFACES
 
 ## Install
 ```console
-pip3 install upsonic_api
+pip3 install kot_api
 ```
 
 ## Start
 You can start the API with `api` command, you can specify the 'host' and 'port'.
 
 ```console
-upsonic api --host localhost --port 5000
+kot api --host localhost --port 5000
 ```
 
 
@@ -36,7 +36,7 @@ You must use the API with `Basic Auth`.
 
 ## Referance
 
-The API provides the following endpoints for interacting with the Upsonic key-value database.
+The API provides the following endpoints for interacting with the KOT key-value database.
 
 ### `set`
 

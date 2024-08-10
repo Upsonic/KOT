@@ -9,8 +9,8 @@ from unittest.mock import patch
 
 
 
-from upsonic import Upsonic, HASHES, Upsonic_Serial
-import upsonic
+from kot import KOT, HASHES, KOT_Serial
+import kot
 
 
 class test_object:
@@ -21,14 +21,14 @@ def my_function():
     return 123
 
 
-class TestUpsonic(unittest.TestCase):
+class TestKOT(unittest.TestCase):
 
 
     def setUp(self):
-        Upsonic.database_delete_all()
+        KOT.database_delete_all()
 
         self.test_name = "test_user"
-        self.Upsonic = Upsonic(self.test_name)
+        self.KOT = KOT(self.test_name)
 
         self.test_vales = [
             "Merhaba",
@@ -43,20 +43,20 @@ class TestUpsonic(unittest.TestCase):
         ]
 
     def tearDown(self):
-        shutil.rmtree(self.Upsonic.location)
-    def test_database_delete_open_databases_pop_Upsonic_Serial(self):
+        shutil.rmtree(self.KOT.location)
+    def test_database_delete_open_databases_pop_KOT_Serial(self):
         # Create a test database
-        test_db = Upsonic_Serial("test_db")
+        test_db = KOT_Serial("test_db")
 
         # Call the database_delete method
 
         self.assertIn(
-            "test_db" + str(False) + upsonic.core.upsonic.start_location, upsonic.core.upsonic.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
         )
-        Upsonic.database_delete("test_db")
+        KOT.database_delete("test_db")
 
         self.assertNotIn(
-            "test_db" + str(False) + upsonic.core.upsonic.start_location, upsonic.core.upsonic.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
         )
 
 

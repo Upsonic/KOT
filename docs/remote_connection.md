@@ -6,13 +6,13 @@ has_children: false
 ---
 
 # Remote Connection
-Upsonic project have a module that named as `Upsonic_Remote` with this you can easily use remote Upsonic API's. In this example we will use the docker api installation.
+KOT project have a module that named as `KOT_Remote` with this you can easily use remote KOT API's. In this example we will use the docker api installation.
 
 ```python
-from upsonic import Upsonic_Remote
+from kot import KOT_Remote
 
 # Creating a database
-my_db = Upsonic_Remote("my_db", 'http://localhost:5000', 'dockerpass')
+my_db = KOT_Remote("my_db", 'http://localhost:5000', 'dockerpass')
 
 my_db.set("My_key", "My_value")
 my_db.get("My_key")

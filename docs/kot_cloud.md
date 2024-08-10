@@ -1,28 +1,28 @@
 ---
 layout: default
-title: Upsonic CLOUD
+title: KOT CLOUD
 nav_order: 23
 has_children: True
 ---
 
-# Upsonic Cloud | [![Cloud Test Every - 15 Minute](https://github.com/Upsonic/Upsonic/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/cloud_test.yml)
-Upsonic Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with Upsonic Cloud today!
+# KOT Cloud | [![Cloud Test Every - 15 Minute](https://github.com/KOT/KOT/actions/workflows/cloud_test.yml/badge.svg)](https://github.com/KOT/KOT/actions/workflows/cloud_test.yml)
+KOT Cloud: the ultimate, free cloud database for all Python developers. Experience reliability, efficiency, and top-notch security in one powerful solution. Start your seamless development journey with KOT Cloud today!
 
-“Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with Upsonic Cloud!”
+“Save your Python Things to the Cloud: Code Unrestricted, Scale Limitless with KOT Cloud!”
 
 
 
 ## Enable the cloud connection in your Python
 ```console
-Upsonic cloud_key
+KOT cloud_key
 ```
 
 > cloud-HWP0iUIvUlFd18acOgrNa6UmLx6yua
 
 ```python
-from upsonic import Upsonic_Cloud
+from kot import KOT_Cloud
 
-cloud = Upsonic_Cloud("YOUR_CLOUD_KEY")
+cloud = KOT_Cloud("YOUR_CLOUD_KEY")
 ```
 
 ## Sending
@@ -64,11 +64,11 @@ cloud.get("price")
 
 
 
-# Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/Upsonic/Upsonic/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/Upsonic/Upsonic/actions/workflows/cloud_pro_test.yml)
+# Cloud Pro | [![Cloud Pro Test Every - 15 Minute](https://github.com/KOT/KOT/actions/workflows/cloud_pro_test.yml/badge.svg)](https://github.com/KOT/KOT/actions/workflows/cloud_pro_test.yml)
 In Cloud Pro you can create databases with name, for this use:
 
 ```console
-Upsonic cloud_pro_key <YOUR_DATABASE_NAME>
+KOT cloud_pro_key <YOUR_DATABASE_NAME>
 ```
 
 Its will give like this:
@@ -78,9 +78,9 @@ Its will give like this:
 and now you can use your access key.
 
 ```python
-from upsonic import Upsonic_Cloud_Pro
+from kot import KOT_Cloud_Pro
 
-cloud = Upsonic_Cloud_Pro("YOUR_CLOUD_PRO_KEY", "YOUR_ACCESS_KEY")
+cloud = KOT_Cloud_Pro("YOUR_CLOUD_PRO_KEY", "YOUR_ACCESS_KEY")
 ```
 
 
@@ -89,21 +89,21 @@ When you got the dedicated cloud you will get admin and user password and dedica
 
 For admin account (set and delete operations):
 ```python
-from upsonic import Upsonic_Cloud_Dedicated
+from kot import KOT_Cloud_Dedicated
 
-cloud = Upsonic_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_ADMIN_PASSWORD", "YOUR_DEDICATED_KEY")
+cloud = KOT_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_ADMIN_PASSWORD", "YOUR_DEDICATED_KEY")
 ```
 
 For user account (get operations):
 ```python
-from upsonic import Upsonic_Cloud_Dedicated
+from kot import KOT_Cloud_Dedicated
 
-cloud = Upsonic_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_USER_PASSWORD", "YOUR_DEDICATED_KEY")
+cloud = KOT_Cloud_Dedicated("YOUR_DATABASE_NAME", "YOUR_USER_PASSWORD", "YOUR_DEDICATED_KEY")
 ```
 
 
 # Encryption
-You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to Upsonic cloud.
+You can give `encryption_key` to all functions, this will encrypt your things in your computer and after its send the encrypted version to KOT cloud.
 
 ```python
 @cloud.active(encryption_key="")
@@ -121,4 +121,4 @@ or you can use global encryption
 cloud.force_encrypt = ""
 ```
 
-You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.upsonic.co/features/encryption.html#fernet-key-generation)
+You can use every string as an encryption key but also you can generate a verry strong encryption key in [here](https://docs.kot.co/features/encryption.html#fernet-key-generation)

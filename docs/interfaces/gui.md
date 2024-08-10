@@ -11,14 +11,14 @@ parent: INTERFACES
 
 ## Install
 ```console
-pip3 install upsonic_gui
+pip3 install kot_gui
 ```
 
 ## Start
 You can start the GUI with `gui` command but you must give an password.
 
 ```console
-upsonic gui <password>
+kot gui <password>
 ```
 
 ## Authorization

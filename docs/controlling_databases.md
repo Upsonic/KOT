@@ -9,17 +9,17 @@ has_children: false
 In here we will learn how to get all databases in currently dir. Let's get all databases.
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 
 # List all databases
-print(Upsonic.database_list())
+print(KOT.database_list())
 ```
 
 Output:
 
 ```console
 {
-    "mydb": "/root/Upsonic-b50d3038fdd554ed9b9d694bc52f73d9899d2576ed6d48899402b5923284edf1"
+    "mydb": "/root/KOT-b50d3038fdd554ed9b9d694bc52f73d9899d2576ed6d48899402b5923284edf1"
 }
 ```
 
@@ -27,18 +27,18 @@ Output:
 In here we will learn how to delete a database. Let's delete a database.
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 
 # Delete a database
-Upsonic.database_delete("mydb")
+KOT.database_delete("mydb")
 ```
 
 # Delete All Databases
 In here we will learn how to delete all databases in currently dir. Let's delete all databases.
 
 ```python   
-from upsonic import Upsonic
+from kot import KOT
 
 # Delete all databases
-Upsonic.database_delete_all()
+KOT.database_delete_all()
 ```

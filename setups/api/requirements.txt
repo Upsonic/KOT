@@ -1,4 +1,0 @@
-flask==2.0.0
-waitress==2.1.2
-Flask-Limiter==3.4.0
-werkzeug==2.3.7

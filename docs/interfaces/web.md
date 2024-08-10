@@ -10,21 +10,21 @@ parent: INTERFACES
 
 ## Install
 ```console
-pip3 install upsonic_web
+pip3 install kot_web
 ```
 
 ## Start
 You can start the WEB with `web` command but you must give an password.
 
 ```console
-upsonic web <password>
+kot web <password>
 ```
 
 Also you can specify the 'host' and 'port'.
 
 ```console
-upsonic web <password> --host localhost --port 5000
+kot web <password> --host localhost --port 5000
 ```
 
 ## Authorization
-You must enter you password to your browser tab (http//localhost:5000/p/upsonic/) `Password` input are and press enter.
+You must enter you password to your browser tab (http//localhost:5000/p/kot/) `Password` input are and press enter.

@@ -3,7 +3,7 @@ import sys
 import re
 
 def read_version():
-    with open('upsonic/__init__.py', 'r') as file:
+    with open('kot/__init__.py', 'r') as file:
         for line in file:
             match = re.search(r"__version__ = '(.*)'", line)
             if match:
@@ -23,14 +23,14 @@ def increment_version(part, version):
     return f'{major}.{minor}.{patch}'
 
 def write_version(version):
-    with open('upsonic/__init__.py', 'r+') as file:
+    with open('kot/__init__.py', 'r+') as file:
         content = file.read()
         content = re.sub(r"__version__ = '.*'", f"__version__ = '{version}'", content)
         file.seek(0)
         file.write(content)
 
 def update_version(version):
-    files = ['setup.py', 'setups/api/setup.py', 'setups/gui/setup.py', 'setups/web/setup.py']
+    files = ['setup.py']
     for file in files:
         with open(file, 'r+') as f:
             content = f.read()

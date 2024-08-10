@@ -5,7 +5,7 @@ nav_order: 13
 
 # Operator Functions
 
-Operator functions in Upsonic are special methods that allow users to perform multiple operations in a single transaction or perform operations asynchronously. These functions enhance the functionality of the Upsonic class and provide users with more flexibility and performance improvements.
+Operator functions in KOT are special methods that allow users to perform multiple operations in a single transaction or perform operations asynchronously. These functions enhance the functionality of the KOT class and provide users with more flexibility and performance improvements.
 
 
 ## Transactional Operations
@@ -15,10 +15,10 @@ Transactional operations allow users to perform multiple operations (SET, GET, D
 Here is an example of how to use this method:
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 
 # Creating a database
-my_db = Upsonic("my_database")
+my_db = KOT("my_database")
 
 operations = [('SET', 'key1', 'value1'), ('GET', 'key1'), ('DELETE', 'key1')]
 results = my_db.transactional_operations(operations)
@@ -31,10 +31,10 @@ Asynchronous operations allow users to perform operations (SET, GET, DELETE) asy
 Here is an example of how to use this method:
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 
 # Creating a database
-my_db = Upsonic("my_database")
+my_db = KOT("my_database")
 
 thread = my_db.asynchronous_operations('SET', 'key1', 'value1')
 

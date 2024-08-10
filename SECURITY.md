@@ -2,4 +2,4 @@
 
 ## Reporting a Vulnerability
 
-Use `info@upsonic.co`
+Use `onur@upsonic.co`

@@ -8,12 +8,12 @@ parent: EXAMPLE APPLICATIONS
 
 # Machine Learning
 
-Upsonic can be used for machine learning by storing the training data efficiently. This allows for quick and easy access to the data, which can then be used to train a machine learning model.
+KOT can be used for machine learning by storing the training data efficiently. This allows for quick and easy access to the data, which can then be used to train a machine learning model.
 
-Here is an example of how to use Upsonic for machine learning:
+Here is an example of how to use KOT for machine learning:
 
 ```python
-from upsonic import Upsonic
+from kot import KOT
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -26,8 +26,8 @@ y = iris.target
 # Split the data into training and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Create a new instance of the Upsonic class to represent the training data:
-training_data = Upsonic("training_data")
+# Create a new instance of the KOT class to represent the training data:
+training_data = KOT("training_data")
 
 # Add the training data to the database:
 training_data.set("X_train", X_train.tolist())
