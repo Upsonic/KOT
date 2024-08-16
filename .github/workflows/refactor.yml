@@ -1,13 +1,7 @@
 name: Manual Refactor
 
 on:
-  workflow_dispatch:  # Manuel tetiklemeler için
-  push:
-    paths:
-      - 'refactor.py'
-  pull_request:
-    paths:
-      - 'refactor.py'
+  workflow_dispatch:
 
 jobs:
   run-refactor:
