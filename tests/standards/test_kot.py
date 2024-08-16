@@ -1,21 +1,18 @@
 import contextlib
+import os
+import shutil
+import sys
 import time
 import unittest
-import os
-import sys
-import shutil
-import copy
-from unittest.mock import patch
 
-
-
-from kot import KOT, HASHES, KOT_Serial
 import kot
+from kot import HASHES, KOT
 
 
 class test_object:
     def exp(self):
         return {"test": "test"}
+
 
 def my_function():
     return 123
@@ -73,16 +70,11 @@ class TestKOT(unittest.TestCase):
         self.KOT.delete("key1")
         self.assertEqual(self.KOT.get("key1"), None)
 
-
     def test_active(self):
-
         self.KOT.active(my_function)
         self.assertEqual(self.KOT.get("my_function")(), 123)
 
-
-
     def test_active_with_enc(self):
-
         self.KOT.active(my_function, encryption_key="dsadasdda")
         self.assertEqual(self.KOT.get("my_function", encryption_key="dsadasdda")(), 123)
 
@@ -241,20 +233,28 @@ class TestKOT(unittest.TestCase):
 
         self.assertGreater(the_size_of_not_compress, the_size_of_compress)
 
-
     def test_set_get_enable_fast(self):
         big_string = "a" * 100000000
 
         time_1 = time.time()
         KOT("aaa", enable_fast=True).set("sadas", big_string)
         time_2 = time.time()
-        self.assertEqual(KOT("aaa", enable_fast=True).get("sadas",), big_string)
+        self.assertEqual(
+            KOT("aaa", enable_fast=True).get(
+                "sadas",
+            ),
+            big_string,
+        )
 
         time_3 = time.time()
         KOT("aaa").set("sadas", big_string)
         time_4 = time.time()
-        self.assertEqual(KOT("aaa").get("sadas",), big_string)
-
+        self.assertEqual(
+            KOT("aaa").get(
+                "sadas",
+            ),
+            big_string,
+        )
 
     def test_set_get_compress_test_file_size(self):
         a_db = KOT("test_set_get_compress_test_file_size_1")
@@ -265,7 +265,9 @@ class TestKOT(unittest.TestCase):
         big_string = "a" * 1000000
         with open("test_file.txt", "w") as f:
             f.write(big_string)
-        b_db.set("key1", file="test_file.txt", compress=False, dont_remove_original_file=True)
+        b_db.set(
+            "key1", file="test_file.txt", compress=False, dont_remove_original_file=True
+        )
 
         b_size = b_db.size("key1")
 
@@ -289,16 +291,12 @@ class TestKOT(unittest.TestCase):
             self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), self.test_vales
         )
 
-        self.assertNotEqual(
-            self.KOT.get("key1"), self.test_vales
-        )
-
+        self.assertNotEqual(self.KOT.get("key1"), self.test_vales)
 
         self.assertNotEqual(self.KOT.dict(), {"key1": self.test_vales})
         self.assertEqual(
             self.KOT.dict(encryption_key="OnurAtakanULUSOY"), {"key1": self.test_vales}
         )
-        
 
     def test_set_get_delete_cache(self):
         self.KOT.set("key1", self.test_vales, cache_policy=30)
@@ -460,6 +458,7 @@ class TestKOT(unittest.TestCase):
         record = kot_instance.get_all()
         logged_message = record[list(record)[0]][1]
         self.assertEqual(logged_message, test_message)
+
     def test_error_function(self):
         kot_instance = KOT("error_test")
         test_message = "This is a test message for the error function."
@@ -632,8 +631,6 @@ class TestKOT(unittest.TestCase):
         self.assertEqual(
             self.KOT.get("key1", encryption_key="OnurAtakanULUSOY"), big_string
         )
-
-
 
     def test_execute_non_string_query(self):
         with self.assertRaises(TypeError):

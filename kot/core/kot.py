@@ -1,31 +1,22 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import json
 
 from rich.console import Console
 
 console = Console()
 import base64
 import contextlib
+import copy as cpv
 import hashlib
 import os
+import random
 import time
 import traceback
 from datetime import datetime
 from hashlib import sha256
-from shutil import copy
-from shutil import make_archive
-from shutil import move
-from shutil import rmtree
-from shutil import unpack_archive
-import random
-
-
-import copy as cpv
-
+from shutil import copy, make_archive, move, rmtree, unpack_archive
 
 from .serial import KOT_Serial
-
 
 open_databases = {}
 start_location = os.getcwd()
@@ -44,14 +35,13 @@ class HASHES:
             raise ValueError("Hash type must be sha256")
         HASHES.cache[string] = result
         return result
-    
+
     @staticmethod
-    def serialize(string:str, enable_hashing:bool=False):
+    def serialize(string: str, enable_hashing: bool = False):
         if enable_hashing:
             return HASHES.get_hash(string)
         string = string.replace(".", ",")
         return string
-        
 
 
 class KOT:
@@ -93,9 +83,7 @@ class KOT:
             self.open_files_db = KOT_Serial(
                 "KOT-open_files_db", self_datas=True, folder=folder
             )
-            database_index = KOT_Serial(
-                "KOT-index", self_datas=True, folder=folder
-            )
+            database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
             database_index.set(self.name, self.location)
 
         self.counter = 0
@@ -119,9 +107,6 @@ class KOT:
                 self._log(f"[{self.name}] Error on database folder creating")
                 raise  # pragma: no cover
             self._log(f"[{self.name}] Connected to folder")
-
-
-
 
     def __enter__(self):
         return self  # pragma: no cover
@@ -341,19 +326,12 @@ class KOT:
 
     @staticmethod
     def database_list(folder: str = "") -> dict:
-        database_index = KOT_Serial(
-            "KOT-index", self_datas=True, folder=folder
-        )
+        database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
         return database_index.dict()
-
-
-
 
     @staticmethod
     def database_delete(name: str, folder: str = "") -> bool:
-        database_index = KOT_Serial(
-            "KOT-index", self_datas=True, folder=folder
-        )
+        database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
 
         the_db = KOT(name, folder=folder, self_datas=True)
         for each_key in the_db.get_all():
@@ -369,9 +347,7 @@ class KOT:
 
     @staticmethod
     def database_delete_all(folder: str = ""):
-        database_index = KOT_Serial(
-            "KOT-index", self_datas=True, folder=folder
-        )
+        database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
 
         for each_database in database_index.dict():
             try:
@@ -381,9 +357,7 @@ class KOT:
 
     @staticmethod
     def database_pop(name: str, folder: str = "") -> bool:
-        database_index = KOT_Serial(
-            "KOT-index", self_datas=True, folder=folder
-        )
+        database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
         the_db = KOT(name, folder=folder, self_datas=True)
         for each_key in the_db.get_all():
             the_db.delete(each_key)
@@ -392,9 +366,7 @@ class KOT:
 
     @staticmethod
     def database_pop_all(folder: str = ""):
-        database_index = KOT_Serial(
-            "KOT-index", self_datas=True, folder=folder
-        )
+        database_index = KOT_Serial("KOT-index", self_datas=True, folder=folder)
 
         for each_database in database_index.dict():
             try:
@@ -651,7 +623,9 @@ class KOT:
                 os.remove(indicator)
 
     def indicator_generator(self, key, custom_key_location):
-        standart_key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
+        standart_key_location = os.path.join(
+            self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing)
+        )
         key_location = (
             standart_key_location if custom_key_location == "" else custom_key_location
         )
@@ -801,11 +775,11 @@ class KOT:
                 with open(os.path.join(self.location, key_location), "rb") as f:
                     result = self.engine.load(f)
 
-            if not "cache_time" in result:
+            if "cache_time" not in result:
                 result["cache_time"] = 0
-            if not "cache_policy" in result:
+            if "cache_policy" not in result:
                 result["cache_policy"] = 0
-            if not "meta" in result:
+            if "meta" not in result:
                 result["meta"] = {"type": "value"}  # pragma: no cover
             try:
                 total_result = result["key"]
@@ -826,7 +800,9 @@ class KOT:
         try:
             if key in self.cache:
                 del self.cache[key]
-            key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
+            key_location = os.path.join(
+                self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing)
+            )
             key_location_compress_indicator = os.path.join(
                 self.location, key_location + ".co"
             )
@@ -866,17 +842,17 @@ class KOT:
         )
         result = {}
         for key in os.listdir(self.location):
-            if not "." in key:
+            if "." not in key:
                 with contextlib.suppress(Exception):
                     the_key = self.get_key(key)
-                    if not the_key is None:
+                    if the_key is not None:
                         if the_key != False:
                             result_of_key = (
                                 self.get(the_key, encryption_key=encryption_key)
                                 if not no_data
                                 else True
                             )
-                            if not result_of_key is None:
+                            if result_of_key is not None:
                                 result[the_key] = result_of_key
         return result
 
@@ -894,7 +870,9 @@ class KOT:
     def size(self, key: str) -> int:
         total_size = 0
         try:
-            key_location = os.path.join(self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing))
+            key_location = os.path.join(
+                self.location, HASHES.serialize(key, enable_hashing=self.enable_hashing)
+            )
 
             key_location_compress_indicator = os.path.join(
                 self.location, key_location + ".co"

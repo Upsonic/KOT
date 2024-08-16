@@ -1,9 +1,2 @@
-from .kot import KOT
-from .kot import console
-from .kot import start_location, open_databases
-from .kot import HASHES
+from .kot import HASHES, KOT, console, open_databases, start_location
 from .serial import KOT_Serial
-
-
-
-

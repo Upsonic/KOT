@@ -4,9 +4,13 @@
 import kot
 
 
-def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = True, enable_hashing:bool=False):
-    
-
+def KOT_Serial(
+    name,
+    self_datas: bool = False,
+    folder: str = "",
+    log: bool = True,
+    enable_hashing: bool = False,
+):
     folder = kot.core.kot.start_location if not folder != "" else folder
 
     name_hash = name + str(self_datas) + folder
@@ -16,6 +20,12 @@ def KOT_Serial(name, self_datas: bool = False, folder: str = "", log: bool = Tru
     else:
         from kot import KOT
 
-        database = KOT(name, self_datas=self_datas, folder=folder, log=log, enable_hashing=enable_hashing)
+        database = KOT(
+            name,
+            self_datas=self_datas,
+            folder=folder,
+            log=log,
+            enable_hashing=enable_hashing,
+        )
         kot.core.kot.open_databases[name_hash] = database
         return database

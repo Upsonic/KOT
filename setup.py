@@ -3,7 +3,7 @@
 
 from setuptools import setup
 
-with open('requirements.txt') as fp:
+with open("requirements.txt") as fp:
     install_requires = fp.read()
 setup(
     name="kot",
@@ -23,4 +23,3 @@ setup(
     python_requires=">= 3",
     zip_safe=False,
 )
-

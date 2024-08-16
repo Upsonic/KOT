@@ -1,29 +1,21 @@
-import contextlib
-import time
-import unittest
-import os
-import sys
 import shutil
-import copy
-from unittest.mock import patch
+import sys
+import unittest
 
-
-
-from kot import KOT, HASHES, KOT_Serial
 import kot
+from kot import KOT, KOT_Serial
 
 
 class test_object:
     def exp(self):
         return {"test": "test"}
 
+
 def my_function():
     return 123
 
 
 class TestKOT(unittest.TestCase):
-
-
     def setUp(self):
         KOT.database_delete_all()
 
@@ -44,6 +36,7 @@ class TestKOT(unittest.TestCase):
 
     def tearDown(self):
         shutil.rmtree(self.KOT.location)
+
     def test_database_delete_open_databases_pop_KOT_Serial(self):
         # Create a test database
         test_db = KOT_Serial("test_db")
@@ -51,12 +44,14 @@ class TestKOT(unittest.TestCase):
         # Call the database_delete method
 
         self.assertIn(
-            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location,
+            kot.core.kot.open_databases,
         )
         KOT.database_delete("test_db")
 
         self.assertNotIn(
-            "test_db" + str(False) + kot.core.kot.start_location, kot.core.kot.open_databases
+            "test_db" + str(False) + kot.core.kot.start_location,
+            kot.core.kot.open_databases,
         )
 
 
