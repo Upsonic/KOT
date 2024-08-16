@@ -6,6 +6,6 @@ from .core import KOT_Serial
 
 
 
-__version__ = '0.1.1' # noqa
+__version__ = '0.1.1' # fmt: skip
 
 
