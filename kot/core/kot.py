@@ -14,8 +14,8 @@ import time
 import traceback
 from datetime import datetime
 from hashlib import sha256
-from shutil import copy, make_archive, move, rmtree, unpack_archive
-
+from shutil import copy, move, rmtree, unpack_archive
+from shutil import make_archive
 from .serial import KOT_Serial
 
 open_databases = {}
